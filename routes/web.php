@@ -19,5 +19,14 @@ Route::get('/', function () {
 
 
 Route::get('/admin', function () {
-    return view('includes/admin');
+    return view('layouts.admin');
 });
+
+Route::get('/test', function() {
+    $data = App\User::all();
+    return json_encode($data);
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
