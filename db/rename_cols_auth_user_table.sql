@@ -1,5 +1,2 @@
-ALTER TABLE "auth_users_tbl"
-RENAME COLUMN "auth_username" TO "username";
-
-ALTER TABLE "auth_users_tbl"
-RENAME COLUMN "auth_password" TO "password";
+ALTER TABLE auth_users_tbl CHANGE auth_username username varchar(250)
+ALTER TABLE auth_users_tbl CHANGE auth_password password varchar(250)
