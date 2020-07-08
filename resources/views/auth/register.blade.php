@@ -18,6 +18,12 @@
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                 @error('name')
+                            <label for="usercode" class="col-md-4 col-form-label text-md-right">{{ __('Usercode') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="auth_usercode" type="text" class="form-control @error('auth_usercode') is-invalid @enderror" name="auth_usercode" value="{{ old('auth_usercode') }}" required autocomplete="name" autofocus>
+
+                                @error('auth_usercode')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -32,12 +38,19 @@
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                                 @error('email')
+                            <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="name" autofocus>
+
+                                @error('username')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
                         </div>
+
 
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
@@ -58,6 +71,36 @@
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label for="auth_fullname" class="col-md-4 col-form-label text-md-right">{{ __('Fullname') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="auth_fullname" type="text" class="form-control @error('auth_fullname') is-invalid @enderror" name="auth_fullname" value="{{ old('auth_fullname') }}" required autocomplete="name" autofocus>
+
+                                @error('auth_fullname')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label for="auth_role" class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="auth_role" type="text" class="form-control @error('auth_role') is-invalid @enderror" name="auth_role" value="{{ old('auth_role') }}" required autocomplete="name" autofocus>
+
+                                @error('auth_role')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
 

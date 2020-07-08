@@ -45,4 +45,7 @@ class LoginController extends Controller
     public function auth_password(){
         return 'auth_password';
     }
+    public function username(){
+        return 'username';
+    }
 }

@@ -22,11 +22,19 @@ Route::get('/admin', function () {
     return view('layouts.admin');
 });
 
+<<<<<<< HEAD
 Route::get('/test', function() {
     $data = App\User::all();
     return json_encode($data);
 });
 
+=======
+
+Route::get('/test', function () {
+    $data = App\User::all();
+    return json_encode($data);
+});
+>>>>>>> dev_jhay
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
