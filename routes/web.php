@@ -19,5 +19,5 @@ Route::get('/', function () {
 
 
 Route::get('/admin', function () {
-    return view('includes/admin');
+    return view('layouts.admin');
 });
