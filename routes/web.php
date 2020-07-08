@@ -22,19 +22,25 @@ Route::get('/admin', function () {
     return view('layouts.admin');
 });
 
-<<<<<<< HEAD
-Route::get('/test', function() {
-    $data = App\User::all();
-    return json_encode($data);
-});
-
-=======
 
 Route::get('/test', function () {
     $data = App\User::all();
     return json_encode($data);
 });
->>>>>>> dev_jhay
+
+
+Route::prefix('/dashboard')->group(function() {
+	Route::get('/', 'Dashboard@index');
+});
+
+
+Route::prefix('/sanitation')->group(function() {
+	Route::get('/', 'Dashboard@sanitation');
+	Route::post('/md', 'Dashboard@getDoctorByName');
+});
+
+// Route::get('/sanitize', 'Dashboard@sanitation');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
