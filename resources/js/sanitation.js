@@ -9,6 +9,7 @@ new Vue({
   		sanitationCount: 0,
 		sanitizedByDoctorName:[],
 		sanitizedByDoctorNameCount: 0,
+		sanitizedByDoctorNameIndex: 0,
   		sanitationLabel: ''
   	}
   },
@@ -25,18 +26,17 @@ new Vue({
 			this.sanitationCount = this.dataToBeSanitized.length;
 		})
 		.catch((error) => {
+
 			console.log(error);
 		})
 		.finally(() => {
 
-			for(let rawDoctor of this.dataToBeSanitized) {
-				this.sanitizeByDoctorName(rawDoctor.raw_doctor)
-			}
+			this.sanitizeByDoctorName(this.dataToBeSanitized[this.sanitizedByDoctorNameIndex].raw_doctor)
 		})
   	},
   	sanitizeByDoctorName: function(mdName) {
 
-  		this.sanitationLabel = 'Sanitizing by MD Name...';
+  		this.sanitationLabel = `Analyzing MD name: ${mdName}`;
 
 		let data = {
 			mdName: mdName
@@ -51,6 +51,14 @@ new Vue({
 		})
 		.catch((error) => {
 			console.log(error);
+		})
+		.finally(() => {
+
+			if( this.sanitationCount >= this.sanitizedByDoctorNameIndex ) {
+				this.sanitizedByDoctorNameIndex += 1;
+				this.sanitizeByDoctorName(this.dataToBeSanitized[this.sanitizedByDoctorNameIndex].raw_doctor)
+			}
+
 		})
   	}
   }
