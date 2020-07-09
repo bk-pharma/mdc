@@ -21,7 +21,7 @@
 	<div class="row mt-3">
 		<div class="col-md">
 			<div class="progress w-100">
-			  <div class="progress-bar" role="progressbar" :style="{ width: sanitizedByDoctorNameCount+'%'}" :aria-valuenow="sanitizedByDoctorNameCount" aria-valuemin="0" :aria-valuemax="sanitationCount">
+			  <div class="progress-bar" role="progressbar" :style="{ width: sanitizedByDoctorNamePercentage+'%'}" :aria-valuenow="sanitizedByDoctorNameCount" aria-valuemin="0" :aria-valuemax="sanitationCount">
 			  	@{{ sanitizedByDoctorNameCount }} / @{{ sanitationCount }}
 			  </div>
 			</div>

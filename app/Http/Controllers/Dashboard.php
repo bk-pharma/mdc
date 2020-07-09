@@ -29,4 +29,9 @@ class Dashboard extends Controller
 		return response()->json($this->sanitation->getDoctorByName($req));
 	}
 
+	public function getFirstListMD()
+	{
+		return response()->json($this->sanitation->getFirstListMD());
+	}
+
 }

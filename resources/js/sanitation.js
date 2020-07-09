@@ -10,6 +10,7 @@ new Vue({
 		sanitizedByDoctorName:[],
 		sanitizedByDoctorNameCount: 0,
 		sanitizedByDoctorNameIndex: 0,
+		sanitizedByDoctorNamePercentage: 0,
   		sanitationLabel: ''
   	}
   },
@@ -36,7 +37,7 @@ new Vue({
   	},
   	sanitizeByDoctorName: function(mdName) {
 
-  		this.sanitationLabel = `Analyzing MD name: ${mdName}`;
+  		this.sanitationLabel = `Comparing ${mdName}`;
 
 		let data = {
 			mdName: mdName
@@ -46,19 +47,20 @@ new Vue({
 		.then((response) => {
 
 			this.sanitizedByDoctorName = response.data;
-			this.sanitationLabel = 'Sanitizing By Name';
+			this.sanitationLabel = 'Sanitizing By Name Done.';
 			this.sanitizedByDoctorNameCount += 1;
-		})
-		.catch((error) => {
-			console.log(error);
-		})
-		.finally(() => {
+			this.sanitizedByDoctorNamePercentage = (this.sanitizedByDoctorNameCount / this.sanitationCount) * 100;
+
 
 			if( this.sanitationCount >= this.sanitizedByDoctorNameIndex ) {
 				this.sanitizedByDoctorNameIndex += 1;
 				this.sanitizeByDoctorName(this.dataToBeSanitized[this.sanitizedByDoctorNameIndex].raw_doctor)
 			}
 
+
+		})
+		.catch((error) => {
+			console.log(error);
 		})
   	}
   }
