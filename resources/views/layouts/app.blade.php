@@ -87,19 +87,26 @@
           <li class="nav-item">
             @guest
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                <a  class="nav-link" href="{{ route('login') }}">
+                <i class="fas fa-sign-in-alt"></i>
+                Login
+                </a> 
             </li>
             @if (Route::has('register'))
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                    <a class="nav-link" href="{{ route('register') }}">
+                        <i class="fas fa-user-plus"></i>
+                        Register
+                    </a>
                 </li>
             @endif
         @else
         <li class="nav-item">
-            <a class="dropdown-item" href="{{ route('logout') }}"
+            <a  href="{{ route('logout') }}"
                     onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                    <i class="fa fa-sign-out" aria-hidden="true">{{ __('Logout') }}</i>
+                    document.getElementById('logout-form').submit();" class="nav-link">
+                   <i class="nav-icon fa fa-sign-out" aria-hidden="true"></i>
+                     Logout
               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>

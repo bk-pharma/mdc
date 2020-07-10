@@ -1,3 +1,4 @@
+<script src="https://kit.fontawesome.com/99b504acc7.js" crossorigin="anonymous"></script>
 <!-- jQuery -->
 <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->
