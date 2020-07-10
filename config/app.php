@@ -176,6 +176,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         App\Providers\SanitationProvider::class,
+        App\Providers\TestProvider::class,
+        App\Providers\PrefixProvider::class,
 
     ],
 
