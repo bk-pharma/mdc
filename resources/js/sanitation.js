@@ -10,7 +10,7 @@ new Vue({
 		sanitizedByDoctorName:[],
 		sanitizedByDoctorNameCount: 0,
 		sanitizedByDoctorNameIndex: 0,
-  		sanitationLabel: ''
+		sanitationLabel: '',
   	}
   },
   methods: {
@@ -33,7 +33,14 @@ new Vue({
 
 			this.sanitizeByDoctorName(this.dataToBeSanitized[this.sanitizedByDoctorNameIndex].raw_doctor)
 		})
-  	},
+	  },
+	stopSanitized : function(){
+		this.sanitationLabel = 'Stopping....';
+		axios.get(`${BASE_URL}/sanitation/`)
+		.then((response) => {
+			this.sanitationCount = 'Sanitation was cancelled';
+		})
+	},
   	sanitizeByDoctorName: function(mdName) {
 
   		this.sanitationLabel = `Analyzing MD name: ${mdName}`;
@@ -58,7 +65,6 @@ new Vue({
 				this.sanitizedByDoctorNameIndex += 1;
 				this.sanitizeByDoctorName(this.dataToBeSanitized[this.sanitizedByDoctorNameIndex].raw_doctor)
 			}
-
 		})
   	}
   }

@@ -43,7 +43,13 @@ new Vue({
 			this.dataToBeSanitized[this.sanitizedByDoctorNameIndex].raw_doctor
 		})
   	},
-      
+      stopSanitized : function(){
+		this.sanitationLabel = 'Stopping....';
+		axios.get(`${BASE_URL}/sanitation/`)
+		.then((response) => {
+			this.sanitationCount = 'Sanitation was cancelled';
+		})
+	},
       SanitizedByPrefix : function(mdName) {
 
       this.sanitationLabel = `Analyzing MD name: ${mdName}`;

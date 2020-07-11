@@ -32,6 +32,10 @@ Route::prefix('/dashboard')->group(function() {
 	Route::get('/', 'Dashboard@index');
 });
 
+Route::prefix('/dashboard1')->group(function() {
+	Route::get('/', 'Dashboard1@index');
+});
+
 
 Route::prefix('/sanitation')->group(function() {
 	Route::get('/', 'Dashboard@sanitation');
@@ -39,8 +43,8 @@ Route::prefix('/sanitation')->group(function() {
 });
 
 Route::prefix('/sanit')->group(function() {
-    Route::get('/', 'Dashboard@getPrefixToSanitized');
-    Route::post('/superMD', 'Dashboard@getDoctorByName');
+    Route::get('/', 'Dashboard1@getPrefixToSanitized');
+    Route::post('/superMD', 'Dashboard1@getDoctorByName');
 });
 Route::get('/test', 'Dashboard@test');
 // Route::get('/sanitize', 'Dashboard@sanitation');
