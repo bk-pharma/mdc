@@ -2,20 +2,20 @@
 
 @section('content')
 
-<div id="sanitation-container" class="container">
+<div id="sanitation-container" class="container-fluid">
 	<div class="row mt-2">
-		<div class="col-md">
+		<div class="col-md-12">
 			<h3>Removing Prefix</h3>
 		</div>
 	</div>
 
 	<div class="row mt-3">
-		<div class="col-md-5">
+		<div class="col-md-12">
 			@{{ sanitationLabel }}
 		</div>
-<!-- 		<div class="col-md">
+		<div class="col-md-12">
 			@{{ sanitizedByDoctorNameCount }} / @{{ sanitationCount }}
-		</div> -->
+		</div> 
 	</div>
 
 	<div class="row mt-3">
@@ -35,6 +35,7 @@
 	<div class="row mt-3">
 		<div class="col-md">
 			<button type="button" @click="startSanitized()" class="btn btn-sm btn-primary">Start sanitize</button>
+			<button type="button" @click="stopSanitized()" class="btn btn-sm btn-danger">Stop sanitize</button>
 		</div>
 	</div>
 

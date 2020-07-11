@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div id="sanitation-container" class="container">
+<div id="sanitation-container" class="container-fluid">
 	<div class="row mt-2">
 		<div class="col-md">
 			<h3>Sanitation</h3>
@@ -21,7 +21,7 @@
 	<div class="row mt-3">
 		<div class="col-md">
 			<div class="progress w-100">
-			  <div class="progress-bar" role="progressbar" :style="{ width: sanitizedByDoctorNameCount+'%'}" :aria-valuenow="sanitizedByDoctorNameCount" aria-valuemin="0" :aria-valuemax="sanitationCount">
+			  <div class="progress-bar" role="progressbar" :style="{ width: sanitizedByDoctorNameCount +'%'}" :aria-valuenow="sanitizedByDoctorNameCount " aria-valuemin="0" :aria-valuemax="sanitationCount">
 			  	@{{ sanitizedByDoctorNameCount }} / @{{ sanitationCount }}
 			  </div>
 			</div>
@@ -35,6 +35,7 @@
 	<div class="row mt-3">
 		<div class="col-md">
 			<button type="button" @click="startSanitize()" class="btn btn-sm btn-success">Start sanitize</button>
+			<button type="button" @click="stopSanitized()"  class="btn btn-sm btn-danger">Stop sanitize</button>
 		</div>
 	</div>
 

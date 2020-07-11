@@ -11,11 +11,15 @@
           <li class="nav-item ml-auto">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
           </li>
-          <li class="nav-item d-none d-sm-inline-block">
-            <a href="http://localhost/mdc/public/test" class="nav-link">Test</a>
+          <li class="nav-item d-none d-sm-inline-block" >
+            <a href="http://localhost/mdc/public/test" class="nav-link">Test Link</a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="http://localhost/mdc/public/dashboard" class="nav-link">Dashboard</a>
+            <a href="http://localhost/mdc/public/dashboard" class="nav-link">Dashboard - Phase 1 ( Ricky_Master )</a>
+          </li>
+
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="http://localhost/mdc/public/dashboard1" class="nav-link">Dashboard1 - Phase 2 (Jhay_Rising_Star)</a>
           </li>
         </ul>
 
@@ -60,7 +64,7 @@
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link ">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
                 <i class="right fas fa-angle-left"></i>
@@ -68,35 +72,52 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
+                <a href="http://localhost/mdc/public/dashboard" class="nav-link">
+                  <i class="far fa-circle"></i>
+                  <p>Sanitation Phase - 1 </p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="http://localhost/mdc/public/dashboard1" class="nav-link">
+                  <i class="far fa-circle"></i>
+                  <p>Sanitation Phase - 2 </p>
+                </a>
+              </li>
+
+              <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>TEST v2</p>
+                  <i class="far fa-circle"></i>
+                  <p>Sanitation Phase - 3 </p>
                 </a>
               </li>
             </ul>
           </li>
           <li class="nav-item">
             <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="fas fa-th"></i>
               <p>
                 Widgets
                 <span class="right badge badge-danger">New</span>
               </p>
             </a>
           </li>
-          <li class="nav-item">
             @guest
             <li class="nav-item">
                 <a  class="nav-link" href="{{ route('login') }}">
                 <i class="fas fa-sign-in-alt"></i>
-                Login
+                <p>
+                  Login
+                </p>
                 </a> 
             </li>
             @if (Route::has('register'))
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('register') }}">
                         <i class="fas fa-user-plus"></i>
-                        Register
+                        <p>
+                          Register
+                        </p>
                     </a>
                 </li>
             @endif
@@ -105,8 +126,10 @@
             <a  href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();" class="nav-link">
-                   <i class="nav-icon fa fa-sign-out" aria-hidden="true"></i>
-                     Logout
+                   <i class="fas fa-sign-out-alt"></i>
+                   <p>
+                    Logout
+                  </p>
               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
@@ -130,7 +153,7 @@
 
    <!-- /.content-wrapper -->
    <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
+    <strong>Copyright &copy; 2020 Dev <a href="https://www.bkpionline.com/" target="blank">Bell-Kenz Pharma. Inc</a>.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 3.0.5
