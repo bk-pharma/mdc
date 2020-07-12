@@ -176,7 +176,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\RawDataProvider::class,
         App\Providers\SanitationOneProvider::class,
-        App\Providers\SanitationTwoProvider::class
+        App\Providers\SanitationTwoProvider::class,
+        App\Providers\SanitationThreeProvider::class
     ],
 
     /*

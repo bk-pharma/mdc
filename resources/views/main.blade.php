@@ -66,9 +66,12 @@
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-          <li class="nav-item has-treeview">
+
+          @if(Request::is('sanitation/*'))
+            <li class="nav-item has-treeview menu-open">
+          @else
+            <li class="nav-item has-treeview">
+          @endif
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-cogs"></i>
               <p>
@@ -98,7 +101,11 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                @if(Request::is('sanitation/phase-three'))
+                  <a href="#" class="nav-link active">
+                @else
+                  <a href="#" class="nav-link">
+                @endif
                   <i class="far fas fa-angle-right nav-icon"></i>
                   <p>Phase 3</p>
                 </a>
@@ -120,6 +127,7 @@
   <div class="content-wrapper">
     @yield('sanitationPhaseOne')
     @yield('sanitationPhaseTwo')
+    @yield('sanitationPhaseThree')
   </div>
 
 </div>
@@ -159,6 +167,7 @@
 
   @stack('sanitationPhaseOne-scripts')
   @stack('sanitationPhaseTwo-scripts')
+  @stack('sanitationPhaseThree-scripts')
 
 </body>
 </html>

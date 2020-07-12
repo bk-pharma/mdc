@@ -35,7 +35,13 @@ Route::prefix('/sanitation')->group(function() {
 	Route::get('/phase-two', 'Dashboard@phaseTwo');
 
 	Route::prefix('/phase-two')->group(function() {
+		Route::get('/test', 'Dashboard@testPhaseTwo');
+	});
 
+	Route::get('/phase-three', 'Dashboard@phaseThree');
+
+	Route::prefix('/phase-three')->group(function() {
+		Route::get('/test', 'Dashboard@testPhaseThree');
 	});
 });
 
