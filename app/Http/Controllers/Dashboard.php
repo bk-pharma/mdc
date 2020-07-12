@@ -29,9 +29,9 @@ class Dashboard extends Controller
 		return response()->json($this->sanitation->getDoctorByName($req));
 	}
 
-	public function getFirstListMD()
+	public function phaseOne(Request $req)
 	{
-		return response()->json($this->sanitation->getFirstListMD());
+		return response()->json($this->sanitation->update($req));
 	}
 
 }

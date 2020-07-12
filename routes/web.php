@@ -35,10 +35,11 @@ Route::prefix('/dashboard')->group(function() {
 
 Route::prefix('/sanitation')->group(function() {
 	Route::get('/', 'Dashboard@sanitation');
-	Route::get('/first-list-md', 'Dashboard@getFirstListMD');
-
 	Route::post('/md', 'Dashboard@getDoctorByName');
+	Route::post('/phase-one', 'Dashboard@phaseOne');
 });
+
+
 
 // Route::get('/sanitize', 'Dashboard@sanitation');
 

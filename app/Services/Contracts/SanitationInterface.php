@@ -8,7 +8,7 @@ Interface SanitationInterface
 {
 	public function getDataToSanitized();
 
-	public function getFirstListMD();
-
 	public function getDoctorByName(Request $mdName);
+
+	public function update(Request $req);
 }

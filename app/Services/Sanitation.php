@@ -15,16 +15,23 @@ class Sanitation implements SanitationInterface
         return DB::select('CALL getDataToBeSanitized()');
     }
 
-    public function getFirstListMD()
-    {
-        return DB::select('CALL getFirstListMD()');
-    }
-
     public function getDoctorByName(Request $req)
     {
 
         $mdName = $req->input('mdName');
-        return DB::select('CALL getDoctorByName("'.$mdName.'")');
+        return DB::select('CALL getDoctorByName("'.$mdName.'");');
+    }
+
+    public function update(Request $req)
+    {
+
+        $id = $req->input('rawId');
+        $group = $req->input('group');
+        $mdName = $req->input('mdName');
+        $universe = $req->input('universe');
+        $mdCode = $req->input('mdCode');
+
+        return DB::select('CALL sanitation1("'.$id.'","'.$group.'","'.$mdName.'","'.$universe.'","'.$mdCode.'")');
     }
 
 }
