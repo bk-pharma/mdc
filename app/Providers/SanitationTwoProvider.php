@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class SanitationProvider extends ServiceProvider
+class SanitationTwoProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -13,9 +13,9 @@ class SanitationProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Services\Contracts\SanitationInterface', function ($app) {
-          return new \App\Services\Sanitation();
-        });           
+        $this->app->bind('App\Services\Contracts\SanitationTwoInterface', function ($app) {
+          return new \App\Services\SanitationTwo();
+        });
     }
 
     /**

@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   <title>MDC</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -49,18 +51,15 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      
+
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-        </div>
+      <div class="user-panel d-flex">
         <div class="info">
-          
+          <h5 class="text-white">Juan Dela Cruz</h5>
         </div>
       </div>
 
@@ -71,29 +70,43 @@
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-cogs"></i>
               <p>
-                Dashboard
+                Sanitation
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Sanitation</p>
+                @if(Request::is('sanitation/phase-one')):
+                  <a href="#" class="nav-link active">
+                @else
+                  <a href="{{ url('/sanitation/phase-one') }}" class="nav-link">
+                @endif
+                  <i class="far fas fa-angle-right nav-icon"></i>
+                  <p>Phase 1</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                @if(Request::is('sanitation/phase-two'))
+                  <a href="#" class="nav-link active">
+                @else
+                  <a href="{{ url('/sanitation/phase-two') }}" class="nav-link">
+                @endif
+                  <i class="far fas fa-angle-right nav-icon"></i>
+                  <p>Phase 2</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>TEST v2</p>
+                  <i class="far fas fa-angle-right nav-icon"></i>
+                  <p>Phase 3</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>TEST v3</p>
+                  <i class="far fas fa-angle-right nav-icon"></i>
+                  <p>Phase 4</p>
                 </a>
               </li>
             </ul>
@@ -105,17 +118,9 @@
   </aside>
 
   <div class="content-wrapper">
-    @yield('nameSanitation')
+    @yield('sanitationPhaseOne')
+    @yield('sanitationPhaseTwo')
   </div>
-
-  <!-- /.content-wrapper -->
-<!--   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.0.5
-    </div>
-  </footer> -->
 
 </div>
 <!-- ./wrapper -->
@@ -152,7 +157,8 @@
   <!-- AdminLTE for demo purposes -->
   <script src="{{asset('dist/js/demo.js')}}"></script>
 
-  @stack('sanitation-scripts')
+  @stack('sanitationPhaseOne-scripts')
+  @stack('sanitationPhaseTwo-scripts')
 
 </body>
 </html>

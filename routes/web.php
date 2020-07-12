@@ -22,22 +22,24 @@ Route::get('/admin', function () {
     return view('layouts.admin');
 });
 
-
-Route::get('/test', function () {
-    $data = App\User::all();
-    return json_encode($data);
-});
-
-
-Route::prefix('/dashboard')->group(function() {
-	Route::get('/', 'Dashboard@index');
-});
-
-
 Route::prefix('/sanitation')->group(function() {
-	Route::get('/', 'Dashboard@sanitation');
-	Route::post('/md', 'Dashboard@getDoctorByName');
+
+	Route::get('/phase-one', 'Dashboard@phaseOne');
+	Route::get('/get-all-md', 'Dashboard@getRawData');
+
+	Route::prefix('/phase-one')->group(function() {
+		Route::post('/get-single-md', 'Dashboard@getDoctorPhaseOne');
+		Route::post('/get-single-md/sanitize', 'Dashboard@sanitizePhaseOne');
+	});
+
+	Route::get('/phase-two', 'Dashboard@phaseTwo');
+
+	Route::prefix('/phase-two')->group(function() {
+
+	});
 });
+
+
 
 // Route::get('/sanitize', 'Dashboard@sanitation');
 
