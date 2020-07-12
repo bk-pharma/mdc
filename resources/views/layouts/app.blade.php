@@ -3,7 +3,7 @@
 @extends('layouts/header')
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
-    
+
       <!-- Navbar -->
       <nav class="main-header navbar navbar-expand navbar-white navbar-light">
         <!-- Left navbar links -->
@@ -11,49 +11,28 @@
           <li class="nav-item ml-auto">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
           </li>
-          <li class="nav-item d-none d-sm-inline-block" >
-            <a href="http://localhost/mdc/public/test" class="nav-link">Test Link</a>
-          </li>
-          <li class="nav-item d-none d-sm-inline-block">
-            <a href="http://localhost/mdc/public/dashboard" class="nav-link">Dashboard - Phase 1 ( Ricky_Master )</a>
-          </li>
-
-          <li class="nav-item d-none d-sm-inline-block">
-            <a href="http://localhost/mdc/public/dashboard1" class="nav-link">Dashboard1 - Phase 2 (Jhay_Rising_Star)</a>
-          </li>
         </ul>
 
          <!-- Right Side Of Navbar -->
          <ul class="navbar-nav ml-auto">
             <!-- Authentication Links -->
-            
+
         </ul>
       </nav>
 
-
-      
  <!-- Main Sidebar Container -->
  <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      
+
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-        @guest
-        @else
-            <a href="#" class="ml-2">
-                {{ Auth::user()->username }} <span class="caret"></span>
-            </a>
-        @endguest
-        </div>
+      <div class="user-panel mt-2 d-flex align-item-center">
         <div class="info">
-          
+          <h5 class="text-white">Juan Dela Cruz</h5>
         </div>
       </div>
 
@@ -62,11 +41,11 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item has-treeview menu-open">
+          <li class="nav-item has-treeview">
             <a href="#" class="nav-link ">
               <i class="fas fa-tachometer-alt"></i>
               <p>
-                Dashboard
+                Sanitation
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -74,33 +53,24 @@
               <li class="nav-item">
                 <a href="http://localhost/mdc/public/dashboard" class="nav-link">
                   <i class="far fa-circle"></i>
-                  <p>Sanitation Phase - 1 </p>
+                  <p>Phase 1 </p>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="http://localhost/mdc/public/dashboard1" class="nav-link">
                   <i class="far fa-circle"></i>
-                  <p>Sanitation Phase - 2 </p>
+                  <p>Phase 2 </p>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle"></i>
-                  <p>Sanitation Phase - 3 </p>
+                  <p>Phase 3 </p>
                 </a>
               </li>
             </ul>
-          </li>
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="fas fa-th"></i>
-              <p>
-                Widgets
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
           </li>
             @guest
             <li class="nav-item">
@@ -109,7 +79,7 @@
                 <p>
                   Login
                 </p>
-                </a> 
+                </a>
             </li>
             @if (Route::has('register'))
                 <li class="nav-item">
@@ -150,15 +120,6 @@
             </div>
         </section>
   </div>
-
-   <!-- /.content-wrapper -->
-   <footer class="main-footer">
-    <strong>Copyright &copy; 2020 Dev <a href="https://www.bkpionline.com/" target="blank">Bell-Kenz Pharma. Inc</a>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.0.5
-    </div>
-  </footer>
 
 </div>
 <!-- ./wrapper -->

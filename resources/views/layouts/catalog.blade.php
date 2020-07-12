@@ -3,7 +3,7 @@
 @extends('layouts/header')
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
-    
+
       <!-- Navbar -->
       <nav class="main-header navbar navbar-expand navbar-white navbar-light">
         <!-- Left navbar links -->
@@ -54,12 +54,12 @@
       </nav>
 
 
-      
+
  <!-- Main Sidebar Container -->
  <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      
+
     </a>
 
     <!-- Sidebar -->
@@ -70,7 +70,7 @@
           <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          
+
         </div>
       </div>
 
@@ -118,15 +118,6 @@
             </div>
         </section>
   </div>
-
-   <!-- /.content-wrapper -->
-   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.0.5
-    </div>
-  </footer>
 
 </div>
 <!-- ./wrapper -->
