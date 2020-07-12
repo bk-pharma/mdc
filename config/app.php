@@ -177,7 +177,8 @@ return [
         App\Providers\RawDataProvider::class,
         App\Providers\SanitationOneProvider::class,
         App\Providers\SanitationTwoProvider::class,
-        App\Providers\SanitationThreeProvider::class
+        App\Providers\SanitationThreeProvider::class,
+        App\Providers\SanitationFourProvider::class
     ],
 
     /*

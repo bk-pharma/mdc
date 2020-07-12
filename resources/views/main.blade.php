@@ -104,14 +104,18 @@
                 @if(Request::is('sanitation/phase-three'))
                   <a href="#" class="nav-link active">
                 @else
-                  <a href="#" class="nav-link">
+                  <a href="{{ url('/sanitation/phase-three') }}" class="nav-link">
                 @endif
                   <i class="far fas fa-angle-right nav-icon"></i>
                   <p>Phase 3</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                @if(Request::is('sanitation/phase-four'))
+                  <a href="#" class="nav-link active">
+                @else
+                  <a href="{{ url('/sanitation/phase-four') }}" class="nav-link">
+                @endif
                   <i class="far fas fa-angle-right nav-icon"></i>
                   <p>Phase 4</p>
                 </a>
@@ -128,6 +132,7 @@
     @yield('sanitationPhaseOne')
     @yield('sanitationPhaseTwo')
     @yield('sanitationPhaseThree')
+    @yield('sanitationPhaseFour')
   </div>
 
 </div>
@@ -168,6 +173,7 @@
   @stack('sanitationPhaseOne-scripts')
   @stack('sanitationPhaseTwo-scripts')
   @stack('sanitationPhaseThree-scripts')
+  @stack('sanitationPhaseFour-scripts')
 
 </body>
 </html>
