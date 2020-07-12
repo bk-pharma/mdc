@@ -6,6 +6,6 @@ BEGIN
     FROM sanitation_result_new
     WHERE raw_status = ''
     LIMIT 0, 100;
-END
+END //
 
 DELIMITER ;
