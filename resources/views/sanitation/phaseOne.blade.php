@@ -1,11 +1,11 @@
 @extends('main')
 
-@section('nameSanitation')
+@section('sanitationPhaseOne')
 
-<div id="sanitation-container" class="container">
+<div id="sanitationPhaseOne-container" class="container">
 	<div class="row mt-2">
 		<div class="col-md">
-			<h3>Sanitation</h3>
+			<h3>Phase 1</h3>
 		</div>
 	</div>
 
@@ -59,8 +59,8 @@
 
 @endsection
 
-@push('sanitation-scripts')
+@push('sanitationPhaseOne-scripts')
 	<script src="{{ url('../resources/js/vue.js') }}"></script>
 	<script src="{{ url('../resources/js/axios.min.js') }}"></script>
-    <script type="module" src="{{ url('../resources/js/sanitation.js') }}"></script>
+    <script type="module" src="{{ url('../resources/js/sanitation/phaseOne.js') }}"></script>
 @endpush

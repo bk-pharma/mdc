@@ -2,18 +2,12 @@
 
 namespace App\Services;
 
-use App\Services\Contracts\SanitationInterface;
+use App\Services\Contracts\SanitationOneInterface;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
-class Sanitation implements SanitationInterface
+class SanitationOne implements SanitationOneInterface
 {
-
-
-    public function getDataToSanitized()
-    {
-        return DB::select('CALL getDataToBeSanitized()');
-    }
 
     public function getDoctorByName(Request $req)
     {
