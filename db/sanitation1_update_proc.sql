@@ -1,16 +1,16 @@
 DELIMITER //
 
 CREATE PROCEDURE sanitation1(
-	IN raw_id VARCHAR(255),
-	IN raw_status VARCHAR(255),
-	IN raw_doctor VARCHAR(255),
-	IN raw_universe VARCHAR(255),
-	IN raw_mdcode VARCHAR(255)
+	IN rawId VARCHAR(255),
+	IN rawStatus VARCHAR(255),
+	IN mdName VARCHAR(255),
+	IN universe VARCHAR(255),
+	IN mDcode VARCHAR(255)
 )
 BEGIN
 	UPDATE sanitation_result_new
-	SET raw_status = raw_status, raw_doctor = raw_doctor, raw_universe = raw_universe, raw_mdcode = raw_mdcode
-	WHERE raw_id = raw_id;
+	SET raw_status = rawStatus, raw_doctor = mdName, raw_universe = universe, raw_mdcode = mdCode
+	WHERE raw_id = rawId;
 END //
 
 DELIMITER ;
