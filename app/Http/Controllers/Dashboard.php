@@ -73,9 +73,9 @@ class Dashboard extends Controller
 		return view('sanitation.phaseThree');
 	}
 
-	public function testPhaseThree()
+	public function getDoctorPhaseThree(Request $req)
 	{
-		echo $this->sanitation_three->test();
+		return response()->json($this->sanitation_three->getDoctorByName($req));
 	}
 
 	public function phaseFour()

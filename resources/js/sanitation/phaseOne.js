@@ -51,7 +51,7 @@ new Vue({
   	},
   	sanitizeByDoctorName: function(rawId, mdName) {
 
-  		this.sanitationLabel = `Analyzing ${mdName}`;
+  		this.sanitationLabel = `${mdName}`;
 
 		let data = {
 			rawId: rawId,
@@ -71,10 +71,30 @@ new Vue({
 				if(this.sanitizedByDoctorName.length === 1) {
 
 					//left logs that shows the BLUE font when found an MD
-					this.sanitizedByDoctorNameLogs += `<span style="font-size:13px;">(${this.dataToBeSanitized[this.sanitizedByDoctorNameIndex].raw_id}) ${this.dataToBeSanitized[this.sanitizedByDoctorNameIndex].raw_doctor} - <span style="color:blue;">(${this.sanitizedByDoctorName.length}) FOUND</span><br>`;
+					this.sanitizedByDoctorNameLogs += `
+					<span style="font-size:13px;">
+						(${this.dataToBeSanitized[this.sanitizedByDoctorNameIndex].raw_id}) ${this.dataToBeSanitized[this.sanitizedByDoctorNameIndex].raw_doctor}
+						-
+						<span style="color:blue;">(${this.sanitizedByDoctorName.length}) FOUND</span>
+					<span>
+					<br>`;
 
 					//right logs
-					this.sanitizedByDoctorNameFoundLogs += `<span style="font-size:13px; color:green;">(${this.dataToBeSanitized[this.sanitizedByDoctorNameIndex].raw_id}) ${this.dataToBeSanitized[this.sanitizedByDoctorNameIndex].raw_doctor} - SANITIZED by (${this.sanitizedByDoctorName[0].sanit_id}) Phase 1 </span><br>`;
+					this.sanitizedByDoctorNameFoundLogs += `
+					<span style="font-size:13px;">
+						<span style="color: red; ">
+							(${this.dataToBeSanitized[this.sanitizedByDoctorNameIndex].raw_id}) ${this.dataToBeSanitized[this.sanitizedByDoctorNameIndex].raw_doctor}
+						</span>
+						<br>
+						<span style="color: blue">
+							(${this.sanitizedByDoctorName[0].sanit_id}) ${this.sanitizedByDoctorName[0].sanit_mdname} |
+							${this.sanitizedByDoctorName[0].sanit_universe} |
+							${this.sanitizedByDoctorName[0].sanit_group}
+						</span>
+					</span>
+					<br>----------------------------------<br>
+					`;
+
 					this.sanitizedByDoctorNameFoundLogsCount += 1;
 
 
@@ -88,7 +108,12 @@ new Vue({
 					this.sanitizeNow(rawId, group, mdName, universe, mdCode);
 				}else {
 
-					this.sanitizedByDoctorNameFoundLogs += `<span style="font-size:13px; color:red;">${this.dataToBeSanitized[this.sanitizedByDoctorNameIndex].raw_doctor} - (${this.sanitizedByDoctorName.length}) FOUND  <i>ignoring, fix the duplicates first for this keyword</i> </span><br>`;
+					this.sanitizedByDoctorNameFoundLogs += `
+						<span style="font-size:13px; color:red;">
+							${this.dataToBeSanitized[this.sanitizedByDoctorNameIndex].raw_doctor} - (${this.sanitizedByDoctorName.length}) FOUND
+							<i>ignoring, fix the duplicates first for this keyword</i>
+						</span>
+						<br>----------------------------------<br>`;
 					this.sanitizedByDoctorNameDuplicateLogsCount += 1;
 				}
 			}

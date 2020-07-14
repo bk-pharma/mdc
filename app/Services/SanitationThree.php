@@ -11,10 +11,11 @@ class SanitationThree implements SanitationThreeInterface
 
     public function getDoctorByName(Request $req)
     {
-        //Query to get MD's on sanitation phase 2
 
-        // $mdName = $req->input('mdName');
-        // return DB::select('CALL getDoctorByName("'.$mdName.'");');
+        $firstName = $req->input('firstName');
+        $lastName = $req->input('lastName');
+
+        return DB::select('CALL getDoctorByName3("'.$lastName.'", "'.$firstName.'");');
     }
 
     public function update(Request $req)

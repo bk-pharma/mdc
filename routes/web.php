@@ -39,7 +39,7 @@ Route::prefix('/sanitation')->group(function() {
 
 	Route::prefix('/phase-three')->group(function() {
 		Route::get('/', 'Dashboard@phaseThree');
-		Route::get('/test', 'Dashboard@testPhaseThree');
+		Route::post('/get-single-md', 'Dashboard@getDoctorPhaseThree');
 	});
 
 	Route::prefix('/phase-four')->group(function() {
