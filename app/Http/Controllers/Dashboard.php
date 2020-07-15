@@ -38,6 +38,33 @@ class Dashboard extends Controller
 		echo 'Unauthorized';
 	}
 
+	public function getRawDataConsole()
+	{
+		// echo "<pre>";
+		// print_r($this->raw_data->getRawData());
+		// echo "</pre>";
+
+		// $totalRaw = 1000;
+
+		// for($x = 0; $x < $totalRaw; $x++) {
+		// 	echo $this->raw_data->getRawData()[$x]->raw_doctor."\n";
+		// }
+
+		$counter = 1;
+		$rawMD = json_encode($this->raw_data->getRawData());
+
+		$start1 = microtime(true);
+		foreach(json_decode($rawMD) as $md) {
+			print '
+'.$counter.'. '.$md->raw_doctor;
+
+			echo json_encode($this->sanitation_one->getDoctorByNameConsole($md->raw_doctor));
+			$counter += 1;
+		}
+		$end1 = microtime(true);
+		echo date("H:i:s",$end1-$start1);
+	}
+
 	public function getRawData()
 	{
 		return response()->json($this->raw_data->getRawData());

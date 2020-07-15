@@ -103,7 +103,7 @@ new Vue({
 
           let lastName = this.getLastName(this.dataToBeSanitized[this.dataToBeSanitizedIndex].raw_doctor);
           let firstName = this.getFirstName(this.dataToBeSanitized[this.dataToBeSanitizedIndex].raw_doctor);
-
+          console.log(this.dataToBeSanitized[this.dataToBeSanitizedIndex].raw_doctor);
           this.getMD(firstName, lastName, licenseNo);
         }
 
