@@ -16,6 +16,11 @@ class SanitationOne implements SanitationOneInterface
         return DB::select('CALL getDoctorByName("'.$mdName.'");');
     }
 
+    public function getDoctorByNameConsole($mdName)
+    {
+        return DB::select('CALL getDoctorByName("'.$mdName.'");');
+    }
+
     public function update(Request $req)
     {
 

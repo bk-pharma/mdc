@@ -8,5 +8,7 @@ Interface SanitationOneInterface
 {
 	public function getDoctorByName(Request $mdName);
 
+	public function getDoctorByNameConsole($mdName);
+
 	public function update(Request $req);
 }
