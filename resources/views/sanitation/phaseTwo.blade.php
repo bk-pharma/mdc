@@ -29,7 +29,7 @@
 		</div>
 
 		<div class="col-md text-right">
-			<button type="button" @click="updateNow()" class="btn btn-sm btn-success" :disabled="sanitationBtn">Sanitize <i class="fa fa-robot"></i></button>
+			<button type="button" @click="sanitizeNow()" class="btn btn-sm btn-success" :disabled="sanitationBtn">Sanitize <i class="fa fa-robot"></i></button>
 		</div>
 	</div>
 

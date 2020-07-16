@@ -13,8 +13,8 @@ class SanitationTwo implements SanitationTwoInterface
     {
         /* Query to get MD's on sanitation phase 2 */
 
-         $mdName = $req->input('mdName');
-         return DB::select('CALL getDoctorByName2("'.$mdName.'");');
+         $lastName = $req->input('lastName');
+         return DB::select('CALL getDoctorByName2("'.$lastName.'");');
     }
 
     public function update(Request $req)

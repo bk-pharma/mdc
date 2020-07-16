@@ -43,7 +43,7 @@ new Vue({
       .then((response) => {
 
         this.dataToBeSanitized = response.data
-        this.sanitationLabel = 'Totalllll.... ';
+        this.sanitationLabel = 'Total ';
         this.sanitationCount = this.dataToBeSanitized.length;
 
 
@@ -92,9 +92,14 @@ new Vue({
       
       .then((response) => {
         console.log("Response : " + lastName);
-        
+  
         this.getByDoctorName = response.data;
         this.sanitationLabel = "Phase 2 done!";
+
+        let licenseNo = this.dataToBeSanitized[this.getByDoctorNameIndex].raw_license; //sanitation_result_new
+        let sanitLicenseNo = this.getByDoctorName[0].sanit_license;
+
+        console.log(sanitLicenseNo);
 
         //do we have MD or Doctors?
         //check
@@ -129,7 +134,7 @@ new Vue({
           `;
           
             this.getByDoctorNameFoundLogsCount += 1;
-
+/*  if existing license = call the update now function inside in_array
           let rawId = this.dataToBeSanitized[this.getByDoctorNameIndex].raw_id;
 					let group = this.getByDoctorName[0].sanit_group;
 					let mdName = this.getByDoctorName[0].sanit_mdname;
@@ -137,7 +142,7 @@ new Vue({
 					let mdCode = this.getByDoctorName[0].sanit_id;
 
 
-					this.updateNow(rawId, group, mdName, universe, mdCode);
+					this.updateNow(rawId, group, mdName, universe, mdCode); */
           } else{
             this.getByDoctorNameFoundLogs += `
 						<span style="font-size:13px; color:red;">
