@@ -24,18 +24,27 @@ Route::get('/admin', function () {
 
 Route::prefix('/sanitation')->group(function() {
 
-	Route::get('/phase-one', 'Dashboard@phaseOne');
 	Route::get('/get-all-md', 'Dashboard@getRawData');
 
 	Route::prefix('/phase-one')->group(function() {
+		Route::get('/', 'Dashboard@phaseOne');
 		Route::post('/get-single-md', 'Dashboard@getDoctorPhaseOne');
 		Route::post('/get-single-md/sanitize', 'Dashboard@sanitizePhaseOne');
 	});
 
-	Route::get('/phase-two', 'Dashboard@phaseTwo');
-
 	Route::prefix('/phase-two')->group(function() {
+		Route::get('/', 'Dashboard@phaseTwo');
+		Route::get('/test', 'Dashboard@testPhaseTwo');
+	});
 
+	Route::prefix('/phase-three')->group(function() {
+		Route::get('/', 'Dashboard@phaseThree');
+		Route::post('/get-single-md', 'Dashboard@getDoctorPhaseThree');
+	});
+
+	Route::prefix('/phase-four')->group(function() {
+		Route::get('/', 'Dashboard@phaseFour');
+		Route::get('/test', 'Dashboard@testPhaseFour');
 	});
 });
 
