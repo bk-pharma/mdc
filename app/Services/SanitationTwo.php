@@ -9,26 +9,19 @@ use Illuminate\Http\Request;
 class SanitationTwo implements SanitationTwoInterface
 {
 
-    public function getDoctorByName2(Request $req)
+    public function getDoctorByName2($mdName, $licenseNo)
     {
-        /* Query to get MD's on sanitation phase 2 */
+       $data = [$mdName, $licenseNo];
 
-         $lastName = $req->input('lastName');
-         return DB::select('CALL getDoctorByName2("'.$lastName.'");');
+         return DB::select('CALL getDoctorByName2(?, ?);', $data); // ? = parameters that declared in a function -- in order
     }
 
-    public function update(Request $req)
+    public function update($id, $group, $mdName, $universe, $mdCode)
     {
 
-        //Query to update MD's on sanitation phase 2
+        $data = [$id, $group, $mdName, $universe, $mdCode];
 
-         $id = $req->input('rawId');
-         $group = $req->input('group');
-         $mdName = $req->input('mdName');
-         $universe = $req->input('universe');
-         $mdCode = $req->input('mdCode');
-
-         return DB::select('CALL sanitation2("'.$id.'","'.$group.'","'.$mdName.'","'.$universe.'","'.$mdCode.'")');
+        return DB::select('CALL sanitation2(?, ?, ?, ?, ?)', $data); // ? = parameters that declared in a function -- in order
     }
 
     public function test() {

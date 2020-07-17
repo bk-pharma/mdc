@@ -77,7 +77,47 @@ class Dashboard extends Controller
 
 	public function getDoctorPhaseTwo(Request $req)
 	{
-		return response()->json($this->sanitation_two->getDoctorByName2($req));
+		$rawId = $req->input('rawId');
+		//misc will use once u want to sanitize any data with prefix and suffix.
+		$mdName = $this->misc->stripPrefix($this->misc->stripSuffix($req->input('mdName')));
+		$licenseNo = $req->input('licenseNo');
+
+		$result = $this->sanitation_two->getDoctorByName2($mdName, $licenseNo);
+
+
+		/* foreach($result as $md){
+			echo $md->sanit_license;
+		}*/
+		if(count($result) > 0) {
+
+			foreach ($result as $md) {
+				$resultGroup = $md->sanit_group;
+				$resultMdName = $md->sanit_mdname;
+				$resultUniverse = $md->sanit_universe;
+				$resultMdCode = $md->sanit_mdcode;
+				$resultLincese = $md->sanit_license;
+				$licenseArr = explode(",", $resultLincese);
+
+				if($this->misc->isExist($licenseNo, $licenseArr)){ //isexist first parameter is value - secind is array
+					echo "UPDATED!";
+					// 1 create json response that will notify the user if successfully updated.
+					// catch by axios( response.data);
+
+			/* 	echo $rawId . ' -- ' . $resultGroup . ' -- ' . $mdName . ' -- ' .  $resultUniverse . ' -- ' . $resultMdCode; */
+
+				$this->sanitation_two->update($rawId, $resultGroup, $resultMdName, $resultUniverse, $resultMdCode);
+				/* $id, $group, $mdName, $universe, $mdCode); */
+				}else {
+					echo "NOT UPDATED!";
+				}
+			}
+
+		}
+		die(); 
+		
+
+
+		return response()->json($this->sanitation_two->getDoctorByName2($mdName, $licenseNo));
 	}
 
 	public function sanitizePhaseTwo(Request $req)

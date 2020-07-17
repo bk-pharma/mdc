@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 
 Interface SanitationTwoInterface
 {
-	public function getDoctorByName2(Request $req);
+	public function getDoctorByName2($mdName, $licenseNo);
 
-	public function update(Request $req);
+	public function update($id, $group, $mdName, $universe, $mdCode); //(parameters that need to update || stored proc in order)
 
 	public function test();
 }

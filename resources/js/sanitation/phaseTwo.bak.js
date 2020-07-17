@@ -22,7 +22,6 @@ new Vue({
       getByDoctorNameDuplicateLogsCount: 0,
       getByDoctorNameLogs : '',
       getDoctorNameFound : [],
-      getBySanitLicenseIndex: 0,
 
 
 
@@ -47,12 +46,11 @@ new Vue({
         this.sanitationLabel = 'Total ';
         this.sanitationCount = this.dataToBeSanitized.length;
 
-        let rawId = this.dataToBeSanitized[this.getByDoctorNameIndex].raw_id;
-        let mdName = this.dataToBeSanitized[this.getByDoctorNameIndex].raw_doctor;
-        let licenseNo = this.dataToBeSanitized[this.getByDoctorNameIndex].raw_license;
-        
 
-        this.getByMdName(rawId, mdName, licenseNo);
+        let rawId = this.dataToBeSanitized[this.getByDoctorNameIndex].raw_license;
+        let rawDoctor = this.dataToBeSanitized[this.getByDoctorNameIndex].raw_doctor;
+
+        this.getByMdName(rawId, rawDoctor);
       })
 
       .catch((error) =>{
@@ -61,40 +59,54 @@ new Vue({
    
     },//end of sanitize now
 
-    getByMdName : function(rawId, mdName, licenseNo){
+    getByMdName : function(rawId, mdName){
       
+      let firstName;
+      let lastName;
+      let fullSplit;
+    
+      fullSplit = mdName.split(" ");
+       if(fullSplit.length >= 3 ){
+        fullSplit.shift();
+        console.log("Clean Name : " + fullSplit);
+        firstName = fullSplit[0];
+        lastName = fullSplit[fullSplit.length - 1];
+      } else{
+        firstName = fullSplit[0];
+        lastName = fullSplit[fullSplit.length - 1];
+      }
+
       let data = {
         rawId : rawId,
         mdName: mdName,
-        licenseNo : licenseNo,
+        firstName : firstName,
+        lastName : lastName,
       }
-      /* console.log(mdName);
-      console.log(licenseNo); */
+      console.log(firstName);
+      console.log(lastName);
 
       axios
       .post(`${BASE_URL}/sanitation/phase-two/get-single-md`, data)
       
       .then((response) => {
-        /* console.log("Response : " + lastName); */
+        console.log("Response : " + lastName);
   
         this.getByDoctorName = response.data;
         this.sanitationLabel = "Phase 2 done!";
-        console.log(this.getByDoctorName);
-        
-      //check if raw_lincese is equal to sanit_license if equal update else skip
 
-     /*    let licenseNo = this.dataToBeSanitized[this.getByDoctorNameIndex].raw_license; //sanitation_result_new
-        let sanitLicenseNo = this.getByDoctorName[this.getBySanitLicenseIndex].sanit_license; //db_sanitation2
-        
 
+        //check if raw_lincese is equal to sanit_license if equal update else skip
+
+       let licenseNo = this.dataToBeSanitized[this.getByDoctorNameIndex].raw_license; //sanitation_result_new
+        let sanitLicenseNo = this.getByDoctorName[0].sanit_license;
         let removingComma = sanitLicenseNo.split(",").join("");
         let addToArray = removingComma.split(" ");
         let cleanArray = addToArray.filter(item => item);
         console.log(cleanArray);
-        console.log(licenseNo); */
+        console.log(licenseNo);
         
 
-        /* if(cleanArray.includes(licenseNo) === true){
+        if(cleanArray.includes(licenseNo) === true){
 
           console.log('Matched!!');
           let rawId = this.dataToBeSanitized[this.getByDoctorNameIndex].raw_license;
@@ -110,7 +122,16 @@ new Vue({
         else{
           console.log('No License!');
         }
-        console.log(sanitLicenseNo.includes(licenseNo)); */
+        console.log(sanitLicenseNo.includes(licenseNo));
+        /*update 
+        
+        
+        
+        
+        
+        
+        
+        */
 
         //do we have MD or Doctors?
         //check
@@ -175,14 +196,14 @@ new Vue({
         //left logs, MD's not found.
 				if(this.getByDoctorName.length < 1) {
 					//left logs
-					this.getByDoctorNameLogs += `<span style="font-size:13px;">(${this.dataToBeSanitized[this.getByDoctorNameIndex].raw_doctor}) ${this.dataToBeSanitized[this.getByDoctorNameIndex].raw_license}</span><br>`;
+					this.getByDoctorNameLogs += `<span style="font-size:13px;">(${this.dataToBeSanitized[this.getByDoctorNameIndex].raw_license}) ${this.dataToBeSanitized[this.getByDoctorNameIndex].raw_doctor}</span><br>`;
 				}
 
 
           this.getByDoctorNameIndex += 1;
 
           if(typeof this.dataToBeSanitized[this.getByDoctorNameIndex] !== 'undefined') {
-            this.getByMdName(this.dataToBeSanitized[this.getByDoctorNameIndex].raw_id, this.dataToBeSanitized[this.getByDoctorNameIndex].raw_doctor, this.dataToBeSanitized[this.getByDoctorNameIndex].raw_license);
+            this.getByMdName(this.dataToBeSanitized[this.getByDoctorNameIndex].raw_license, this.dataToBeSanitized[this.getByDoctorNameIndex].raw_doctor);
             this.sanitationBtn = true;
           }else {
             // this.sanitationBtn = false;
@@ -197,6 +218,7 @@ new Vue({
       }) 
     
     },
+
     updateNow : function(rawId, group, mdName, universe, mdCode){
     let data = {
   			rawId: rawId,
