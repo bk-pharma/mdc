@@ -42,4 +42,13 @@ class Misc implements MiscInterface
     {
     	return str_replace($this->suffix, '', $str);
     }
+
+    public function isExist($value, $array)
+    {
+        if(in_array($value, $array)) {
+            return true;
+        }
+
+        return false;
+    }
 }

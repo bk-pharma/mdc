@@ -9,4 +9,6 @@ Interface MiscInterface
 	public function stripPrefix($str);
 
 	public function stripSuffix($str);
+
+	public function isExist($value, $array);
 }
