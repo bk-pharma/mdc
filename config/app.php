@@ -175,6 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\RawDataProvider::class,
+        App\Providers\MiscProvider::class,
         App\Providers\SanitationOneProvider::class,
         App\Providers\SanitationTwoProvider::class,
         App\Providers\SanitationThreeProvider::class,

@@ -29,27 +29,21 @@ new Vue({
         this.dataToBeSanitized = response.data;
         this.sanitationCount = this.dataToBeSanitized.length;
 
-        this.sanitationLabel = this.dataToBeSanitized[this.dataToBeSanitizedIndex].raw_doctor;
-
-        let lastName = this.getLastName(this.dataToBeSanitized[this.dataToBeSanitizedIndex].raw_doctor);
-        let firstName = this.getFirstName(this.dataToBeSanitized[this.dataToBeSanitizedIndex].raw_doctor);
+        let md = this.dataToBeSanitized[this.dataToBeSanitizedIndex].raw_doctor;
         let licenseNo = this.dataToBeSanitized[this.dataToBeSanitizedIndex].raw_license;
 
+        this.sanitationLabel = md;
 
-        this.getMD(firstName, lastName, licenseNo);
-        // for(let md of this.dataToBeSanitized) {
-        //   console.log(`${md.raw_doctor} ---> ${this.filter(md.raw_doctor)}  ---> ${md.raw_license}`);
-        // }
+        this.getMD(md, licenseNo);
       })
       .catch((error) => {
 
       });
     },
-    getMD: function(firstName, lastName, licenseNo) {
+    getMD: function(mdName, licenseNo) {
 
       let data = {
-        firstName: firstName,
-        lastName: lastName,
+        mdName: mdName,
         licenseNo: licenseNo
       }
 
@@ -99,12 +93,12 @@ new Vue({
 
         if(this.dataToBeSanitizedIndex < this.dataToBeSanitized.length) {
 
-          this.sanitationLabel = this.dataToBeSanitized[this.dataToBeSanitizedIndex].raw_doctor;
+          let md = this.dataToBeSanitized[this.dataToBeSanitizedIndex].raw_doctor;
+          let licenseNo = this.dataToBeSanitized[this.dataToBeSanitizedIndex].raw_license;
 
-          let lastName = this.getLastName(this.dataToBeSanitized[this.dataToBeSanitizedIndex].raw_doctor);
-          let firstName = this.getFirstName(this.dataToBeSanitized[this.dataToBeSanitizedIndex].raw_doctor);
-          console.log(this.dataToBeSanitized[this.dataToBeSanitizedIndex].raw_doctor);
-          this.getMD(firstName, lastName, licenseNo);
+          this.sanitationLabel = md;
+
+          this.getMD(md, licenseNo);
         }
 
       })
@@ -112,84 +106,6 @@ new Vue({
 
       })
 
-    },
-    getLastName: function(mdName) {
-
-      let splitMdName = mdName.split(' ');
-
-      if(
-        splitMdName[0].includes(']DR ') ||
-        splitMdName[0].includes(']R ') ||
-        splitMdName[0].includes(']RA ') ||
-        splitMdName[0].includes('`DR ') ||
-        splitMdName[0].includes('`DRA ') ||
-        splitMdName[0].includes('`R ') ||
-        splitMdName[0].includes('DR ') ||
-        splitMdName[0].includes('DR  ') ||
-        splitMdName[0].includes('D   ') ||
-        splitMdName[0].includes('DR A ') ||
-        splitMdName[0].includes('DR DR ') ||
-        splitMdName[0].includes('DR. ') ||
-        splitMdName[0].includes('DR.') ||
-        splitMdName[0].includes('DR/ ') ||
-        splitMdName[0].includes('DR] ') ||
-        splitMdName[0].includes('DR]') ||
-        splitMdName[0].includes('DRA  ') ||
-        splitMdName[splitMdName.length - 1].includes('MD ') ||
-        splitMdName[splitMdName.length - 1].includes('JR') ||
-        splitMdName[splitMdName.length - 1].includes(' SR')
-      ) {
-
-        splitMdName.shift();
-      }
-
-
-      if(splitMdName.length === 3) {
-        return `${splitMdName[2]}`;
-      }else if(splitMdName.length === 2) {
-        return `${splitMdName[1]}`;
-      }else {
-        return `${splitMdName[splitMdName.length - 1]}`;
-      }
-    },
-    getFirstName: function(mdName) {
-
-      let splitMdName = mdName.split(' ');
-
-      if(
-        splitMdName[0].includes(']DR ') ||
-        splitMdName[0].includes(']R ') ||
-        splitMdName[0].includes(']RA ') ||
-        splitMdName[0].includes('`DR ') ||
-        splitMdName[0].includes('`DRA ') ||
-        splitMdName[0].includes('`R ') ||
-        splitMdName[0].includes('DR ') ||
-        splitMdName[0].includes('DR  ') ||
-        splitMdName[0].includes('D   ') ||
-        splitMdName[0].includes('DR A ') ||
-        splitMdName[0].includes('DR DR ') ||
-        splitMdName[0].includes('DR. ') ||
-        splitMdName[0].includes('DR.') ||
-        splitMdName[0].includes('DR/ ') ||
-        splitMdName[0].includes('DR] ') ||
-        splitMdName[0].includes('DR]') ||
-        splitMdName[0].includes('DRA  ') ||
-        splitMdName[splitMdName.length - 1].includes('MD ') ||
-        splitMdName[splitMdName.length - 1].includes('JR') ||
-        splitMdName[splitMdName.length - 1].includes(' SR')
-      ) {
-
-        splitMdName.shift();
-      }
-
-
-      if(splitMdName.length === 3) {
-        return `${splitMdName[0]}`;
-      }else if(splitMdName.length === 2) {
-        return `${splitMdName[0]}`;
-      }else {
-        return `${splitMdName[splitMdName.length - 1]}`;
-      }
     }
   }
 });
