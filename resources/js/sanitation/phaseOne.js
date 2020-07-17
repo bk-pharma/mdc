@@ -1,5 +1,5 @@
 
-const BASE_URL = "http://localhost/dev/public";
+const BASE_URL = "http://localhost/mdc/public";
 
 new Vue({
   el: '#sanitationPhaseOne-container',
@@ -140,7 +140,7 @@ new Vue({
 					this.sanitizeByDoctorName(this.dataToBeSanitized[this.sanitizedByDoctorNameIndex].raw_id, this.dataToBeSanitized[this.sanitizedByDoctorNameIndex].raw_doctor);
 					this.sanitationBtn = true;
 				}else {
-					this.sanitationBtn = false;
+					// this.sanitationBtn = false;
 				}
 			}
 
