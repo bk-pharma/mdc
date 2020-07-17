@@ -87,10 +87,26 @@ class Dashboard extends Controller
 
 	public function getDoctorPhaseThree(Request $req)
 	{
+		$rawId = $req->input('rawId');
 		$mdName = $this->misc->stripPrefix($this->misc->stripSuffix($req->input('mdName')));
 		$licenseNo = $req->input('licenseNo');
 
-		return response()->json($this->sanitation_three->getDoctorByName($mdName, $licenseNo));
+		$hasMD = $this->sanitation_three->getDoctorByName($mdName, $licenseNo);
+
+		if(count($hasMD) > 0)
+		{
+			foreach($hasMD as $md)
+			{
+				$sanitGroup = $md->sanit_group;
+				$sanitName = $md->sanit_mdname;
+				$sanitUniverse = $md->sanit_universe;
+				$sanitMdcode = $md->sanit_mdcode;
+
+				$this->sanitation_three->update($rawId, $sanitGroup, $sanitName, $sanitUniverse, $sanitMdcode);
+			}
+		}
+
+		return response()->json($hasMD);
 	}
 
 	public function phaseFour()

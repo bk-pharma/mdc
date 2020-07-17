@@ -16,7 +16,7 @@ class SanitationConsole extends Command
      *
      * @var string
      */
-    protected $signature = 'sanitation:start';
+    protected $signature = 'sanitize';
 
     /**
      * The console command description.
