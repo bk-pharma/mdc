@@ -102,6 +102,7 @@ class Dashboard extends Controller
 					echo "UPDATED!";
 					// 1 create json response that will notify the user if successfully updated.
 					// catch by axios( response.data);
+					return response()->json(array('success' => 1));
 
 			/* 	echo $rawId . ' -- ' . $resultGroup . ' -- ' . $mdName . ' -- ' .  $resultUniverse . ' -- ' . $resultMdCode; */
 
@@ -109,6 +110,7 @@ class Dashboard extends Controller
 				/* $id, $group, $mdName, $universe, $mdCode); */
 				}else {
 					echo "NOT UPDATED!";
+					return response()->json(array('NOT' => 2));
 				}
 			}
 
