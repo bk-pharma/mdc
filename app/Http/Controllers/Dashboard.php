@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\Contracts\RawDataInterface;
+use App\Services\Contracts\MiscInterface;
 use App\Services\Contracts\SanitationOneInterface;
 use App\Services\Contracts\SanitationTwoInterface;
 use App\Services\Contracts\SanitationThreeInterface;
@@ -13,6 +14,7 @@ class Dashboard extends Controller
 {
 
     private $raw_data;
+    private $misc;
     private $sanitation_one;
     private $sanitation_two;
     private $sanitation_three;
@@ -20,6 +22,7 @@ class Dashboard extends Controller
 
     function __construct(
     	RawDataInterface $raw_data,
+    	MiscInterface $misc,
     	SanitationOneInterface $sanitation_one,
     	SanitationTwoInterface $sanitation_two,
     	SanitationThreeInterface $sanitation_three,
@@ -27,6 +30,7 @@ class Dashboard extends Controller
     )
     {
     	$this->raw_data = $raw_data;
+    	$this->misc = $misc;
     	$this->sanitation_one = $sanitation_one;
     	$this->sanitation_two = $sanitation_two;
     	$this->sanitation_three = $sanitation_three;
@@ -50,12 +54,20 @@ class Dashboard extends Controller
 
 	public function getDoctorPhaseOne(Request $req)
 	{
-		return response()->json($this->sanitation_one->getDoctorByName($req));
+		$mdName = $req->input('mdName');
+
+		return response()->json($this->sanitation_one->getDoctorByName($mdName));
 	}
 
 	public function sanitizePhaseOne(Request $req)
 	{
-		return response()->json($this->sanitation_one->update($req));
+        $id = $req->input('rawId');
+        $group = $req->input('group');
+        $mdName = $req->input('mdName');
+        $universe = $req->input('universe');
+        $mdCode = $req->input('mdCode');
+
+		return response()->json($this->sanitation_one->update($id, $group, $mdName, $universe, $mdCode));
 	}
 
 	public function phaseTwo()
@@ -85,7 +97,10 @@ class Dashboard extends Controller
 
 	public function getDoctorPhaseThree(Request $req)
 	{
-		return response()->json($this->sanitation_three->getDoctorByName($req));
+		$mdName = $this->misc->stripPrefix($this->misc->stripSuffix($req->input('mdName')));
+		$licenseNo = $req->input('licenseNo');
+
+		return response()->json($this->sanitation_three->getDoctorByName($mdName, $licenseNo));
 	}
 
 	public function phaseFour()

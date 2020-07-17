@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Services\Contracts\MiscInterface;
 use App\Services\Contracts\SanitationThreeInterface;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -9,13 +10,11 @@ use Illuminate\Http\Request;
 class SanitationThree implements SanitationThreeInterface
 {
 
-    public function getDoctorByName(Request $req)
+    public function getDoctorByName($mdName, $licenseNo)
     {
+        $data = [$mdName, $licenseNo];
 
-        $firstName = $req->input('firstName');
-        $lastName = $req->input('lastName');
-
-        return DB::select('CALL getDoctorByName3("'.$lastName.'", "'.$firstName.'");');
+        return DB::select('CALL getDoctorByName3(?, ?);', $data);
     }
 
     public function update(Request $req)
