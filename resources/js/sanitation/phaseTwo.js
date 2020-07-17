@@ -1,6 +1,5 @@
-const BASE_URL = "http://localhost/mdc/public";
 
-console.log('test phase 2 js'); // just to make sure phase2 scripts was loaded.
+const BASE_URL = "http://localhost/dev/public";
 
 new Vue({
   el: '#sanitationPhaseTwo-container',
@@ -35,12 +34,12 @@ new Vue({
   methods: {
     //methods here
     sanitizeNow : function (){
-   
+
       this.sanitationLabel = 'Scanning.... ';
 
       axios
       .get(`${BASE_URL}/sanitation/get-all-md`)
-      
+
       .then((response) => {
 
         this.dataToBeSanitized = response.data
@@ -50,7 +49,7 @@ new Vue({
         let rawId = this.dataToBeSanitized[this.getByDoctorNameIndex].raw_id;
         let mdName = this.dataToBeSanitized[this.getByDoctorNameIndex].raw_doctor;
         let licenseNo = this.dataToBeSanitized[this.getByDoctorNameIndex].raw_license;
-        
+
 
         this.getByMdName(rawId, mdName, licenseNo);
       })
@@ -58,11 +57,11 @@ new Vue({
       .catch((error) =>{
         console.log(error);
       })
-   
+
     },//end of sanitize now
 
     getByMdName : function(rawId, mdName, licenseNo){
-      
+
       let data = {
         rawId : rawId,
         mdName: mdName,
@@ -73,26 +72,26 @@ new Vue({
 
       axios
       .post(`${BASE_URL}/sanitation/phase-two/get-single-md`, data)
-      
+
       .then((response) => {
         /* console.log("Response : " + lastName); */
-  
+
         this.getByDoctorName = response.data;
         this.sanitationLabel = "Phase 2 done!";
         console.log(this.getByDoctorName);
-        
+
       //check if raw_lincese is equal to sanit_license if equal update else skip
 
      /*    let licenseNo = this.dataToBeSanitized[this.getByDoctorNameIndex].raw_license; //sanitation_result_new
         let sanitLicenseNo = this.getByDoctorName[this.getBySanitLicenseIndex].sanit_license; //db_sanitation2
-        
+
 
         let removingComma = sanitLicenseNo.split(",").join("");
         let addToArray = removingComma.split(" ");
         let cleanArray = addToArray.filter(item => item);
         console.log(cleanArray);
         console.log(licenseNo); */
-        
+
 
         /* if(cleanArray.includes(licenseNo) === true){
 
@@ -103,7 +102,7 @@ new Vue({
 					let universe = this.getByDoctorName[0].sanit_universe;
 					let mdCode = this.getByDoctorName[0].sanit_id;
 
-					this.updateNow(rawId, group, mdName, universe, mdCode); 
+					this.updateNow(rawId, group, mdName, universe, mdCode);
         }else if(cleanArray.includes(licenseNo) === false){
           console.log('Did not match!');
         }
@@ -143,7 +142,7 @@ new Vue({
 					</span>
 					<br>----------------------------------<br>
           `;
-          
+
             this.getByDoctorNameFoundLogsCount += 1;
 /*  if existing license = call the update now function inside in_array
           let rawId = this.dataToBeSanitized[this.getByDoctorNameIndex].raw_license;
@@ -164,14 +163,14 @@ new Vue({
 					  this.getByDoctorNameDuplicateLogsCount += 1;
           }
         }
-       
+
 
         //proceed to next doctor
         if( this.sanitationCount !== this.getByDoctorNameIndex ) {
-        
+
         this.getByDoctorNameCount += 1;
         this.getByDoctorNamePercentage = ((this.getByDoctorNameCount / this.sanitationCount) * 100).toFixed(2);
-        
+
         //left logs, MD's not found.
 				if(this.getByDoctorName.length < 1) {
 					//left logs
@@ -189,13 +188,13 @@ new Vue({
           }
         }
 
-       
+
       })
-      
+
       .catch((error) =>{
         console.log(error);
-      }) 
-    
+      })
+
     },
     updateNow : function(rawId, group, mdName, universe, mdCode){
     let data = {
@@ -218,6 +217,6 @@ new Vue({
        /*  console.log(error); */
       })
     },
-    
+
   } // end of methods
 });

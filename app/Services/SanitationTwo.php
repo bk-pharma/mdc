@@ -13,7 +13,7 @@ class SanitationTwo implements SanitationTwoInterface
     {
        $data = [$mdName, $licenseNo];
 
-         return DB::select('CALL getDoctorByName2(?, ?);', $data); // ? = parameters that declared in a function -- in order
+         return DB::select('CALL getDoctorByName2(?, ?);', $data);
     }
 
     public function update($id, $group, $mdName, $universe, $mdCode)
@@ -21,7 +21,7 @@ class SanitationTwo implements SanitationTwoInterface
 
         $data = [$id, $group, $mdName, $universe, $mdCode];
 
-        return DB::select('CALL sanitation2(?, ?, ?, ?, ?)', $data); // ? = parameters that declared in a function -- in order
+        return DB::select('CALL sanitation2(?, ?, ?, ?, ?)', $data);
     }
 
     public function test() {
