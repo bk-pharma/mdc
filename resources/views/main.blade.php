@@ -59,7 +59,12 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel d-flex">
         <div class="info">
+          @if (!Auth::check())
           <h5 class="text-white">Juan Dela Cruz</h5>
+          @else
+          <h5 class="text-white">
+          {{ Auth::user()->auth_fullname }} </h5>
+          @endif
         </div>
       </div>
 

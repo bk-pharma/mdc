@@ -5,7 +5,9 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 use App\Services\Contracts\RawDataInterface;
+use App\Services\Contracts\MiscInterface;
 use App\Services\Contracts\SanitationOneInterface;
+use App\Services\Contracts\SanitationTwoInterface;
 use App\Services\Contracts\SanitationThreeInterface;
 
 class SanitationConsole extends Command
@@ -15,7 +17,7 @@ class SanitationConsole extends Command
      *
      * @var string
      */
-    protected $signature = 'sanitation:start';
+    protected $signature = 'sanitize';
 
     /**
      * The console command description.
@@ -30,43 +32,27 @@ class SanitationConsole extends Command
      * @return void
      */
 
-
-    private $special = array(
-        "]DR ",
-        "]R ",
-        "]RA ",
-        "`DR ",
-        "`DRA ",
-        "`R ",
-        "DR ",
-        "DR  ",
-        "D   ",
-        "DR A ",
-        "DR DR ",
-        "DR. ",
-        "DR.",
-        "DR/ ",
-        "DR] ",
-        "DR]",
-        "DRA  ",
-        "MD ",
-        " JR",
-        " SR"
-    );
-
     private $raw_data;
+    private $misc;
     private $sanitation_one;
+    private $sanitation_two;
     private $sanitation_three;
-    private $phaseOneTotal = 0;
-    private $phaseThreeTotal = 0;
+
+    private $phaseOneArr = [];
+    private $phaseTwoArr = [];
+    private $phaseThreeArr = [];
 
     public function __construct(
+        MiscInterface $misc,
         SanitationOneInterface $sanitation_one,
+        SanitationTwoInterface $sanitation_two,
         SanitationThreeInterface $sanitation_three
     )
     {
         parent::__construct();
+        $this->misc = $misc;
         $this->sanitation_one = $sanitation_one;
+        $this->sanitation_two = $sanitation_two;
         $this->sanitation_three = $sanitation_three;
     }
 
@@ -74,27 +60,130 @@ class SanitationConsole extends Command
     private function phaseOne($mdName)
     {
 
-        $md = $this->sanitation_one->getDoctorByNameConsole($mdName->raw_doctor);
+       $sanitizeName = $this->misc->stripPrefix($this->misc->stripSuffix($mdName->raw_doctor));
 
-        if(count($md) > 0) {
-            $this->phaseOneTotal += 1;
-        }else {
-            $this->phaseThree($mdName);
+        if(!$this->misc->isSingleWord($sanitizeName))
+        {
+            $md = $this->sanitation_one->getDoctorByName($sanitizeName);
+
+            if(count($md) > 0) {
+                // $this->line('Phase 1 ----> '.json_encode($md));
+                $this->phaseOneArr[] = $md;
+            }else {
+                $this->phaseThree($mdName);
+            }
+
+        }else
+        {
+            $this->phaseTwo($mdName);
+        }
+    }
+
+    private function phaseTwoGetLicense($rawId, $rawMD, $md, $rawLicense)
+    {
+
+        $licenseArr = explode(",", $md->sanit_license);
+
+        if($this->misc->isExist($rawLicense, $licenseArr))
+        {
+            // $this->sanitation_two->update(
+            //     $rawId,
+            //     $md->sanit_group,
+            //     $md->sanit_mdname,
+            //     $md->sanit_universe,
+            //     $md->sanit_mdcode
+            // );
+
+            return array(
+                'raw_id' => $rawId,
+                'raw_md' => $rawMD,
+                'raw_license' => $rawLicense,
+                'sanit_id' => $md->sanit_id,
+                'sanit_mdname' => $md->sanit_mdname,
+                'sanit_group' => $md->sanit_group,
+                'sanit_universe' => $md->sanit_universe,
+                'sanit_mdcode' => $md->sanit_mdcode,
+                'sanit_license' => $md->sanit_license
+            );
         }
     }
 
 
+    public function phaseTwo($mdName)
+    {
+
+        $sanitizeName = $this->misc->stripPrefix($this->misc->stripSuffix($mdName->raw_doctor));
+
+        if($this->misc->isSingleWord($sanitizeName)) {
+
+            $findSurname = $this->sanitation_two->getDoctorByName2($sanitizeName, $mdName->raw_license, 'sanit_surname');
+
+            if(count($findSurname) > 0)
+            {
+                foreach($findSurname as $md)
+                {
+                    $data = $this->phaseTwoGetLicense($mdName->raw_id, $sanitizeName, $md, $mdName->raw_license);
+
+                    if($data != null)
+                    {
+                        $this->phaseTwoArr[] = $data;
+                    }
+                }
+            }else
+            {
+                $findFirstName = $this->sanitation_two->getDoctorByName2($sanitizeName, $mdName->raw_license, 'sanit_firstname');
+
+                if(count($findFirstName) > 0)
+                {
+                    foreach($findFirstName as $md)
+                    {
+                        $data = $this->phaseTwoGetLicense($mdName->raw_id, $sanitizeName, $md, $mdName->raw_license);
+
+                        if($data !== null)
+                        {
+                            $this->phaseTwoArr[] = $data;
+                        }
+                    }
+                }else
+                {
+
+                    $findMiddleName = $this->sanitation_two->getDoctorByName2($sanitizeName, $mdName->raw_license, 'sanit_middlename');
+
+                    if(count($findMiddleName) > 0)
+                    {
+                        foreach($findMiddleName as $md)
+                        {
+                            $data = $this->phaseTwoGetLicense($mdName->raw_id, $sanitizeName, $md, $mdName->raw_license);
+
+                            if($data !== null)
+                            {
+                                $this->phaseTwoArr[] = $data;
+                            }
+                        }
+
+                    }else
+                    {
+                        $this->phaseThree($mdName);
+                    }
+
+                }
+            }
+        }else
+        {
+            $this->phaseThree($mdName);
+        }
+    }
+
     private function phaseThree($mdName)
     {
 
+        $sanitizedName = $this->misc->stripPrefix($this->misc->stripSuffix($mdName->raw_doctor));
 
-        $sanitizedMD = str_replace($this->special, '', $mdName->raw_doctor);
+        $md = $this->sanitation_three->getDoctorByName($sanitizedName, $mdName->raw_license);
 
-        $phaseThree = $this->sanitation_three->getDoctorByNameConsole($sanitizedMD, $mdName->raw_license);
-
-        if(count($phaseThree) > 0) {
-            $this->line(json_encode($phaseThree));
-            $this->phaseThreeTotal += 1;
+        if(count($md) > 0) {
+            // $this->line('Phase 3 ----> '.json_encode($md));
+            $this->phaseThreeArr[] = $md;
         }
     }
 
@@ -104,10 +193,7 @@ class SanitationConsole extends Command
      *
      * @return int
      */
-    public function handle(
-        RawDataInterface $raw_data,
-        SanitationOneInterface $sanitation_one
-    )
+    public function handle(RawDataInterface $raw_data)
     {
         // $request = Request::create($this->argument('uri'), 'GET');
         // $this->info(app()->make(\Illuminate\Contracts\Http\Kernel::class)->handle($request));
@@ -132,7 +218,8 @@ class SanitationConsole extends Command
         $bar->finish();
 
         $this->info('  '.date("H:i:s",$endSanitation-$startSanitation));
-        $this->info('Phase 1: '. $this->phaseOneTotal);
-        $this->info('Phase 3: '. $this->phaseThreeTotal);
+        $this->info('Phase 1: '.count($this->phaseOneArr));
+        $this->info('Phase 2: '.count($this->phaseTwoArr));
+        $this->info('Phase 3: '.count($this->phaseThreeArr));
     }
 }

@@ -6,11 +6,9 @@ use Illuminate\Http\Request;
 
 Interface SanitationThreeInterface
 {
-	public function getDoctorByName(Request $mdName);
+	public function getDoctorByName($mdName, $licenseNo);
 
-	public function getDoctorByNameConsole($lastName, $licenseNo);
-
-	public function update(Request $req);
+	public function update($id, $group, $mdName, $universe, $mdCode);
 
 	public function test();
 }
