@@ -11,4 +11,6 @@ Interface MiscInterface
 	public function stripSuffix($str);
 
 	public function isExist($value, $array);
+
+	public function isSingleWord($str);
 }

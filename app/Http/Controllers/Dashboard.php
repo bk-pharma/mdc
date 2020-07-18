@@ -75,46 +75,96 @@ class Dashboard extends Controller
 		return view('sanitation.phaseTwo');
 	}
 
+	private function phaseTwoGetLicense($rawId, $md, $rawLicense)
+	{
+
+		$licenseArr = explode(",", $md->sanit_license);
+
+		if($this->misc->isExist($rawLicense, $licenseArr))
+		{
+			$this->sanitation_two->update(
+				$rawId,
+				$md->sanit_group,
+				$md->sanit_mdname,
+				$md->sanit_universe,
+				$md->sanit_mdcode
+			);
+
+			return array(
+				'sanit_id' => $md->sanit_id,
+				'sanit_mdname' => $md->sanit_mdname,
+				'sanit_group' => $md->sanit_group,
+				'sanit_universe' => $md->sanit_universe,
+				'sanit_mdcode' => $md->sanit_mdcode
+			);
+		}
+	}
+
 	public function getDoctorPhaseTwo(Request $req)
 	{
 		$rawId = $req->input('rawId');
 		$mdName = $this->misc->stripPrefix($this->misc->stripSuffix($req->input('mdName')));
 		$licenseNo = $req->input('licenseNo');
 
-		$hasMD = $this->sanitation_two->getDoctorByName2($mdName, $licenseNo);
+		$result = [];
 
-		if(count($hasMD) > 0) {
+		if($this->misc->isSingleWord($mdName)) {
 
-			foreach ($result as $md)
+			$findSurname = $this->sanitation_two->getDoctorByName2($mdName, $licenseNo, 'sanit_surname');
+
+			if(count($findSurname) > 0)
 			{
-				$resultGroup = $md->sanit_group;
-				$resultMdName = $md->sanit_mdname;
-				$resultUniverse = $md->sanit_universe;
-				$resultMdCode = $md->sanit_mdcode;
-				$resultLincese = $md->sanit_license;
-				$licenseArr = explode(",", $resultLincese);
-
-				if($this->misc->isExist($licenseNo, $licenseArr))
+				foreach($findSurname as $md)
 				{
-					$this->sanitation_two->update($rawId, $resultGroup, $resultMdName, $resultUniverse, $resultMdCode);
-				}else {
-					echo "NOT UPDATED!";
+					$data = $this->phaseTwoGetLicense($rawId, $md, $licenseNo);
+
+					if($data != null)
+					{
+						$result[] = $data;
+					}
+				}
+			}else
+			{
+				$findFirstName = $this->sanitation_two->getDoctorByName2($mdName, $licenseNo, 'sanit_firstname');
+
+				if(count($findFirstName) > 0)
+				{
+					foreach($findFirstName as $md)
+					{
+						$data = $this->phaseTwoGetLicense($rawId, $md, $licenseNo);
+
+						if($data !== null)
+						{
+							$result[] = $data;
+						}
+					}
+				}else
+				{
+
+					$findMiddleName = $this->sanitation_two->getDoctorByName2($mdName, $licenseNo, 'sanit_middlename');
+
+					if(count($findMiddleName) > 0)
+					{
+						foreach($findMiddleName as $md)
+						{
+							$data = $this->phaseTwoGetLicense($rawId, $md, $licenseNo);
+
+							if($data !== null)
+							{
+								$result[] = $data;
+							}
+						}
+
+					}else
+					{
+						$result[] = array('message' => 'not existing.');
+					}
+
 				}
 			}
-
 		}
 
-		return response()->json($this->sanitation_two->getDoctorByName2($mdName, $licenseNo));
-	}
-
-	public function sanitizePhaseTwo(Request $req)
-	{
-		return response()->json($this->sanitation_two->update($req));
-	}
-
-	public function testPhaseTwo()
-	{
-		echo $this->sanitation_two->test();
+		return response()->json($result);
 	}
 
 	public function phaseThree()

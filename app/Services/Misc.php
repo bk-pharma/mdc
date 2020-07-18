@@ -45,9 +45,22 @@ class Misc implements MiscInterface
 
     public function isExist($value, $array)
     {
-        if(in_array($value, $array)) {
+        if(in_array($value, $array))
+        {
             return true;
         }
+
+        return false;
+    }
+
+    public function isSingleWord($str) {
+
+        $str1 = explode(' ', $str);
+
+        if(count($str1) === 1)
+        {
+            return true;
+        }else
 
         return false;
     }

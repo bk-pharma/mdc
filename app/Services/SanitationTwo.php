@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 class SanitationTwo implements SanitationTwoInterface
 {
 
-    public function getDoctorByName2($mdName, $licenseNo)
+    public function getDoctorByName2($mdName, $licenseNo, $clauseCols)
     {
-       $data = [$mdName, $licenseNo];
+       $data = [$mdName, $clauseCols];
 
          return DB::select('CALL getDoctorByName2(?, ?);', $data);
     }
