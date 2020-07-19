@@ -110,7 +110,7 @@ class Dashboard extends Controller
 
 		if($this->misc->isSingleWord($mdName)) {
 
-			$findSurname = $this->sanitation_two->getDoctorByName2($mdName, $licenseNo, 'sanit_surname');
+			$findSurname = $this->sanitation_two->getDoctorByName2($mdName, 'sanit_surname');
 
 			if(count($findSurname) > 0)
 			{
@@ -125,7 +125,7 @@ class Dashboard extends Controller
 				}
 			}else
 			{
-				$findFirstName = $this->sanitation_two->getDoctorByName2($mdName, $licenseNo, 'sanit_firstname');
+				$findFirstName = $this->sanitation_two->getDoctorByName2($mdName, 'sanit_firstname');
 
 				if(count($findFirstName) > 0)
 				{
@@ -141,7 +141,7 @@ class Dashboard extends Controller
 				}else
 				{
 
-					$findMiddleName = $this->sanitation_two->getDoctorByName2($mdName, $licenseNo, 'sanit_middlename');
+					$findMiddleName = $this->sanitation_two->getDoctorByName2($mdName, 'sanit_middlename');
 
 					if(count($findMiddleName) > 0)
 					{

@@ -39,6 +39,7 @@ class SanitationConsole extends Command
     private $sanitation_two;
     private $sanitation_three;
     private $sanitation_four;
+    private $sanitation_total;
 
     private $phaseOneArr = [];
     private $phaseTwoArr = [];
@@ -71,10 +72,20 @@ class SanitationConsole extends Command
         {
             $md = $this->sanitation_one->getDoctorByName($sanitizeName);
 
-            if(count($md) > 0) {
-                // $this->line('Phase 1 ----> '.json_encode($md));
-                $this->phaseOneArr[] = $md;
-            }else {
+            if(count($md) > 0)
+            {
+                $this->sanitation_one->update(
+                    $mdName->raw_id,
+                    $md[0]->sanit_group,
+                    $md[0]->sanit_mdname,
+                    $md[0]->sanit_universe,
+                    $md[0]->sanit_mdcode
+                );
+
+                $this->phaseOneArr[]['raw_id'] = $mdName->raw_id;
+                $this->phaseOneArr[]['data'] = $md;
+            }else
+            {
                 $this->phaseThree($mdName);
             }
 
@@ -91,13 +102,13 @@ class SanitationConsole extends Command
 
         if($this->misc->isExist($rawLicense, $licenseArr))
         {
-            // $this->sanitation_two->update(
-            //     $rawId,
-            //     $md->sanit_group,
-            //     $md->sanit_mdname,
-            //     $md->sanit_universe,
-            //     $md->sanit_mdcode
-            // );
+            $this->sanitation_two->update(
+                $rawId,
+                $md->sanit_group,
+                $md->sanit_mdname,
+                $md->sanit_universe,
+                $md->sanit_mdcode
+            );
 
             return array(
                 'raw_id' => $rawId,
@@ -121,7 +132,7 @@ class SanitationConsole extends Command
 
         if($this->misc->isSingleWord($sanitizeName)) {
 
-            $findSurname = $this->sanitation_two->getDoctorByName2($sanitizeName, $mdName->raw_license, 'sanit_surname');
+            $findSurname = $this->sanitation_two->getDoctorByName2($sanitizeName, 'sanit_surname');
 
             if(count($findSurname) > 0)
             {
@@ -136,7 +147,7 @@ class SanitationConsole extends Command
                 }
             }else
             {
-                $findFirstName = $this->sanitation_two->getDoctorByName2($sanitizeName, $mdName->raw_license, 'sanit_firstname');
+                $findFirstName = $this->sanitation_two->getDoctorByName2($sanitizeName, 'sanit_firstname');
 
                 if(count($findFirstName) > 0)
                 {
@@ -152,7 +163,7 @@ class SanitationConsole extends Command
                 }else
                 {
 
-                    $findMiddleName = $this->sanitation_two->getDoctorByName2($sanitizeName, $mdName->raw_license, 'sanit_middlename');
+                    $findMiddleName = $this->sanitation_two->getDoctorByName2($sanitizeName, 'sanit_middlename');
 
                     if(count($findMiddleName) > 0)
                     {
@@ -188,12 +199,18 @@ class SanitationConsole extends Command
 
         if(count($md) > 0)
         {
-            // $this->line('Phase 3 ----> '.json_encode($md));
+            $this->sanitation_two->update(
+                $mdName->raw_id,
+                $md[0]->sanit_group,
+                $md[0]->sanit_mdname,
+                $md[0]->sanit_universe,
+                $md[0]->sanit_mdcode
+            );
+
             $this->phaseThreeArr[] = $md;
-        }else
-        {
-            $this->phaseFour($mdName);
         }
+
+        $this->phaseFour($mdName);
     }
 
 
@@ -204,13 +221,13 @@ class SanitationConsole extends Command
 
         if($this->misc->isExist($rawBranch, $branchArr))
         {
-            // $this->sanitation_four->update(
-            //     $rawId,
-            //     $md->sanit_group,
-            //     $md->sanit_mdname,
-            //     $md->sanit_universe,
-            //     $md->sanit_mdcode
-            // );
+            $this->sanitation_four->update(
+                $rawId,
+                $md->sanit_group,
+                $md->sanit_mdname,
+                $md->sanit_universe,
+                $md->sanit_mdcode
+            );
 
             return array(
                 'raw_id' => $rawId,
@@ -309,6 +326,7 @@ class SanitationConsole extends Command
 
             $this->info($md->raw_doctor);
             $this->phaseOne($md);
+            // $this->phaseFour($md);
             $bar->advance();
         }
 
@@ -320,7 +338,21 @@ class SanitationConsole extends Command
         $this->info('Phase 2: '.count($this->phaseTwoArr));
         $this->info('Phase 3: '.count($this->phaseThreeArr));
         $this->info('Phase 4: '.count($this->phaseFourArr));
+        $this->info(' ');
+
+        $this->sanitation_total = (
+            count($this->phaseOneArr) +
+            count($this->phaseTwoArr) +
+            count($this->phaseThreeArr) +
+            count($this->phaseFourArr)
+        );
+
+        $this->info('Rows: '.count($raw_data->getRawData()));
+        $this->info('Sanitized: '.$this->sanitation_total);
+        $this->info('Unsanitized: '.( count($raw_data->getRawData()) - $this->sanitation_total ));
+        $this->info(' ');
+
         $this->info('Duration: '.date("H:i:s",$endSanitation-$startSanitation));
-        $this->info('Completed: '.date('D m Y g:i A'));
+        $this->info('Completed: '.date('M d Y g:i A'));
     }
 }
