@@ -9,6 +9,7 @@ use App\Services\Contracts\MiscInterface;
 use App\Services\Contracts\SanitationOneInterface;
 use App\Services\Contracts\SanitationTwoInterface;
 use App\Services\Contracts\SanitationThreeInterface;
+use App\Services\Contracts\SanitationFourInterface;
 
 class SanitationConsole extends Command
 {
@@ -37,16 +38,19 @@ class SanitationConsole extends Command
     private $sanitation_one;
     private $sanitation_two;
     private $sanitation_three;
+    private $sanitation_four;
 
     private $phaseOneArr = [];
     private $phaseTwoArr = [];
     private $phaseThreeArr = [];
+    private $phaseFourArr = [];
 
     public function __construct(
         MiscInterface $misc,
         SanitationOneInterface $sanitation_one,
         SanitationTwoInterface $sanitation_two,
-        SanitationThreeInterface $sanitation_three
+        SanitationThreeInterface $sanitation_three,
+        SanitationFourInterface $sanitation_four
     )
     {
         parent::__construct();
@@ -54,6 +58,7 @@ class SanitationConsole extends Command
         $this->sanitation_one = $sanitation_one;
         $this->sanitation_two = $sanitation_two;
         $this->sanitation_three = $sanitation_three;
+        $this->sanitation_four = $sanitation_four;
     }
 
 
@@ -181,9 +186,102 @@ class SanitationConsole extends Command
 
         $md = $this->sanitation_three->getDoctorByName($sanitizedName, $mdName->raw_license);
 
-        if(count($md) > 0) {
+        if(count($md) > 0)
+        {
             // $this->line('Phase 3 ----> '.json_encode($md));
             $this->phaseThreeArr[] = $md;
+        }else
+        {
+            $this->phaseFour($mdName);
+        }
+    }
+
+
+    private function phaseFourGetBranch($rawId, $rawMD, $md, $rawBranch)
+    {
+
+        $branchArr = explode(",", $md->sanit_branch);
+
+        if($this->misc->isExist($rawBranch, $branchArr))
+        {
+            // $this->sanitation_four->update(
+            //     $rawId,
+            //     $md->sanit_group,
+            //     $md->sanit_mdname,
+            //     $md->sanit_universe,
+            //     $md->sanit_mdcode
+            // );
+
+            return array(
+                'raw_id' => $rawId,
+                'raw_md' => $rawMD,
+                'raw_branchcode' => $rawBranch,
+                'sanit_id' => $md->sanit_id,
+                'sanit_mdname' => $md->sanit_mdname,
+                'sanit_group' => $md->sanit_group,
+                'sanit_universe' => $md->sanit_universe,
+                'sanit_mdcode' => $md->sanit_mdcode,
+                'sanit_branch' => $md->sanit_branch
+            );
+        }
+    }
+
+
+    public function phaseFour($mdName)
+    {
+
+        $sanitizeName = $this->misc->stripPrefix($this->misc->stripSuffix($mdName->raw_doctor));
+
+        if($this->misc->isSingleWord($sanitizeName)) {
+
+            $findSurname = $this->sanitation_four->getDoctorByName($sanitizeName, 'sanit_surname');
+
+            if(count($findSurname) > 0)
+            {
+                foreach($findSurname as $md)
+                {
+                    $data = $this->phaseFourGetBranch($mdName->raw_id, $sanitizeName, $md, $mdName->raw_branchcode);
+
+                    if($data != null)
+                    {
+                        $this->phaseFourArr[] = $data;
+                    }
+                }
+            }else
+            {
+                $findFirstName = $this->sanitation_four->getDoctorByName($sanitizeName, 'sanit_firstname');
+
+                if(count($findFirstName) > 0)
+                {
+                    foreach($findFirstName as $md)
+                    {
+                        $data = $this->phaseFourGetBranch($mdName->raw_id, $sanitizeName, $md, $mdName->raw_branchcode);
+
+                        if($data !== null)
+                        {
+                            $this->phaseFourArr[] = $data;
+                        }
+                    }
+                }else
+                {
+
+                    $findMiddleName = $this->sanitation_four->getDoctorByName($sanitizeName, 'sanit_middlename');
+
+                    if(count($findMiddleName) > 0)
+                    {
+                        foreach($findMiddleName as $md)
+                        {
+                            $data = $this->phaseFourGetBranch($mdName->raw_id, $sanitizeName, $md, $mdName->raw_branchcode);
+
+                            if($data !== null)
+                            {
+                                $this->phaseFourArr[] = $data;
+                            }
+                        }
+
+                    }
+                }
+            }
         }
     }
 
@@ -217,9 +315,12 @@ class SanitationConsole extends Command
         $endSanitation = microtime(true);
         $bar->finish();
 
-        $this->info('  '.date("H:i:s",$endSanitation-$startSanitation));
+        $this->info(' ');
         $this->info('Phase 1: '.count($this->phaseOneArr));
         $this->info('Phase 2: '.count($this->phaseTwoArr));
         $this->info('Phase 3: '.count($this->phaseThreeArr));
+        $this->info('Phase 4: '.count($this->phaseFourArr));
+        $this->info('Duration: '.date("H:i:s",$endSanitation-$startSanitation));
+        $this->info('Completed: '.date('D m Y g:i A'));
     }
 }
