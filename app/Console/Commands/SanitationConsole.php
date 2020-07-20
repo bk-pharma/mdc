@@ -82,8 +82,7 @@ class SanitationConsole extends Command
                     $md[0]->sanit_mdcode
                 );
 
-                $this->phaseOneArr[]['raw_id'] = $mdName->raw_id;
-                $this->phaseOneArr[]['data'] = $md;
+                $this->phaseOneArr[] = $md;
             }else
             {
                 $this->phaseThree($mdName);
