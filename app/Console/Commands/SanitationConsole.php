@@ -68,35 +68,25 @@ class SanitationConsole extends Command
     }
 
 
-    private function phaseOne($mdName)
+    private function phaseOne($mdName, $sanitizedName)
     {
+        $md = $this->sanitation_one->getDoctorByName($sanitizedName);
 
-       $sanitizeName = $this->misc->stripPrefix($this->misc->stripSuffix($mdName->raw_doctor));
-
-        if(!$this->misc->isSingleWord($sanitizeName))
+        if(count($md) > 0)
         {
-            $md = $this->sanitation_one->getDoctorByName($sanitizeName);
+            $this->sanitation_one->update(
+                $mdName->raw_id,
+                $md[0]->sanit_group,
+                $md[0]->sanit_mdname,
+                $md[0]->sanit_universe,
+                $md[0]->sanit_mdcode
+            );
 
-            if(count($md) > 0)
-            {
-                $this->sanitation_one->update(
-                    $mdName->raw_id,
-                    $md[0]->sanit_group,
-                    $md[0]->sanit_mdname,
-                    $md[0]->sanit_universe,
-                    $md[0]->sanit_mdcode
-                );
-
-                // $this->phaseOneArr[] = $md;
-                $this->phaseOneTotal += 1;
-            }else
-            {
-                $this->phaseThree($mdName);
-            }
-
+            // $this->phaseOneArr[] = $md;
+            $this->phaseOneTotal += 1;
         }else
         {
-            $this->phaseTwo($mdName);
+            $this->phaseThree($mdName, $sanitizedName);
         }
     }
 
@@ -130,22 +120,33 @@ class SanitationConsole extends Command
     }
 
 
-    public function phaseTwo($mdName)
+    public function phaseTwo($mdName, $sanitizedName)
     {
+        $findSurname = $this->sanitation_two->getDoctorByName2($sanitizedName, 'sanit_surname');
 
-        $sanitizeName = $this->misc->stripPrefix($this->misc->stripSuffix($mdName->raw_doctor));
-
-        if($this->misc->isSingleWord($sanitizeName)) {
-
-            $findSurname = $this->sanitation_two->getDoctorByName2($sanitizeName, 'sanit_surname');
-
-            if(count($findSurname) > 0)
+        if(count($findSurname) > 0)
+        {
+            foreach($findSurname as $md)
             {
-                foreach($findSurname as $md)
-                {
-                    $data = $this->phaseTwoGetLicense($mdName->raw_id, $sanitizeName, $md, $mdName->raw_license);
+                $data = $this->phaseTwoGetLicense($mdName->raw_id, $sanitizedName, $md, $mdName->raw_license);
 
-                    if($data != null)
+                if($data != null)
+                {
+                    // $this->phaseTwoArr[] = $data;
+                    $this->phaseTwoTotal += 1;
+                }
+            }
+        }else
+        {
+            $findFirstName = $this->sanitation_two->getDoctorByName2($sanitizedName, 'sanit_firstname');
+
+            if(count($findFirstName) > 0)
+            {
+                foreach($findFirstName as $md)
+                {
+                    $data = $this->phaseTwoGetLicense($mdName->raw_id, $sanitizedName, $md, $mdName->raw_license);
+
+                    if($data !== null)
                     {
                         // $this->phaseTwoArr[] = $data;
                         $this->phaseTwoTotal += 1;
@@ -153,13 +154,14 @@ class SanitationConsole extends Command
                 }
             }else
             {
-                $findFirstName = $this->sanitation_two->getDoctorByName2($sanitizeName, 'sanit_firstname');
 
-                if(count($findFirstName) > 0)
+                $findMiddleName = $this->sanitation_two->getDoctorByName2($sanitizedName, 'sanit_middlename');
+
+                if(count($findMiddleName) > 0)
                 {
-                    foreach($findFirstName as $md)
+                    foreach($findMiddleName as $md)
                     {
-                        $data = $this->phaseTwoGetLicense($mdName->raw_id, $sanitizeName, $md, $mdName->raw_license);
+                        $data = $this->phaseTwoGetLicense($mdName->raw_id, $sanitizedName, $md, $mdName->raw_license);
 
                         if($data !== null)
                         {
@@ -167,42 +169,17 @@ class SanitationConsole extends Command
                             $this->phaseTwoTotal += 1;
                         }
                     }
+
                 }else
                 {
-
-                    $findMiddleName = $this->sanitation_two->getDoctorByName2($sanitizeName, 'sanit_middlename');
-
-                    if(count($findMiddleName) > 0)
-                    {
-                        foreach($findMiddleName as $md)
-                        {
-                            $data = $this->phaseTwoGetLicense($mdName->raw_id, $sanitizeName, $md, $mdName->raw_license);
-
-                            if($data !== null)
-                            {
-                                // $this->phaseTwoArr[] = $data;
-                                $this->phaseTwoTotal += 1;
-                            }
-                        }
-
-                    }else
-                    {
-                        $this->phaseThree($mdName);
-                    }
-
+                    $this->phaseThree($mdName, $sanitizedName);
                 }
             }
-        }else
-        {
-            $this->phaseThree($mdName);
         }
     }
 
-    private function phaseThree($mdName)
+    private function phaseThree($mdName, $sanitizedName)
     {
-
-        $sanitizedName = $this->misc->stripPrefix($this->misc->stripSuffix($mdName->raw_doctor));
-
         $md = $this->sanitation_three->getDoctorByName($sanitizedName, $mdName->raw_license);
 
         if(count($md) > 0)
@@ -219,7 +196,7 @@ class SanitationConsole extends Command
             $this->phaseThreeTotal += 1;
         }
 
-        $this->phaseFour($mdName);
+        $this->phaseFour($mdName, $sanitizedName);
     }
 
 
@@ -253,22 +230,33 @@ class SanitationConsole extends Command
     }
 
 
-    public function phaseFour($mdName)
+    public function phaseFour($mdName, $sanitizedName)
     {
+        $findSurname = $this->sanitation_four->getDoctorByName($sanitizedName, 'sanit_surname');
 
-        $sanitizeName = $this->misc->stripPrefix($this->misc->stripSuffix($mdName->raw_doctor));
-
-        if($this->misc->isSingleWord($sanitizeName)) {
-
-            $findSurname = $this->sanitation_four->getDoctorByName($sanitizeName, 'sanit_surname');
-
-            if(count($findSurname) > 0)
+        if(count($findSurname) > 0)
+        {
+            foreach($findSurname as $md)
             {
-                foreach($findSurname as $md)
-                {
-                    $data = $this->phaseFourGetBranch($mdName->raw_id, $sanitizeName, $md, $mdName->raw_branchcode);
+                $data = $this->phaseFourGetBranch($mdName->raw_id, $sanitizedName, $md, $mdName->raw_branchcode);
 
-                    if($data != null)
+                if($data != null)
+                {
+                    // $this->phaseFourArr[] = $data;
+                    $this->phaseFourTotal += 1;
+                }
+            }
+        }else
+        {
+            $findFirstName = $this->sanitation_four->getDoctorByName($sanitizedName, 'sanit_firstname');
+
+            if(count($findFirstName) > 0)
+            {
+                foreach($findFirstName as $md)
+                {
+                    $data = $this->phaseFourGetBranch($mdName->raw_id, $sanitizedName, $md, $mdName->raw_branchcode);
+
+                    if($data !== null)
                     {
                         // $this->phaseFourArr[] = $data;
                         $this->phaseFourTotal += 1;
@@ -276,13 +264,14 @@ class SanitationConsole extends Command
                 }
             }else
             {
-                $findFirstName = $this->sanitation_four->getDoctorByName($sanitizeName, 'sanit_firstname');
 
-                if(count($findFirstName) > 0)
+                $findMiddleName = $this->sanitation_four->getDoctorByName($sanitizedName, 'sanit_middlename');
+
+                if(count($findMiddleName) > 0)
                 {
-                    foreach($findFirstName as $md)
+                    foreach($findMiddleName as $md)
                     {
-                        $data = $this->phaseFourGetBranch($mdName->raw_id, $sanitizeName, $md, $mdName->raw_branchcode);
+                        $data = $this->phaseFourGetBranch($mdName->raw_id, $sanitizedName, $md, $mdName->raw_branchcode);
 
                         if($data !== null)
                         {
@@ -290,25 +279,7 @@ class SanitationConsole extends Command
                             $this->phaseFourTotal += 1;
                         }
                     }
-                }else
-                {
 
-                    $findMiddleName = $this->sanitation_four->getDoctorByName($sanitizeName, 'sanit_middlename');
-
-                    if(count($findMiddleName) > 0)
-                    {
-                        foreach($findMiddleName as $md)
-                        {
-                            $data = $this->phaseFourGetBranch($mdName->raw_id, $sanitizeName, $md, $mdName->raw_branchcode);
-
-                            if($data !== null)
-                            {
-                                // $this->phaseFourArr[] = $data;
-                                $this->phaseFourTotal += 1;
-                            }
-                        }
-
-                    }
                 }
             }
         }
@@ -335,11 +306,20 @@ class SanitationConsole extends Command
 
         foreach($raw_data->getRawData() as $md) {
 
-            $this->info($md->raw_doctor);
-            $this->phaseOne($md);
+            $sanitizeName = $this->misc->stripPrefix($this->misc->stripSuffix($md->raw_doctor));
 
-            if($counter === 3000) {
-                $bar->advance(3000);
+            $this->info($sanitizeName);
+
+            if($this->misc->isSingleWord($sanitizeName))
+            {
+                $this->phaseTwo($md, $sanitizeName);
+            }else
+            {
+                $this->phaseOne($md, $sanitizeName);
+            }
+
+            if($counter === 10) {
+                $bar->advance(10);
                 $counter = 0;
                 sleep(10);
             }
