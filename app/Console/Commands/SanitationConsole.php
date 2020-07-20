@@ -308,7 +308,7 @@ class SanitationConsole extends Command
 
             $sanitizeName = $this->misc->stripPrefix($this->misc->stripSuffix($md->raw_doctor));
 
-            $this->info($sanitizeName);
+            $this->info($md->raw_doctor.' ------> '.$sanitizeName);
 
             if($this->misc->isSingleWord($sanitizeName))
             {
