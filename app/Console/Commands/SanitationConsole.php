@@ -328,8 +328,7 @@ class SanitationConsole extends Command
 
         $bar = $this->output->createProgressBar(count($raw_data->getRawData()));
 
-        $phaseOneTotal = 0;
-        $phaseThreeTotal = 0;
+        $counter = 0;
 
         $bar->start();
         $startSanitation = microtime(true);
@@ -338,8 +337,13 @@ class SanitationConsole extends Command
 
             $this->info($md->raw_doctor);
             $this->phaseOne($md);
-            // $this->phaseFour($md);
-            $bar->advance();
+
+            if($counter === 3000) {
+                $bar->advance(3000);
+                $counter = 0;
+            }
+
+            $counter += 1;
         }
 
         $endSanitation = microtime(true);
