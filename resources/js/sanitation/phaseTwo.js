@@ -61,11 +61,7 @@ new Vue({
     },//end of sanitize now
 
     getByMdName : function(rawId, mdName, licenseNo){
-<<<<<<< HEAD
       this.sanitationLabel = `${mdName}`;
-=======
-
->>>>>>> 94cdff38e4c5d3998f125f1c76b268705a90b0ff
       let data = {
         rawId : rawId,
         mdName: mdName,
@@ -76,50 +72,10 @@ new Vue({
       .post(`${BASE_URL}/sanitation/phase-two/get-single-md`, data)
 
       .then((response) => {
-<<<<<<< HEAD
         
         this.getByDoctorName = response.data;
         this.sanitationLabel = "Phase 2 done!";
         
-=======
-        /* console.log("Response : " + lastName); */
-
-        this.getByDoctorName = response.data;
-        this.sanitationLabel = "Phase 2 done!";
-        console.log(this.getByDoctorName);
-
-      //check if raw_lincese is equal to sanit_license if equal update else skip
-
-     /*    let licenseNo = this.dataToBeSanitized[this.getByDoctorNameIndex].raw_license; //sanitation_result_new
-        let sanitLicenseNo = this.getByDoctorName[this.getBySanitLicenseIndex].sanit_license; //db_sanitation2
-
-
-        let removingComma = sanitLicenseNo.split(",").join("");
-        let addToArray = removingComma.split(" ");
-        let cleanArray = addToArray.filter(item => item);
-        console.log(cleanArray);
-        console.log(licenseNo); */
-
-
-        /* if(cleanArray.includes(licenseNo) === true){
-
-          console.log('Matched!!');
-          let rawId = this.dataToBeSanitized[this.getByDoctorNameIndex].raw_license;
-					let group = this.getByDoctorName[0].sanit_group;
-					let mdName = this.getByDoctorName[0].sanit_mdname;
-					let universe = this.getByDoctorName[0].sanit_universe;
-					let mdCode = this.getByDoctorName[0].sanit_id;
-
-					this.updateNow(rawId, group, mdName, universe, mdCode);
-        }else if(cleanArray.includes(licenseNo) === false){
-          console.log('Did not match!');
-        }
-        else{
-          console.log('No License!');
-        }
-        console.log(sanitLicenseNo.includes(licenseNo)); */
-
->>>>>>> 94cdff38e4c5d3998f125f1c76b268705a90b0ff
         //do we have MD or Doctors?
         //check
         if(this.getByDoctorName.length > 0) {
@@ -150,13 +106,8 @@ new Vue({
 						</span>
 					</span>
 					<br>----------------------------------<br>
-<<<<<<< HEAD
 					`;
           
-=======
-          `;
-
->>>>>>> 94cdff38e4c5d3998f125f1c76b268705a90b0ff
             this.getByDoctorNameFoundLogsCount += 1;
             
             let rawId = this.dataToBeSanitized[this.getByDoctorNameIndex].raw_id;
@@ -175,7 +126,6 @@ new Vue({
 							<i>ignoring, fix the duplicates first for this keyword</i>
 						</span>
 						<br>----------------------------------<br>`;
-<<<<<<< HEAD
 					this.getByDoctorNameDuplicateLogsCount += 1;
 				}
 			}
@@ -188,25 +138,10 @@ new Vue({
 				this.getByDoctorNamePercentage = ((this.getByDoctorNameCount / this.sanitationCount) * 100).toFixed(2);
 
 				//left logs, MD's not found.
-=======
-					  this.getByDoctorNameDuplicateLogsCount += 1;
-          }
-        }
-
-
-        //proceed to next doctor
-        if( this.sanitationCount !== this.getByDoctorNameIndex ) {
-
-        this.getByDoctorNameCount += 1;
-        this.getByDoctorNamePercentage = ((this.getByDoctorNameCount / this.sanitationCount) * 100).toFixed(2);
-
-        //left logs, MD's not found.
->>>>>>> 94cdff38e4c5d3998f125f1c76b268705a90b0ff
 				if(this.getByDoctorName.length < 1) {
 					//left logs
 					this.getByDoctorNameLogs += `<span style="font-size:13px;">(${this.dataToBeSanitized[this.getByDoctorNameIndex].raw_id}) ${this.dataToBeSanitized[this.getByDoctorNameIndex].raw_doctor}</span><br>`;
 				}
-<<<<<<< HEAD
         
 				//sanitizedByDoctorNameIndex incremented by 1 every execution
 				//to proceed to the next element of dataToBeSanitized array
@@ -220,21 +155,6 @@ new Vue({
 					// this.sanitationBtn = false;
 				}
 			}
-=======
-
-
-          this.getByDoctorNameIndex += 1;
-
-          if(typeof this.dataToBeSanitized[this.getByDoctorNameIndex] !== 'undefined') {
-            this.getByMdName(this.dataToBeSanitized[this.getByDoctorNameIndex].raw_id, this.dataToBeSanitized[this.getByDoctorNameIndex].raw_doctor, this.dataToBeSanitized[this.getByDoctorNameIndex].raw_license);
-            this.sanitationBtn = true;
-          }else {
-            // this.sanitationBtn = false;
-          }
-        }
-
-
->>>>>>> 94cdff38e4c5d3998f125f1c76b268705a90b0ff
       })
 
       .catch((error) =>{

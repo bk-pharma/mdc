@@ -112,11 +112,11 @@ class Dashboard extends Controller
 
 			$findSurname = $this->sanitation_two->getDoctorByName2($mdName, 'sanit_surname');
 
-				if($this->misc->isExist($licenseNo, $licenseArr)){ //isexist first parameter is value - secind is array
-					echo "UPDATED!";
-					// 1 create json response that will notify the user if successfully updated.
-					// catch by axios( response.data);
-					return response()->json(array('success' => 1));
+			if(count($findSurname) > 0)
+			{
+				foreach($findSurname as $md)
+				{
+					$data = $this->phaseTwoGetLicense($rawId, $md, $licenseNo);
 
 					if($data != null)
 					{
@@ -160,11 +160,6 @@ class Dashboard extends Controller
 						$result[] = array('message' => 'not existing.');
 					}
 
-				$this->sanitation_two->update($rawId, $resultGroup, $resultMdName, $resultUniverse, $resultMdCode);
-				/* $id, $group, $mdName, $universe, $mdCode); */
-				}else {
-					echo "NOT UPDATED!";
-					return response()->json(array('NOT' => 2));
 				}
 			}
 		}
