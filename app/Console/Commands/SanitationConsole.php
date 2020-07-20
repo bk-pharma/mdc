@@ -339,7 +339,7 @@ class SanitationConsole extends Command
             $this->phaseOne($md);
 
             if($counter === 3000) {
-                $bar->advance();
+                $bar->advance(3000);
                 $counter = 0;
             }
 
