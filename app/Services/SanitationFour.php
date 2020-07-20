@@ -9,26 +9,20 @@ use Illuminate\Http\Request;
 class SanitationFour implements SanitationFourInterface
 {
 
-    public function getDoctorByName(Request $req)
+    public function getDoctorByName($mdName, $cols)
     {
-        //Query to get MD's on sanitation phase 2
 
-        // $mdName = $req->input('mdName');
-        // return DB::select('CALL getDoctorByName("'.$mdName.'");');
+        $data = [$mdName, $cols];
+
+        return DB::select('CALL getDoctorByName4(?, ?);', $data);
     }
 
-    public function update(Request $req)
+    public function update($id, $group, $mdName, $universe, $mdCode)
     {
 
-        //Query to update MD's on sanitation phase 2
+        $data = [$id, $group, $mdName, $universe, $mdCode];
 
-        // $id = $req->input('rawId');
-        // $group = $req->input('group');
-        // $mdName = $req->input('mdName');
-        // $universe = $req->input('universe');
-        // $mdCode = $req->input('mdCode');
-
-        // return DB::select('CALL sanitation1("'.$id.'","'.$group.'","'.$mdName.'","'.$universe.'","'.$mdCode.'")');
+        return DB::select('CALL sanitation4(?, ?, ?, ?, ?)', $data);
     }
 
     public function test() {

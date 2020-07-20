@@ -9,11 +9,11 @@ use Illuminate\Http\Request;
 class SanitationTwo implements SanitationTwoInterface
 {
 
-    public function getDoctorByName2($mdName, $licenseNo)
+    public function getDoctorByName2($mdName, $clauseCols)
     {
-       $data = [$mdName, $licenseNo];
+       $data = [$mdName, $clauseCols];
 
-         return DB::select('CALL getDoctorByName2(?, ?);', $data); // ? = parameters that declared in a function -- in order
+         return DB::select('CALL getDoctorByName2(?, ?);', $data);
     }
 
     public function update($id, $group, $mdName, $universe, $mdCode)
@@ -21,7 +21,7 @@ class SanitationTwo implements SanitationTwoInterface
 
         $data = [$id, $group, $mdName, $universe, $mdCode];
 
-        return DB::select('CALL sanitation2(?, ?, ?, ?, ?)', $data); // ? = parameters that declared in a function -- in order
+        return DB::select('CALL sanitation2(?, ?, ?, ?, ?)', $data);
     }
 
     public function test() {

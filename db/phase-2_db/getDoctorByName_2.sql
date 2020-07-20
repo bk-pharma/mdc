@@ -1,7 +1,8 @@
 DELIMITER //
 
-CREATE PROCEDURE getDoctorByName(
-	IN mdName VARCHAR(255)
+CREATE PROCEDURE getDoctorByName2(
+	IN mdName VARCHAR(255),
+	IN licenseNo VARCHAR(255)
 )
 BEGIN
 	SELECT sanit_mdname,sanit_license,sanit_group,sanit_universe,sanit_mdcode

@@ -75,61 +75,112 @@ class Dashboard extends Controller
 		return view('sanitation.phaseTwo');
 	}
 
+	private function phaseTwoGetLicense($rawId, $md, $rawLicense)
+	{
+
+		$licenseArr = explode(",", $md->sanit_license);
+
+		if($this->misc->isExist($rawLicense, $licenseArr))
+		{
+			$this->sanitation_two->update(
+				$rawId,
+				$md->sanit_group,
+				$md->sanit_mdname,
+				$md->sanit_universe,
+				$md->sanit_mdcode
+			);
+
+			return array(
+				'sanit_id' => $md->sanit_id,
+				'sanit_mdname' => $md->sanit_mdname,
+				'sanit_group' => $md->sanit_group,
+				'sanit_universe' => $md->sanit_universe,
+				'sanit_mdcode' => $md->sanit_mdcode
+			);
+		}
+	}
+
 	public function getDoctorPhaseTwo(Request $req)
 	{
 		$rawId = $req->input('rawId');
-		//misc will use once u want to sanitize any data with prefix and suffix.
 		$mdName = $this->misc->stripPrefix($this->misc->stripSuffix($req->input('mdName')));
 		$licenseNo = $req->input('licenseNo');
 
-		$result = $this->sanitation_two->getDoctorByName2($mdName, $licenseNo);
+		$result = [];
 
+		if($this->misc->isSingleWord($mdName)) {
 
-		/* foreach($result as $md){
-			echo $md->sanit_license;
-		}*/
-		if(count($result) > 0) {
+			$findSurname = $this->sanitation_two->getDoctorByName2($mdName, 'sanit_surname');
 
-			foreach ($result as $md) {
-				$resultGroup = $md->sanit_group;
-				$resultMdName = $md->sanit_mdname;
-				$resultUniverse = $md->sanit_universe;
-				$resultMdCode = $md->sanit_mdcode;
-				$resultLincese = $md->sanit_license;
-				$licenseArr = explode(",", $resultLincese);
-
+<<<<<<< HEAD
 				if($this->misc->isExist($licenseNo, $licenseArr)){ //isexist first parameter is value - secind is array
 					echo "UPDATED!";
 					// 1 create json response that will notify the user if successfully updated.
 					// catch by axios( response.data);
 					return response()->json(array('success' => 1));
+=======
+			if(count($findSurname) > 0)
+			{
+				foreach($findSurname as $md)
+				{
+					$data = $this->phaseTwoGetLicense($rawId, $md, $licenseNo);
+>>>>>>> 94cdff38e4c5d3998f125f1c76b268705a90b0ff
 
-			/* 	echo $rawId . ' -- ' . $resultGroup . ' -- ' . $mdName . ' -- ' .  $resultUniverse . ' -- ' . $resultMdCode; */
+					if($data != null)
+					{
+						$result[] = $data;
+					}
+				}
+			}else
+			{
+				$findFirstName = $this->sanitation_two->getDoctorByName2($mdName, 'sanit_firstname');
 
+				if(count($findFirstName) > 0)
+				{
+					foreach($findFirstName as $md)
+					{
+						$data = $this->phaseTwoGetLicense($rawId, $md, $licenseNo);
+
+						if($data !== null)
+						{
+							$result[] = $data;
+						}
+					}
+				}else
+				{
+
+					$findMiddleName = $this->sanitation_two->getDoctorByName2($mdName, 'sanit_middlename');
+
+					if(count($findMiddleName) > 0)
+					{
+						foreach($findMiddleName as $md)
+						{
+							$data = $this->phaseTwoGetLicense($rawId, $md, $licenseNo);
+
+							if($data !== null)
+							{
+								$result[] = $data;
+							}
+						}
+
+					}else
+					{
+						$result[] = array('message' => 'not existing.');
+					}
+
+<<<<<<< HEAD
 				$this->sanitation_two->update($rawId, $resultGroup, $resultMdName, $resultUniverse, $resultMdCode);
 				/* $id, $group, $mdName, $universe, $mdCode); */
 				}else {
 					echo "NOT UPDATED!";
 					return response()->json(array('NOT' => 2));
+=======
+>>>>>>> 94cdff38e4c5d3998f125f1c76b268705a90b0ff
 				}
 			}
-
 		}
-		die(); 
-		
 
-
-		return response()->json($this->sanitation_two->getDoctorByName2($mdName, $licenseNo));
-	}
-
-	public function sanitizePhaseTwo(Request $req)
-	{
-		return response()->json($this->sanitation_two->update($req));
-	}
-
-	public function testPhaseTwo()
-	{
-		echo $this->sanitation_two->test();
+		return response()->json($result);
 	}
 
 	public function phaseThree()
@@ -139,10 +190,26 @@ class Dashboard extends Controller
 
 	public function getDoctorPhaseThree(Request $req)
 	{
+		$rawId = $req->input('rawId');
 		$mdName = $this->misc->stripPrefix($this->misc->stripSuffix($req->input('mdName')));
 		$licenseNo = $req->input('licenseNo');
 
-		return response()->json($this->sanitation_three->getDoctorByName($mdName, $licenseNo));
+		$hasMD = $this->sanitation_three->getDoctorByName($mdName, $licenseNo);
+
+		if(count($hasMD) > 0)
+		{
+			foreach($hasMD as $md)
+			{
+				$sanitGroup = $md->sanit_group;
+				$sanitName = $md->sanit_mdname;
+				$sanitUniverse = $md->sanit_universe;
+				$sanitMdcode = $md->sanit_mdcode;
+
+				$this->sanitation_three->update($rawId, $sanitGroup, $sanitName, $sanitUniverse, $sanitMdcode);
+			}
+		}
+
+		return response()->json($hasMD);
 	}
 
 	public function phaseFour()

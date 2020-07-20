@@ -29,20 +29,22 @@ new Vue({
         this.dataToBeSanitized = response.data;
         this.sanitationCount = this.dataToBeSanitized.length;
 
+        let rawId = this.dataToBeSanitized[this.dataToBeSanitizedIndex].raw_id;
         let md = this.dataToBeSanitized[this.dataToBeSanitizedIndex].raw_doctor;
         let licenseNo = this.dataToBeSanitized[this.dataToBeSanitizedIndex].raw_license;
 
         this.sanitationLabel = md;
 
-        this.getMD(md, licenseNo);
+        this.getMD(rawId, md, licenseNo);
       })
       .catch((error) => {
 
       });
     },
-    getMD: function(mdName, licenseNo) {
+    getMD: function(rawId, mdName, licenseNo) {
 
       let data = {
+        rawId: rawId,
         mdName: mdName,
         licenseNo: licenseNo
       }
@@ -93,12 +95,13 @@ new Vue({
 
         if(this.dataToBeSanitizedIndex < this.dataToBeSanitized.length) {
 
+          let rawId = this.dataToBeSanitized[this.dataToBeSanitizedIndex].raw_id;
           let md = this.dataToBeSanitized[this.dataToBeSanitizedIndex].raw_doctor;
           let licenseNo = this.dataToBeSanitized[this.dataToBeSanitizedIndex].raw_license;
 
           this.sanitationLabel = md;
 
-          this.getMD(md, licenseNo);
+          this.getMD(rawId, md, licenseNo);
         }
 
       })

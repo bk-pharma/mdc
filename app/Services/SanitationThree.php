@@ -17,18 +17,11 @@ class SanitationThree implements SanitationThreeInterface
         return DB::select('CALL getDoctorByName3(?, ?);', $data);
     }
 
-    public function update(Request $req)
+    public function update($id, $group, $mdName, $universe, $mdCode)
     {
+        $data = [$id, $group, $mdName, $universe, $mdCode];
 
-        //Query to update MD's on sanitation phase 2
-
-        // $id = $req->input('rawId');
-        // $group = $req->input('group');
-        // $mdName = $req->input('mdName');
-        // $universe = $req->input('universe');
-        // $mdCode = $req->input('mdCode');
-
-        // return DB::select('CALL sanitation1("'.$id.'","'.$group.'","'.$mdName.'","'.$universe.'","'.$mdCode.'")');
+        return DB::select('CALL sanitation3(?, ?, ?, ?, ?)', $data);
     }
 
     public function test() {
