@@ -318,10 +318,10 @@ class SanitationConsole extends Command
                 $this->phaseOne($md, $sanitizeName);
             }
 
-            if($counter === 10) {
-                $bar->advance(10);
+            if($counter === 3000) {
+                $bar->advance(3000);
                 $counter = 0;
-                sleep(10);
+                sleep(5);
             }
 
             $counter += 1;
