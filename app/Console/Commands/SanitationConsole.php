@@ -341,6 +341,7 @@ class SanitationConsole extends Command
             if($counter === 3000) {
                 $bar->advance(3000);
                 $counter = 0;
+                sleep(10);
             }
 
             $counter += 1;
