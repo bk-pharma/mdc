@@ -30,8 +30,11 @@ class Misc implements MiscInterface
 
 	private $suffix = [
         "MD ",
+        " MD",
         " JR",
-        " SR"
+        "JR ",
+        " SR",
+        "SR "
 	];
 
     public function stripPrefix($str)
