@@ -13,6 +13,7 @@ class Misc implements MiscInterface
         "]RA ",
         "`DR ",
         "`DRA ",
+        "DRA. ",
         "`R ",
         "DR ",
         "DR  ",
