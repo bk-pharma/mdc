@@ -46,6 +46,11 @@ class SanitationConsole extends Command
     private $phaseThreeArr = [];
     private $phaseFourArr = [];
 
+    private $phaseOneTotal = 0;
+    private $phaseTwoTotal = 0;
+    private $phaseThreeTotal = 0;
+    private $phaseFourTotal = 0;
+
     public function __construct(
         MiscInterface $misc,
         SanitationOneInterface $sanitation_one,
@@ -82,7 +87,8 @@ class SanitationConsole extends Command
                     $md[0]->sanit_mdcode
                 );
 
-                $this->phaseOneArr[] = $md;
+                // $this->phaseOneArr[] = $md;
+                $this->phaseOneTotal += 1;
             }else
             {
                 $this->phaseThree($mdName);
@@ -141,7 +147,8 @@ class SanitationConsole extends Command
 
                     if($data != null)
                     {
-                        $this->phaseTwoArr[] = $data;
+                        // $this->phaseTwoArr[] = $data;
+                        $this->phaseTwoTotal += 1;
                     }
                 }
             }else
@@ -156,7 +163,8 @@ class SanitationConsole extends Command
 
                         if($data !== null)
                         {
-                            $this->phaseTwoArr[] = $data;
+                            // $this->phaseTwoArr[] = $data;
+                            $this->phaseTwoTotal += 1;
                         }
                     }
                 }else
@@ -172,7 +180,8 @@ class SanitationConsole extends Command
 
                             if($data !== null)
                             {
-                                $this->phaseTwoArr[] = $data;
+                                // $this->phaseTwoArr[] = $data;
+                                $this->phaseTwoTotal += 1;
                             }
                         }
 
@@ -206,7 +215,8 @@ class SanitationConsole extends Command
                 $md[0]->sanit_mdcode
             );
 
-            $this->phaseThreeArr[] = $md;
+            // $this->phaseThreeArr[] = $md;
+            $this->phaseThreeTotal += 1;
         }
 
         $this->phaseFour($mdName);
@@ -260,7 +270,8 @@ class SanitationConsole extends Command
 
                     if($data != null)
                     {
-                        $this->phaseFourArr[] = $data;
+                        // $this->phaseFourArr[] = $data;
+                        $this->phaseFourTotal += 1;
                     }
                 }
             }else
@@ -275,7 +286,8 @@ class SanitationConsole extends Command
 
                         if($data !== null)
                         {
-                            $this->phaseFourArr[] = $data;
+                            // $this->phaseFourArr[] = $data;
+                            $this->phaseFourTotal += 1;
                         }
                     }
                 }else
@@ -291,7 +303,8 @@ class SanitationConsole extends Command
 
                             if($data !== null)
                             {
-                                $this->phaseFourArr[] = $data;
+                                // $this->phaseFourArr[] = $data;
+                                $this->phaseFourTotal += 1;
                             }
                         }
 
@@ -333,17 +346,17 @@ class SanitationConsole extends Command
         $bar->finish();
 
         $this->info(' ');
-        $this->info('Phase 1: '.count($this->phaseOneArr));
-        $this->info('Phase 2: '.count($this->phaseTwoArr));
-        $this->info('Phase 3: '.count($this->phaseThreeArr));
-        $this->info('Phase 4: '.count($this->phaseFourArr));
+        $this->info('Phase 1: '.$this->phaseOneTotal);
+        $this->info('Phase 2: '.$this->phaseTwoTotal);
+        $this->info('Phase 3: '.$this->phaseThreeTotal);
+        $this->info('Phase 4: '.$this->phaseFourTotal);
         $this->info(' ');
 
         $this->sanitation_total = (
-            count($this->phaseOneArr) +
-            count($this->phaseTwoArr) +
-            count($this->phaseThreeArr) +
-            count($this->phaseFourArr)
+            $this->phaseOneTotal +
+            $this->phaseTwoTotal +
+            $this->phaseThreeTotal +
+            $this->phaseFourTotal
         );
 
         $this->info('Rows: '.count($raw_data->getRawData()));
