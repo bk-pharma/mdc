@@ -1,5 +1,5 @@
 
-const BASE_URL = "http://localhost/dev/public";
+const BASE_URL = "http://localhost/mdc/public";
 
 
 new Vue({

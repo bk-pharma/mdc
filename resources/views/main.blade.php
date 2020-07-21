@@ -125,8 +125,33 @@
                   <p>Phase 4</p>
                 </a>
               </li>
+             
             </ul>
           </li>
+          @if (!Auth::check())
+          <li class="nav-item">
+            <a href="{{ route('login') }}" class="nav-link">
+              <i class="nav-icon fas fa-sign-in-alt"></i>
+              <p>
+                Sign In 
+              </p>
+            </a>
+          </li>
+         
+          @else
+          <li class="nav-item">
+            <a  href="{{ route('logout') }}"
+            onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();" class="nav-link">
+            <i class="nav-icon fas fa-sign-out-alt"></i>
+            <p>
+              Sign Out
+            </p>
+             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+          </a>
+          @endif
       </nav>
       <!-- /.sidebar-menu -->
     </div>

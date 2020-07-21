@@ -33,6 +33,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        @if (Auth::check())
                         <li class="nav-item">
                             <a href="http://localhost/mdc/public/sanitation/phase-one" class="nav-link">Phase - 1</a>
                         </li>
@@ -48,6 +49,8 @@
                         <li class="nav-item">
                             <a href="http://localhost/mdc/public/sanitation/phase-four" class="nav-link">Phase - 4</a>
                         </li>
+                        @endif
+                       
                     </ul>
 
                     <!-- Right Side Of Navbar -->
