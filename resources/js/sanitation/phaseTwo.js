@@ -1,7 +1,3 @@
-const BASE_URL = "http://localhost/mdc/public";
-
-console.log('test phase 2 js'); // just to make sure phase2 scripts was loaded.
-
 new Vue({
   el: '#sanitationPhaseTwo-container',
   data() {
@@ -28,11 +24,11 @@ new Vue({
   methods: {
     //methods here
     startSanitize : function (){
-   
+
       this.sanitationLabel = 'Scanning.... ';
 
-      axios.get(`${BASE_URL}/sanitation/get-all-md`)
-      
+      axios.get(`get-all-md`)
+
       .then((response) => {
 
         this.dataToBeSanitized = response.data;
@@ -43,7 +39,7 @@ new Vue({
         let licenseNo = this.dataToBeSanitized[this.getByDoctorIndex].raw_license;
 
         this.sanitationLabel = md;
-        
+
 
         this.getByMdName(rawId, md, licenseNo);
       })
@@ -51,7 +47,7 @@ new Vue({
       .catch((error) =>{
         console.log(error);
       })
-   
+
     },//end of sanitize now
 
     getByMdName : function(rawId, mdName, licenseNo){
@@ -62,10 +58,10 @@ new Vue({
         licenseNo : licenseNo,
       }
 
-      axios.post(`${BASE_URL}/sanitation/phase-two/get-single-md`, data)
-      
+      axios.post(`phase-two/get-single-md`, data)
+
       .then((response) => {
-        
+
         this.foundMD = response.data;
         this.sanitationLabel = 'Phase 2 done.';
 
@@ -117,11 +113,11 @@ new Vue({
           this.getByMdName(rawId, md, licenseNo);
         }
       })
-      
+
       .catch((error) =>{
         console.log(error);
-      }) 
-    
+      })
+
     },
   } // end of methods
 });

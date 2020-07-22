@@ -1,6 +1,3 @@
-
-const BASE_URL = "http://localhost/mdc/public";
-
 new Vue({
   el: '#sanitationPhaseOne-container',
   data() {
@@ -28,7 +25,7 @@ new Vue({
 
   		this.sanitationLabel = 'Scanning....';
 
-		axios.get(`${BASE_URL}/sanitation/get-all-md`)
+		axios.get(`get-all-md`)
 		.then((response) => {
 
 			this.dataToBeSanitized = response.data;
@@ -58,7 +55,7 @@ new Vue({
 			mdName: mdName
 		}
 
-		axios.post(`${BASE_URL}/sanitation/phase-one/get-single-md`, data)
+		axios.post(`phase-one/get-single-md`, data)
 		.then((response) => {
 
 			this.sanitizedByDoctorName = response.data;
@@ -160,7 +157,7 @@ new Vue({
   			mdCode: mdCode
   		}
 
-  		axios.post(`${BASE_URL}/sanitation/phase-one/get-single-md/sanitize`, data, {
+  		axios.post(`phase-one/get-single-md/sanitize`, data, {
   			headers:{
   				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
   			}

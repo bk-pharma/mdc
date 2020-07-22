@@ -1,7 +1,3 @@
-
-const BASE_URL = "http://localhost/mdc/public";
-
-
 new Vue({
   el: '#sanitationPhaseThree-container',
   data() {
@@ -23,7 +19,7 @@ new Vue({
   methods: {
   	startSanitize: function() {
 
-      axios.get(`${BASE_URL}/sanitation/get-all-md`)
+      axios.get(`get-all-md`)
       .then((response) => {
 
         this.dataToBeSanitized = response.data;
@@ -49,7 +45,7 @@ new Vue({
         licenseNo: licenseNo
       }
 
-      axios.post(`${BASE_URL}/sanitation/phase-three/get-single-md`, data)
+      axios.post(`phase-three/get-single-md`, data)
       .then((response) => {
 
         this.foundMD = response.data;
