@@ -302,11 +302,12 @@ class SanitationConsole extends Command
         $this->info('Hello, Before we start i just want you to know the');
         $this->info('Total Data to be sanitized is: '.count($raw_data->getRawData()));
         $this->info('I will put a number before the name of every MD to give you a progress.');
-        sleep(30);
+        sleep(20);
 
         $counter = 1;
 
         // $bar->start();
+
         $startSanitation = microtime(true);
 
         foreach($raw_data->getRawData() as $md) {
@@ -327,6 +328,7 @@ class SanitationConsole extends Command
         }
 
         $endSanitation = microtime(true);
+
         // $bar->finish();
 
         $this->info(' ');
