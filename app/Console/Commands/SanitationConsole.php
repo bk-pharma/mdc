@@ -299,9 +299,10 @@ class SanitationConsole extends Command
 
         // $bar = $this->output->createProgressBar(count($raw_data->getRawData()));
 
-        $this->line('Hello, Before we start i just want you to know the');
-        $this->line('Total Data to be sanitized is: '.count($raw_data->getRawData()));
-        sleep(10);
+        $this->info('Hello, Before we start i just want you to know the');
+        $this->info('Total Data to be sanitized is: '.count($raw_data->getRawData()));
+        $this->info('I will put a number before the name of every MD to give you a progress.');
+        sleep(30);
 
         $counter = 1;
 
