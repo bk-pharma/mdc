@@ -122,7 +122,7 @@ class SanitationConsole extends Command
 
     public function phaseTwo($mdName, $sanitizedName)
     {
-        $findSurname = $this->sanitation_two->getDoctorByName2($sanitizedName, 'sanit_surname');
+        $findSurname = $this->sanitation_two->getDoctorByName($sanitizedName, 'sanit_surname');
 
         if(count($findSurname) > 0)
         {
@@ -138,7 +138,7 @@ class SanitationConsole extends Command
             }
         }else
         {
-            $findFirstName = $this->sanitation_two->getDoctorByName2($sanitizedName, 'sanit_firstname');
+            $findFirstName = $this->sanitation_two->getDoctorByName($sanitizedName, 'sanit_firstname');
 
             if(count($findFirstName) > 0)
             {
@@ -155,7 +155,7 @@ class SanitationConsole extends Command
             }else
             {
 
-                $findMiddleName = $this->sanitation_two->getDoctorByName2($sanitizedName, 'sanit_middlename');
+                $findMiddleName = $this->sanitation_two->getDoctorByName($sanitizedName, 'sanit_middlename');
 
                 if(count($findMiddleName) > 0)
                 {
@@ -297,18 +297,22 @@ class SanitationConsole extends Command
         // $this->info(app()->make(\Illuminate\Contracts\Http\Kernel::class)->handle($request));
 
 
-        $bar = $this->output->createProgressBar(count($raw_data->getRawData()));
+        // $bar = $this->output->createProgressBar(count($raw_data->getRawData()));
 
-        $counter = 0;
+        $counter = 1;
 
-        $bar->start();
+        // $bar->start();
         $startSanitation = microtime(true);
 
         foreach($raw_data->getRawData() as $md) {
 
+            if($counter > 999) {
+                $counter = number_format($counter, 2);
+            }
+
             $sanitizeName = $this->misc->stripPrefix($this->misc->stripSuffix($md->raw_doctor));
 
-            $this->info($md->raw_doctor.' ------> '.$sanitizeName);
+            $this->info($counter.'. '.$md->raw_doctor.' ------> '.$sanitizeName);
 
             if($this->misc->isSingleWord($sanitizeName))
             {
@@ -318,17 +322,11 @@ class SanitationConsole extends Command
                 $this->phaseOne($md, $sanitizeName);
             }
 
-            if($counter === 3000) {
-                $bar->advance(3000);
-                $counter = 0;
-                sleep(5);
-            }
-
             $counter += 1;
         }
 
         $endSanitation = microtime(true);
-        $bar->finish();
+        // $bar->finish();
 
         $this->info(' ');
         $this->info('Phase 1: '.$this->phaseOneTotal);

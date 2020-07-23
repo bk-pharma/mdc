@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class SanitationTwo implements SanitationTwoInterface
 {
 
-    public function getDoctorByName2($mdName, $clauseCols)
+    public function getDoctorByName($mdName, $clauseCols)
     {
        $data = [$mdName, $clauseCols];
 

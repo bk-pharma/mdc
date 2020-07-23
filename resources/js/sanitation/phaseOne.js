@@ -139,6 +139,9 @@ new Vue({
 				}else {
 					// this.sanitationBtn = false;
 				}
+			}else {
+				console.log("end end end");
+				window.open('phase-two', '_blank');
 			}
 
 
