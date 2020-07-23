@@ -41,11 +41,6 @@ class SanitationConsole extends Command
     private $sanitation_four;
     private $sanitation_total;
 
-    private $phaseOneArr = [];
-    private $phaseTwoArr = [];
-    private $phaseThreeArr = [];
-    private $phaseFourArr = [];
-
     private $phaseOneTotal = 0;
     private $phaseTwoTotal = 0;
     private $phaseThreeTotal = 0;
@@ -82,7 +77,6 @@ class SanitationConsole extends Command
                 $md[0]->sanit_mdcode
             );
 
-            // $this->phaseOneArr[] = $md;
             $this->phaseOneTotal += 1;
         }else
         {
@@ -132,7 +126,6 @@ class SanitationConsole extends Command
 
                 if($data != null)
                 {
-                    // $this->phaseTwoArr[] = $data;
                     $this->phaseTwoTotal += 1;
                 }
             }
@@ -148,7 +141,6 @@ class SanitationConsole extends Command
 
                     if($data !== null)
                     {
-                        // $this->phaseTwoArr[] = $data;
                         $this->phaseTwoTotal += 1;
                     }
                 }
@@ -165,7 +157,6 @@ class SanitationConsole extends Command
 
                         if($data !== null)
                         {
-                            // $this->phaseTwoArr[] = $data;
                             $this->phaseTwoTotal += 1;
                         }
                     }
@@ -192,7 +183,6 @@ class SanitationConsole extends Command
                 $md[0]->sanit_mdcode
             );
 
-            // $this->phaseThreeArr[] = $md;
             $this->phaseThreeTotal += 1;
         }
 
@@ -242,7 +232,6 @@ class SanitationConsole extends Command
 
                 if($data != null)
                 {
-                    // $this->phaseFourArr[] = $data;
                     $this->phaseFourTotal += 1;
                 }
             }
@@ -258,7 +247,6 @@ class SanitationConsole extends Command
 
                     if($data !== null)
                     {
-                        // $this->phaseFourArr[] = $data;
                         $this->phaseFourTotal += 1;
                     }
                 }
@@ -275,7 +263,6 @@ class SanitationConsole extends Command
 
                         if($data !== null)
                         {
-                            // $this->phaseFourArr[] = $data;
                             $this->phaseFourTotal += 1;
                         }
                     }
@@ -293,20 +280,12 @@ class SanitationConsole extends Command
      */
     public function handle(RawDataInterface $raw_data)
     {
-        // $request = Request::create($this->argument('uri'), 'GET');
-        // $this->info(app()->make(\Illuminate\Contracts\Http\Kernel::class)->handle($request));
-
-
-        // $bar = $this->output->createProgressBar(count($raw_data->getRawData()));
-
         $this->info('Hello, Before we start i just want you to know the');
         $this->info('Total Data to be sanitized is: '.count($raw_data->getRawData()));
         $this->info('I will put a number before the name of every MD to give you a progress.');
         sleep(20);
 
         $counter = 1;
-
-        // $bar->start();
 
         $startSanitation = microtime(true);
 
@@ -328,8 +307,6 @@ class SanitationConsole extends Command
         }
 
         $endSanitation = microtime(true);
-
-        // $bar->finish();
 
         $this->info(' ');
         $this->info('Phase 1: '.$this->phaseOneTotal);
