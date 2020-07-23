@@ -306,10 +306,6 @@ class SanitationConsole extends Command
 
         foreach($raw_data->getRawData() as $md) {
 
-            if($counter > 999) {
-                $counter = number_format($counter, 2);
-            }
-
             $sanitizeName = $this->misc->stripPrefix($this->misc->stripSuffix($md->raw_doctor));
 
             $this->info($counter.'. '.$md->raw_doctor.' ------> '.$sanitizeName);
