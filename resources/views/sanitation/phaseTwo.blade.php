@@ -14,7 +14,7 @@
 			@{{ sanitationLabel }}
 		</div>
 		<div class="col-md">
-			@{{ getByDoctorNameCount }} / @{{ sanitationCount }}
+			@{{ getByDoctorIndex }} / @{{ sanitationCount }}
 		</div>
 	</div>
 
@@ -22,14 +22,14 @@
 
 		<div class="col-md">
 			<div class="progress w-100">
-			  <div class="progress-bar" role="progressbar" :style="{ width: getByDoctorNamePercentage+'%'}" :aria-valuenow="getByDoctorNameCount" aria-valuemin="0" :aria-valuemax="sanitationCount">
-			  	@{{ getByDoctorNamePercentage }}%
+			  <div class="progress-bar bg-success" role="progressbar" :style="{ width: sanitizedByDoctorNamePercentage+'%'}" :aria-valuenow="getByDoctorIndex" aria-valuemin="0" :aria-valuemax="sanitationCount">
+			  		@{{ sanitizedByDoctorNamePercentage }}%
 			  </div>
 			</div>
 		</div>
 
 		<div class="col-md text-right">
-			<button type="button" @click="sanitizeNow()" class="btn btn-sm btn-success" :disabled="sanitationBtn">Sanitize <i class="fa fa-robot"></i></button>
+			<button type="button" @click="startSanitize()" class="btn btn-sm btn-success">Sanitize <i class="fa fa-robot"></i></button>
 		</div>
 	</div>
 
@@ -37,26 +37,25 @@
 		<div class="col-md">
 
 			<div class="form-group">
-			  <!-- <textarea class="form-control" rows="12" id="sanitationLogs" v-model="getByDoctorNameLogs" spellcheck="false"></textarea> -->
-
-				<div id="sanitationLogs" contenteditable="true" v-html="getByDoctorNameLogs" style="overflow-x: scroll; max-height: 300px; background-color:white;">
+				<div id="leftLogsPhaseTwo" contenteditable="true" spellcheck="false" v-html="leftLogs" style="overflow-x: scroll; max-height: 300px; background-color:white;">
 			    </div>
 
 			</div>
 
 		</div>
 		<div class="col-md">
-			<div id="sanitizedLogs" contenteditable="true" v-html="getByDoctorNameFoundLogs" style="overflow-x: scroll; max-height: 300px; background-color:white;">
+			<div id="rightLogsPhaseTwo" contenteditable="true" spellcheck="false" v-html="rightLogs" style="overflow-x: scroll; max-height: 300px; background-color:white;">
 
 		    </div>
 
-			<span style="color: green;">Sanitized:</span> @{{ getByDoctorNameFoundLogsCount }} / @{{ sanitationCount }}
-			<br>
-			<span style="color: red;">Duplicates:</span> @{{ getByDoctorNameDuplicateLogsCount }}
+			<span style="color: green;">Sanitized:</span> @{{ totalFound }} / @{{ sanitationCount }}
 		</div>
 	</div>
 </div>
+<script>
 
+
+</script>
 @endsection
 
 @push('sanitationPhaseTwo-scripts')

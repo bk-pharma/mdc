@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class SanitationThree implements SanitationThreeInterface
 {
 
-    public function getDoctorByName($mdName, $licenseNo)
+    public function getDoctorByName3($mdName, $licenseNo)
     {
         $data = [$mdName, $licenseNo];
 

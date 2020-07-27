@@ -179,7 +179,7 @@ return [
         App\Providers\SanitationOneProvider::class,
         App\Providers\SanitationTwoProvider::class,
         App\Providers\SanitationThreeProvider::class,
-        App\Providers\SanitationFourProvider::class
+        App\Providers\SanitationFourProvider::class,
     ],
 
     /*

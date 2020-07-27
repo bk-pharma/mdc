@@ -112,11 +112,11 @@ class Dashboard extends Controller
 
 			$findSurname = $this->sanitation_two->getDoctorByName2($mdName, 'sanit_surname');
 
-			if(count($findSurname) > 0)
-			{
-				foreach($findSurname as $md)
-				{
-					$data = $this->phaseTwoGetLicense($rawId, $md, $licenseNo);
+				if($this->misc->isExist($licenseNo, $licenseArr)){ //isexist first parameter is value - secind is array
+					echo "UPDATED!";
+					// 1 create json response that will notify the user if successfully updated.
+					// catch by axios( response.data);
+					return response()->json(array('success' => 1));
 
 					if($data != null)
 					{
@@ -160,13 +160,18 @@ class Dashboard extends Controller
 						$result[] = array('message' => 'not existing.');
 					}
 
+				$this->sanitation_two->update($rawId, $resultGroup, $resultMdName, $resultUniverse, $resultMdCode);
+				/* $id, $group, $mdName, $universe, $mdCode); */
+				}else {
+					echo "NOT UPDATED!";
+					return response()->json(array('NOT' => 2));
 				}
 			}
 		}
 
 		return response()->json($result);
 	}
-	
+
 	public function phaseThree()
 	{
 		return view('sanitation.phaseThree');
@@ -178,7 +183,7 @@ class Dashboard extends Controller
 		$mdName = $this->misc->stripPrefix($this->misc->stripSuffix($req->input('mdName')));
 		$licenseNo = $req->input('licenseNo');
 
-		$hasMD = $this->sanitation_three->getDoctorByName3($mdName, $licenseNo);
+		$hasMD = $this->sanitation_three->getDoctorByName($mdName, $licenseNo);
 
 		if(count($hasMD) > 0)
 		{
@@ -196,110 +201,14 @@ class Dashboard extends Controller
 		return response()->json($hasMD);
 	}
 
-
-
-
-
-
-
-	/* Phase 4 */
-
-
 	public function phaseFour()
 	{
 		return view('sanitation.phaseFour');
 	}
 
-	private function phaseFourGetBranch($rawId, $md, $rawBranch)
+	public function testPhaseFour()
 	{
-
-		$branchArr = explode(",", $md->sanit_branch);
-
-		if($this->misc->isExist($rawBranch, $branchArr))
-		{
-			$this->sanitation_four->update(
-				$rawId,
-				$md->sanit_group,
-				$md->sanit_mdname,
-				$md->sanit_universe,
-				$md->sanit_mdcode
-			);
-
-			return array(
-				'sanit_id' => $md->sanit_id,
-				'sanit_mdname' => $md->sanit_mdname,
-				'sanit_group' => $md->sanit_group,
-				'sanit_universe' => $md->sanit_universe,
-				'sanit_mdcode' => $md->sanit_mdcode
-			);
-		}
-	}
-
-	public function getDoctorPhaseFour(Request $req)
-	{
-		$rawId = $req->input('rawId');
-		$mdName = $this->misc->stripPrefix($this->misc->stripSuffix($req->input('mdName')));
-		$rawBranch = $req->input('rawBranch');
-
-		$result = [];
-
-		if($this->misc->isSingleWord($mdName)) {
-
-			$findSurname = $this->sanitation_four->getDoctorByName4($mdName, 'sanit_surname');
-
-			if(count($findSurname) > 0)
-			{
-				foreach($findSurname as $md)
-				{
-					$data = $this->phaseFourGetBranch($rawId, $md, $rawBranch);
-
-					if($data != null)
-					{
-						$result[] = $data;
-					}
-				}
-			}else
-			{
-				$findFirstName = $this->sanitation_four->getDoctorByName4($mdName, 'sanit_firstname');
-
-				if(count($findFirstName) > 0)
-				{
-					foreach($findFirstName as $md)
-					{
-						$data = $this->phaseFourGetBranch($rawId, $md, $rawBranch);
-
-						if($data !== null)
-						{
-							$result[] = $data;
-						}
-					}
-				}else
-				{
-
-					$findMiddleName = $this->sanitation_four->getDoctorByName4($mdName, 'sanit_middlename');
-
-					if(count($findMiddleName) > 0)
-					{
-						foreach($findMiddleName as $md)
-						{
-							$data = $this->phaseFourGetBranch($rawId, $md, $rawBranch);
-
-							if($data !== null)
-							{
-								$result[] = $data;
-							}
-						}
-
-					}else
-					{
-						$result[] = array('message' => 'not existing.');
-					}
-
-				}
-			}
-		}
-
-		return response()->json($result);
+		return $this->sanitation_four->test();
 	}
 
 }
