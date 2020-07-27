@@ -1,6 +1,6 @@
 
-const BASE_URL = "http://localhost/mdc/public";
-const SUB_PHASE_URL = "http://localhost/mdc/public/sanitation/phase-four";
+const BASE_URL = "http://132.148.12.19:3306/mdc/public";
+const SUB_PHASE_URL = "http://132.148.12.19:3306/mdc/public/sanitation/phase-four";
 
 
 new Vue({
