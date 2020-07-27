@@ -1,5 +1,5 @@
-const BASE_URL = "https://server001.bell-kenz.com/mdc-new/mdc/public";
-const SUB_PHASE_URL = "https://server001.bell-kenz.com/mdc-new/mdc/public/sanitation/phase-three";
+const BASE_URL = "https://server001.bell-kenz.com:2083/mdc-new/mdc/public";
+const SUB_PHASE_URL = "https://server001.bell-kenz.com:2083/mdc-new/mdc/public/sanitation/phase-three";
 
 console.log('test phase 2 js'); // just to make sure phase2 scripts was loaded.
 
