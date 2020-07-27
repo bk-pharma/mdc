@@ -13,6 +13,7 @@ class Misc implements MiscInterface
         "]RA ",
         "`DR ",
         "`DRA ",
+        "DRA. ",
         "`R ",
         "DR ",
         "DR  ",
@@ -29,8 +30,11 @@ class Misc implements MiscInterface
 
 	private $suffix = [
         "MD ",
+        " MD",
         " JR",
-        " SR"
+        "JR ",
+        " SR",
+        "SR "
 	];
 
     public function stripPrefix($str)
