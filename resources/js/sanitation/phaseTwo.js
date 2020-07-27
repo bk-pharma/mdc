@@ -2,6 +2,7 @@ const BASE_URL = "http://server001.bell-kenz.com/mdc-new/mdc/public";
 const SUB_PHASE_URL = "http://server001.bell-kenz.com/mdc-new/mdc/public/sanitation/phase-three";
 
 
+
 console.log('test phase 2 js'); // just to make sure phase2 scripts was loaded.
 
 new Vue({
