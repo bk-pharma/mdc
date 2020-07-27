@@ -1,7 +1,8 @@
 
-const BASE_URL = "http://server001.bell-kenz.com/mdc-newmdc/public";
+const BASE_URL = "http://server001.bell-kenz.com/mdc-new/mdc/public";
 //sub phase
 const SUB_PHASE_URL = "http://server001.bell-kenz.com/mdc-new/mdc/public/sanitation/phase-four";
+
 
 
 new Vue({
