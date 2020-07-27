@@ -1,4 +1,5 @@
 const BASE_URL = "http://localhost/mdc/public";
+const SUB_PHASE_URL = "http://localhost/mdc/public/sanitation/phase-three";
 
 console.log('test phase 2 js'); // just to make sure phase2 scripts was loaded.
 
@@ -115,7 +116,18 @@ new Vue({
           this.sanitationLabel = md;
 
           this.getByMdName(rawId, md, licenseNo);
-        }
+        } 
+        if(typeof this.dataToBeSanitized[this.getByDoctorIndex] !== 'undefined') {
+					this.sanitationBtn = true;
+				}else {
+          // this.sanitationBtn = false;
+					this.sanitationLabel = 'Moving to next Phase . . . ';
+					window.setTimeout(function () {
+						window.location.href = `${SUB_PHASE_URL}`;
+					}, 3000);
+				}
+        
+      
       })
       
       .catch((error) =>{
@@ -123,5 +135,8 @@ new Vue({
       }) 
     
     },
-  } // end of methods
+  }, // end of methods
+  mounted(){
+    this.startSanitize();
+  }
 });

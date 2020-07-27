@@ -1,6 +1,6 @@
 
 const BASE_URL = "http://localhost/mdc/public";
-
+const SUB_PHASE_URL = "http://localhost/mdc/public/sanitation/phase-two";
 new Vue({
   el: '#sanitationPhaseOne-container',
   data() {
@@ -17,7 +17,7 @@ new Vue({
 		sanitizedByDoctorNameFoundLogsCount: 0,
 		sanitizedByDoctorNameDuplicateLogsCount: 0,
 		sanitizedByDoctorNameFound:[],
-  		sanitationLabel: ''
+		sanitationLabel: '',
   	}
   },
   updated() {
@@ -141,6 +141,10 @@ new Vue({
 					this.sanitationBtn = true;
 				}else {
 					// this.sanitationBtn = false;
+					this.sanitationLabel = 'Moving to next Phase . . . ';
+					window.setTimeout(function () {
+						window.location.href = `${SUB_PHASE_URL}`;
+					}, 3000);
 				}
 			}
 
@@ -149,9 +153,9 @@ new Vue({
 		.catch((error) => {
 			console.log(error);
 		})
-  	},
+	  },
+	 
   	sanitizeNow: function(rawId, group, mdName, universe, mdCode) {
-
   		let data = {
   			rawId: rawId,
   			group: group,
@@ -171,6 +175,7 @@ new Vue({
   		.catch((error) => {
 
   		})
-  	}
+	  },
+	  
   }
 });

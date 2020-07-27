@@ -302,21 +302,4 @@ class Dashboard extends Controller
 		return response()->json($result);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

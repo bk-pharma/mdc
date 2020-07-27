@@ -1,4 +1,5 @@
 const BASE_URL = "http://localhost/mdc/public";
+const SUB_PHASE_URL = "http://localhost/mdc/public/sanitation/phase-one";
 
 console.log('test phase 2 js'); // just to make sure phase2 scripts was loaded.
 
@@ -66,10 +67,10 @@ new Vue({
       .then((response) => {
         
         this.foundMD = response.data;
+
         this.sanitationLabel = 'Phase 4 done.';
 
         if(this.foundMD.length > 0) {
-          console.log('1');
           this.leftLogs += `
             <span style="font-size:13px;">
               (${this.dataToBeSanitized[this.getByDoctorIndex].raw_id}) ${this.dataToBeSanitized[this.getByDoctorIndex].raw_doctor}
@@ -90,8 +91,6 @@ new Vue({
 
           this.totalFound += 1;
         }else {
-          console.log('2');
-
           this.leftLogs += `
           <span style="font-size:13px;">
             (${this.dataToBeSanitized[this.getByDoctorIndex].raw_id}) ${this.dataToBeSanitized[this.getByDoctorIndex].raw_doctor}
@@ -114,7 +113,19 @@ new Vue({
           this.sanitationLabel = md;
 
           this.getByMdName(rawId, md, rawBranch);
-        }
+        } 
+        
+
+
+        if(typeof this.dataToBeSanitized[this.getByDoctorIndex] !== 'undefined') {
+					this.sanitationBtn = true;
+				}else {
+          // this.sanitationBtn = false;
+					this.sanitationLabel = 'Moving to next Phase . . . ';
+					window.setTimeout(function () {
+						window.location.href = `${SUB_PHASE_URL}`;
+					}, 3000);
+				}
       })
       
       .catch((error) =>{
@@ -122,5 +133,8 @@ new Vue({
       }) 
     
     },
-  } // end of methods
+  }, // end of methods
+  mounted(){
+    this.startSanitize();
+  }
 });

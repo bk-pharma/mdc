@@ -1,5 +1,6 @@
 
 const BASE_URL = "http://localhost/mdc/public";
+const SUB_PHASE_URL = "http://localhost/mdc/public/sanitation/phase-four";
 
 
 new Vue({
@@ -14,7 +15,8 @@ new Vue({
       leftLogs:'',
       rightLogs: '',
       foundMD:[],
-      totalFound: 0
+      totalFound: 0,
+
   	}
   },
   updated() {
@@ -102,13 +104,25 @@ new Vue({
           this.sanitationLabel = md;
 
           this.getMD(rawId, md, licenseNo);
-        }
-
+        } 
+        
+        if(typeof this.dataToBeSanitized[this.dataToBeSanitizedIndex] !== 'undefined') {
+					this.sanitationBtn = true;
+				}else {
+          // this.sanitationBtn = false;
+					this.sanitationLabel = 'Moving to next Phase . . . ';
+					window.setTimeout(function () {
+						window.location.href = `${SUB_PHASE_URL}`;
+					}, 3000);
+				}
       })
       .catch((error) => {
 
       })
 
     }
+  },
+  mounted(){
+    this.startSanitize();
   }
 });
