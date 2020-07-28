@@ -1,5 +1,5 @@
-const BASE_URL = "http://68.183.229.231/dev/public";
-const SUB_PHASE_URL = "http://68.183.229.231/dev/public/sanitation/phase-one";
+const BASE_URL = "https://68.183.229.231/dev/public";
+const SUB_PHASE_URL = "https://68.183.229.231/dev/public/sanitation/phase-one";
 
 
 console.log('test phase 2 js'); // just to make sure phase2 scripts was loaded.
