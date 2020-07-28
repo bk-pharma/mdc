@@ -1,6 +1,6 @@
 
-const BASE_URL = "http://server001.bell-kenz.com/mdc-newmdc/public";
-const SUB_PHASE_URL = "http://server001.bell-kenz.com/mdc-new/mdc/public/sanitation/phase-four";
+const BASE_URL = "http://68.183.229.231/dev/public";
+const SUB_PHASE_URL = "http://68.183.229.231/dev/public/sanitation/phase-four";
 
 
 

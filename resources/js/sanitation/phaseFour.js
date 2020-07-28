@@ -1,5 +1,5 @@
-const BASE_URL = "http://server001.bell-kenz.com/mdc-new/mdc/public";
-const SUB_PHASE_URL = "http://server001.bell-kenz.com/mdc-new/mdc/public/sanitation/phase-one";
+const BASE_URL = "http://68.183.229.231/dev/public";
+const SUB_PHASE_URL = "http://68.183.229.231/dev/public/sanitation/phase-one";
 
 
 console.log('test phase 2 js'); // just to make sure phase2 scripts was loaded.
@@ -122,7 +122,7 @@ new Vue({
 					this.sanitationBtn = true;
 				}else {
           // this.sanitationBtn = false;
-					this.sanitationLabel = 'Moving to next Phase . . . ';
+					this.sanitationLabel = 'Back to Phase One . . . ';
 					window.setTimeout(function () {
 						window.location.href = `${SUB_PHASE_URL}`;
 					}, 3000);
