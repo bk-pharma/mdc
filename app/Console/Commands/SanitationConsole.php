@@ -293,9 +293,7 @@ class SanitationConsole extends Command
 
             $sanitizeName = $this->misc->stripPrefix($this->misc->stripSuffix($md->raw_doctor));
 
-            // $this->info($counter.'. '.$md->raw_doctor.' ------> '.$sanitizeName);
-
-            $this->info($md->raw_doctor);
+            $this->info($counter.'. '.$md->raw_doctor);
 
             if($this->misc->isSingleWord($sanitizeName))
             {
@@ -305,7 +303,7 @@ class SanitationConsole extends Command
                 $this->phaseOne($md, $sanitizeName);
             }
 
-            // $counter += 1;
+            $counter += 1;
         }
 
         $endSanitation = microtime(true);
