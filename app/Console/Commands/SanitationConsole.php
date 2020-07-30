@@ -280,10 +280,10 @@ class SanitationConsole extends Command
      */
     public function handle(RawDataInterface $raw_data)
     {
-        $this->info('Hello, Before we start i just want you to know the');
-        $this->info('Total Data to be sanitized is: '.count($raw_data->getRawData()));
-        $this->info('I will put a number before the name of every MD to give you a progress.');
-        sleep(20);
+        // $this->info('Hello, Before we start i just want you to know the');
+        // $this->info('Total Data to be sanitized is: '.count($raw_data->getRawData()));
+        // $this->info('I will put a number before the name of every MD to give you a progress.');
+        // sleep(20);
 
         $counter = 1;
 
@@ -293,7 +293,7 @@ class SanitationConsole extends Command
 
             $sanitizeName = $this->misc->stripPrefix($this->misc->stripSuffix($md->raw_doctor));
 
-            $this->info($counter.'. '.$md->raw_doctor.' ------> '.$sanitizeName);
+            // $this->info($counter.'. '.$md->raw_doctor.' ------> '.$sanitizeName);
 
             if($this->misc->isSingleWord($sanitizeName))
             {
@@ -303,7 +303,7 @@ class SanitationConsole extends Command
                 $this->phaseOne($md, $sanitizeName);
             }
 
-            $counter += 1;
+            // $counter += 1;
         }
 
         $endSanitation = microtime(true);
