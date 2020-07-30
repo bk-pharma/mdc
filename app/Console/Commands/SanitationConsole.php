@@ -295,6 +295,8 @@ class SanitationConsole extends Command
 
             // $this->info($counter.'. '.$md->raw_doctor.' ------> '.$sanitizeName);
 
+            $this->info($md->raw_doctor);
+
             if($this->misc->isSingleWord($sanitizeName))
             {
                 $this->phaseTwo($md, $sanitizeName);
