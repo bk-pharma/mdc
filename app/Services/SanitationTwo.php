@@ -11,9 +11,12 @@ class SanitationTwo implements SanitationTwoInterface
 
     public function getDoctorByName($mdName, $clauseCols)
     {
-       $data = [$mdName, $clauseCols];
+       $data = [
+            'mdName' => $mdName,
+            'clauseCols' => $clauseCols
+        ];
 
-         return DB::select('CALL getDoctorByName2(?, ?);', $data);
+         return DB::select('CALL getDoctorByName2(:mdName, :clauseCols);', $data);
     }
 
     public function update($id, $group, $mdName, $correctedName, $universe, $mdCode)

@@ -73,6 +73,7 @@ class SanitationConsole extends Command
                 $mdName->raw_id,
                 $md[0]->sanit_group,
                 $md[0]->sanit_mdname,
+                $md[0]->sanit_mdname,
                 $md[0]->sanit_universe,
                 $md[0]->sanit_mdcode
             );
@@ -94,6 +95,7 @@ class SanitationConsole extends Command
             $this->sanitation_two->update(
                 $rawId,
                 $md->sanit_group,
+                $md->sanit_mdname,
                 $md->sanit_mdname,
                 $md->sanit_universe,
                 $md->sanit_mdcode
@@ -175,9 +177,10 @@ class SanitationConsole extends Command
 
         if(count($md) > 0)
         {
-            $this->sanitation_two->update(
+            $this->sanitation_three->update(
                 $mdName->raw_id,
                 $md[0]->sanit_group,
+                $md[0]->sanit_mdname,
                 $md[0]->sanit_mdname,
                 $md[0]->sanit_universe,
                 $md[0]->sanit_mdcode
@@ -200,6 +203,7 @@ class SanitationConsole extends Command
             $this->sanitation_four->update(
                 $rawId,
                 $md->sanit_group,
+                $md->sanit_mdname,
                 $md->sanit_mdname,
                 $md->sanit_universe,
                 $md->sanit_mdcode
@@ -293,7 +297,7 @@ class SanitationConsole extends Command
 
             $sanitizeName = $this->misc->stripPrefix($this->misc->stripSuffix($md->raw_doctor));
 
-            $this->info($counter.'. '.$md->raw_doctor);
+            $this->info($counter.'. '.$md->raw_doctor.' ['.$sanitizeName.']');
 
             if($this->misc->isSingleWord($sanitizeName))
             {

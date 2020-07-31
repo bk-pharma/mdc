@@ -12,9 +12,12 @@ class SanitationThree implements SanitationThreeInterface
 
     public function getDoctorByName($mdName, $licenseNo)
     {
-        $data = [$mdName, $licenseNo];
+        $data = [
+            'mdName' => $mdName,
+            'licenseNo' => $licenseNo
+        ];
 
-        return DB::select('CALL getDoctorByName3(?, ?);', $data);
+        return DB::select('CALL getDoctorByName3(:mdName, :licenseNo);', $data);
     }
 
     public function update($id, $group, $mdName, $correctedName, $universe, $mdCode)
