@@ -294,15 +294,9 @@ class SanitationConsole extends Command
 
         if(count($raw_data->getRawData($rowStart, $rowCount)) === 0)
         {
-            $process = new Process(['exit']);
-            $process->run();
-
-            if (!$process->isSuccessful())
-            {
-                throw new ProcessFailedException($process);
-            }
-
-            echo $process->getOutput();
+            $this->info('no data');
+            exit;
+            exec('ls');
         }
 
         $startSanitation = microtime(true);
