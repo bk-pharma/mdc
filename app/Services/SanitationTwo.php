@@ -16,16 +16,26 @@ class SanitationTwo implements SanitationTwoInterface
          return DB::select('CALL getDoctorByName2(?, ?);', $data);
     }
 
-    public function update($id, $group, $mdName, $universe, $mdCode)
+    public function update($id, $group, $mdName, $correctedName, $universe, $mdCode)
     {
 
-        $data = [$id, $group, $mdName, $universe, $mdCode];
+        $data = [
+            'rawId' => $id,
+            'group' => $group,
+            'mdName' => $mdName,
+            'correctedName' => $correctedName,
+            'universe' => $universe,
+            'mdCode' => $mdCode
+        ];
 
-        return DB::select('CALL sanitation2(?, ?, ?, ?, ?)', $data);
+        return DB::select('CALL sanitation2(
+            :rawId,
+            :group,
+            :mdName,
+            :correctedName,
+            :universe,
+            :mdCode)',
+            $data
+        );
     }
-
-    public function test() {
-        return 'phase 2 test';
-    }
-
 }

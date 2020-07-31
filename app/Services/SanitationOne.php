@@ -16,11 +16,25 @@ class SanitationOne implements SanitationOneInterface
         return DB::select('CALL getDoctorByName(?);', $data);
     }
 
-    public function update($rawId, $group, $mdName, $universe, $mdCode)
+    public function update($rawId, $group, $mdName, $correctedName, $universe, $mdCode)
     {
-        $data = [$rawId, $group, $mdName, $universe, $mdCode];
+        $data = [
+            'rawId' => $rawId,
+            'group' => $group,
+            'mdName' => $mdName,
+            'correctedName' => $correctedName,
+            'universe' => $universe,
+            'mdCode' => $mdCode
+        ];
 
-        return DB::select('CALL sanitation1(?, ?, ?, ?, ?)', $data);
+        return DB::select('CALL sanitation1(
+            :rawId,
+            :group,
+            :mdName,
+            :correctedName,
+            :universe,
+            :mdCode)',
+            $data);
     }
 
 }

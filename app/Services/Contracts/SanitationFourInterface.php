@@ -8,5 +8,5 @@ Interface SanitationFourInterface
 {
 	public function getDoctorByName($mdName, $cols);
 
-	public function update($id, $group, $mdName, $universe, $mdCode); //(parameters that need to update || stored proc in order)
+	public function update($id, $group, $mdName, $correctedName, $universe, $mdCode); //(parameters that need to update || stored proc in order)
 }

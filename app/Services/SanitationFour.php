@@ -16,12 +16,26 @@ class SanitationFour implements SanitationFourInterface
          return DB::select('CALL getDoctorByName4(?, ?);', $data);
     }
 
-    public function update($id, $group, $mdName, $universe, $mdCode)
+    public function update($id, $group, $mdName, $correctedName, $universe, $mdCode)
     {
 
-        $data = [$id, $group, $mdName, $universe, $mdCode];
+        $data = [
+            'rawId' => $id,
+            'group' => $group,
+             'mdName' => $mdName,
+             'correctedName' => $correctedName,
+             'universe' => $universe,
+             'mdCode' => $mdCode
+         ];
 
-        return DB::select('CALL sanitation4(?, ?, ?, ?, ?)', $data);
+        return DB::select('CALL sanitation4(
+            :rawId,
+            :group,
+            :mdName,
+            :correctedName,
+            :universe,
+            :mdCode)',
+        $data);
     }
 
     public function test() {
