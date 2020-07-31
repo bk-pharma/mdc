@@ -292,7 +292,7 @@ class SanitationConsole extends Command
         $rowStart = $this->option('row_start');
         $rowCount = $this->option('row_count');
 
-        $counter = 1;
+        $counter = 0;
 
         $startSanitation = microtime(true);
 
@@ -329,12 +329,14 @@ class SanitationConsole extends Command
             $this->phaseFourTotal
         );
 
-        $this->info('Rows Start: '. $rowStart);
-        $this->info('Rows Count:'. $rowCount);
         $this->info('Sanitized: '.$this->sanitation_total);
         $this->info('Unsanitized: '.($counter - $this->sanitation_total));
         $this->info(' ');
 
+        $this->info('Rows Start: '. $rowStart);
+        $this->info('Rows Count:'. $rowCount);
+
+        $this->info('');
         $this->info('Duration: '.date("H:i:s",$endSanitation-$startSanitation));
         $this->info('Completed: '.date('M d Y g:i A'));
     }
