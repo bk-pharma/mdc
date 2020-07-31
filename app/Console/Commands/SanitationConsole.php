@@ -295,8 +295,7 @@ class SanitationConsole extends Command
         if(count($raw_data->getRawData($rowStart, $rowCount)) === 0)
         {
             $this->info('no data');
-            exit;
-            exec('ls');
+            shell_exec('exit');
         }
 
         $startSanitation = microtime(true);
