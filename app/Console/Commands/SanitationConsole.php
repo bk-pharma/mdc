@@ -4,8 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
 use App\Services\Contracts\RawDataInterface;
 use App\Services\Contracts\MiscInterface;
 use App\Services\Contracts\SanitationOneInterface;
@@ -294,8 +292,8 @@ class SanitationConsole extends Command
 
         if(count($raw_data->getRawData($rowStart, $rowCount)) === 0)
         {
-            $this->info('no data');
-            shell_exec('exit');
+            $this->comment('no data to be sanitized.');
+            exit;
         }
 
         $startSanitation = microtime(true);
