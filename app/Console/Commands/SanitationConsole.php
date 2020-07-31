@@ -4,12 +4,15 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 use App\Services\Contracts\RawDataInterface;
 use App\Services\Contracts\MiscInterface;
 use App\Services\Contracts\SanitationOneInterface;
 use App\Services\Contracts\SanitationTwoInterface;
 use App\Services\Contracts\SanitationThreeInterface;
 use App\Services\Contracts\SanitationFourInterface;
+
 
 class SanitationConsole extends Command
 {
@@ -284,18 +287,22 @@ class SanitationConsole extends Command
      */
     public function handle(RawDataInterface $raw_data)
     {
-        // $this->info('Hello, Before we start i just want you to know the');
-        // $this->info('Total Data to be sanitized is: '.count($raw_data->getRawData()));
-        // $this->info('I will put a number before the name of every MD to give you a progress.');
-        // sleep(20);
-
         $rowStart = $this->option('row_start');
         $rowCount = $this->option('row_count');
 
         $counter = 0;
 
-        if(count($raw_data->getRawData($rowStart, $rowCount)) === 0 ) {
-            exec('exit');
+        if(count($raw_data->getRawData($rowStart, $rowCount)) === 0)
+        {
+            $process = new Process(['exit']);
+            $process->run();
+
+            if (!$process->isSuccessful())
+            {
+                throw new ProcessFailedException($process);
+            }
+
+            echo $process->getOutput();
         }
 
         $startSanitation = microtime(true);
