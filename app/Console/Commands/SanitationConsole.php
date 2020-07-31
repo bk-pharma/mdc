@@ -294,6 +294,10 @@ class SanitationConsole extends Command
 
         $counter = 0;
 
+        if(count($raw_data->getRawData($rowStart, $rowCount)) === 0 ) {
+            exec('exit');
+        }
+
         $startSanitation = microtime(true);
 
         foreach($raw_data->getRawData($rowStart, $rowCount) as $md) {
