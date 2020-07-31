@@ -18,7 +18,7 @@ class SanitationConsole extends Command
      *
      * @var string
      */
-    protected $signature = 'sanitize';
+    protected $signature = 'sanitize {--row_start=0} {--row_count=100}';
 
     /**
      * The console command description.
@@ -289,11 +289,14 @@ class SanitationConsole extends Command
         // $this->info('I will put a number before the name of every MD to give you a progress.');
         // sleep(20);
 
+        $rowStart = $this->option('row_start');
+        $rowCount = $this->option('row_count');
+
         $counter = 1;
 
         $startSanitation = microtime(true);
 
-        foreach($raw_data->getRawData() as $md) {
+        foreach($raw_data->getRawData($rowStart, $rowCount) as $md) {
 
             $sanitizeName = $this->misc->stripPrefix($this->misc->stripSuffix($md->raw_doctor));
 
@@ -326,9 +329,10 @@ class SanitationConsole extends Command
             $this->phaseFourTotal
         );
 
-        $this->info('Rows: '.count($raw_data->getRawData()));
+        $this->info('Rows Start: '. $rowStart);
+        $this->info('Rows Count:'. $rowCount);
         $this->info('Sanitized: '.$this->sanitation_total);
-        $this->info('Unsanitized: '.( count($raw_data->getRawData()) - $this->sanitation_total ));
+        $this->info('Unsanitized: '.($counter - $this->sanitation_total));
         $this->info(' ');
 
         $this->info('Duration: '.date("H:i:s",$endSanitation-$startSanitation));

@@ -8,8 +8,13 @@ use Illuminate\Http\Request;
 
 class RawData implements RawDataInterface
 {
-    public function getRawData()
+    public function getRawData($rowStart, $rowCount)
     {
-        return DB::select('CALL getDataToBeSanitized()');
+    	$data = array(
+    		'rowStart' => $rowStart,
+    		'rowCount' => $rowCount
+    	);
+
+        return DB::select('CALL getDataToBeSanitized(:rowStart, :rowCount)', $data);
     }
 }
