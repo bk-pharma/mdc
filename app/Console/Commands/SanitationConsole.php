@@ -292,7 +292,7 @@ class SanitationConsole extends Command
 
         if(count($raw_data->getRawData($rowStart, $rowCount)) === 0)
         {
-            $this->comment('no data to be sanitized.');
+            $this->comment('no data to be sanitize.');
             exit;
         }
 
