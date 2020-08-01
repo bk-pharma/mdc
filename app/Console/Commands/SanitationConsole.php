@@ -10,7 +10,7 @@ use App\Services\Contracts\SanitationOneInterface;
 use App\Services\Contracts\SanitationTwoInterface;
 use App\Services\Contracts\SanitationThreeInterface;
 use App\Services\Contracts\SanitationFourInterface;
-
+use App\Services\Contracts\RulesInterface;
 
 class SanitationConsole extends Command
 {
@@ -41,18 +41,21 @@ class SanitationConsole extends Command
     private $sanitation_three;
     private $sanitation_four;
     private $sanitation_total;
+    private $rules;
 
     private $phaseOneTotal = 0;
     private $phaseTwoTotal = 0;
     private $phaseThreeTotal = 0;
     private $phaseFourTotal = 0;
+    private $rulesTotal = 0;
 
     public function __construct(
         MiscInterface $misc,
         SanitationOneInterface $sanitation_one,
         SanitationTwoInterface $sanitation_two,
         SanitationThreeInterface $sanitation_three,
-        SanitationFourInterface $sanitation_four
+        SanitationFourInterface $sanitation_four,
+        RulesInterface $rules
     )
     {
         parent::__construct();
@@ -61,6 +64,7 @@ class SanitationConsole extends Command
         $this->sanitation_two = $sanitation_two;
         $this->sanitation_three = $sanitation_three;
         $this->sanitation_four = $sanitation_four;
+        $this->rules = $rules;
     }
 
 
@@ -272,11 +276,62 @@ class SanitationConsole extends Command
                         }
                     }
 
+                }else
+                {
+                    $this->rules($mdName, $sanitizedName);
                 }
             }
         }
     }
 
+    private function rules($md, $sanitizedName)
+    {
+        $rulesArr = [];
+        $doctorsRuleCodeArr = [];
+
+        $rawDoctors = $this->rules->getRuleDetails('details_column_name', 'raw_doctor', 'details_value', $sanitizedName);
+        $rawLicenses = $this->rules->getRuleDetails('details_column_name', 'raw_license', 'details_value', $md->raw_license);
+
+        if($rawDoctors !== null)
+        {
+            foreach($rawDoctors as $rawDoctor)
+            {
+                array_push($doctorsRuleCodeArr, $rawDoctor->rule_code);
+            }
+
+            if($rawLicenses !== null)
+            {
+                foreach($rawLicenses as $rawLicense)
+                {
+                    if($this->misc->isExist($rawLicense->rule_code, $doctorsRuleCodeArr))
+                    {
+                        $mdName = $this->rules->getRules($rawLicense->rule_code)[0]->rule_assign_to;
+                        $sanitation = $this->rules->getRulesSanitation($mdName);
+
+                        $universe = (isset($sanitation[0]->sanit_universe)) ? $sanitation[0]->sanit_universe : '';
+                        $group = (isset($sanitation[0]->sanit_group)) ? $sanitation[0]->sanit_group : '';
+                        $mdCode = (isset($sanitation[0]->sanit_mdcode)) ? $sanitation[0]->sanit_mdcode : '';
+
+                        $rulesArr = [
+                            'rawId' => $md->raw_id,
+                            'ruleCode' => $rawLicense->rule_code,
+                            'mdName' => $mdName,
+                            'sanit_universe' => $universe,
+                            'sanit_group' => $group,
+                            'sanit_mdcode' => $mdCode
+                        ];
+
+                        $this->rules->applyRules($md->raw_id, $group, $mdName, $mdName, $universe, $mdCode);
+
+                        $this->rulesTotal += 1;
+
+                        return $rulesArr;
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * Execute the console command.
@@ -292,24 +347,25 @@ class SanitationConsole extends Command
 
         if(count($raw_data->getRawData($rowStart, $rowCount)) === 0)
         {
-            $this->comment('no data to be sanitize.');
+            $this->comment('No data to be sanitize.');
             exit;
         }
 
         $startSanitation = microtime(true);
 
-        foreach($raw_data->getRawData($rowStart, $rowCount) as $md) {
+        foreach($raw_data->getRawData($rowStart, $rowCount) as $md)
+        {
 
-            $sanitizeName = $this->misc->stripPrefix($this->misc->stripSuffix($md->raw_doctor));
+            $sanitizedName = $this->misc->stripPrefix($this->misc->stripSuffix($md->raw_doctor));
 
-            $this->info($counter.'. '.$md->raw_doctor.' ['.$sanitizeName.']');
+            $this->info($counter.'. '.$md->raw_doctor.' ['.$sanitizedName.']');
 
-            if($this->misc->isSingleWord($sanitizeName))
+            if($this->misc->isSingleWord($sanitizedName))
             {
-                $this->phaseTwo($md, $sanitizeName);
+                $this->phaseTwo($md, $sanitizedName);
             }else
             {
-                $this->phaseOne($md, $sanitizeName);
+                $this->phaseOne($md, $sanitizedName);
             }
 
             $counter += 1;
@@ -322,21 +378,19 @@ class SanitationConsole extends Command
         $this->info('Phase 2: '.$this->phaseTwoTotal);
         $this->info('Phase 3: '.$this->phaseThreeTotal);
         $this->info('Phase 4: '.$this->phaseFourTotal);
+        $this->info('Rules applied: '.$this->rulesTotal);
         $this->info(' ');
 
         $this->sanitation_total = (
             $this->phaseOneTotal +
             $this->phaseTwoTotal +
             $this->phaseThreeTotal +
-            $this->phaseFourTotal
+            $this->phaseFourTotal +
+            $this->rulesTotal
         );
 
         $this->info('Sanitized: '.$this->sanitation_total);
         $this->info('Unsanitized: '.($counter - $this->sanitation_total));
-        $this->info(' ');
-
-        $this->info('Rows Start: '. $rowStart);
-        $this->info('Rows Count:'. $rowCount);
 
         $this->info('');
         $this->info('Duration: '.date("H:i:s",$endSanitation-$startSanitation));
