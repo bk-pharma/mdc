@@ -121,7 +121,7 @@ class SanitationConsole extends Command
     }
 
 
-    public function phaseTwo($mdName, $sanitizedName)
+    private function phaseTwo($mdName, $sanitizedName)
     {
         $findSurname = $this->sanitation_two->getDoctorByName($sanitizedName, 'sanit_surname');
 
@@ -229,7 +229,7 @@ class SanitationConsole extends Command
     }
 
 
-    public function phaseFour($mdName, $sanitizedName)
+    private function phaseFour($mdName, $sanitizedName)
     {
         $findSurname = $this->sanitation_four->getDoctorByName($sanitizedName, 'sanit_surname');
 
