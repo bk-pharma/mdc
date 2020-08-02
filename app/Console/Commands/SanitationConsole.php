@@ -337,7 +337,7 @@ class SanitationConsole extends Command
 
                             $this->rules->applyRules($md->raw_id, $group, $mdName, $mdName, $universe, $mdCode);
 
-                             $this->comment('   Rules ID: '.$rawDoctor->details_id.' Rule Code: '.$rawDoctor->rule_code.' (rules applied)');
+                             $this->comment('   Rule Code: '.$rawDoctor->rule_code.' (rules applied)');
 
                              $this->rulesTotal += 1;
 
@@ -440,10 +440,9 @@ class SanitationConsole extends Command
 
         $this->comment('Sanitized: '.$this->sanitation_total);
         $this->comment('Unsanitized: '.($counter - $this->sanitation_total));
-        $this->info('');
-
-        $this->comment('Rules applied: '.$this->rulesTotal);
-        $this->comment('Formatted name:'.$this->formattedNameTotal);
+        $this->comment('  Rules applied: '.$this->rulesTotal);
+        $this->comment('  Formatted name:'.$this->formattedNameTotal);
+        $this->comment('  Untouched: '.(($counter - $this->sanitation_total) - ($this->rulesTotal + $this->formattedNameTotal)) );
 
         $this->info('');
         $this->info('Duration: '.date("H:i:s",$endSanitation-$startSanitation));
