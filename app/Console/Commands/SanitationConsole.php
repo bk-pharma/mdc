@@ -429,20 +429,21 @@ class SanitationConsole extends Command
         $this->comment('Phase 2: '.$this->phaseTwoTotal);
         $this->comment('Phase 3: '.$this->phaseThreeTotal);
         $this->comment('Phase 4: '.$this->phaseFourTotal);
+        $this->comment('Rules applied: '.$this->rulesTotal);
         $this->info(' ');
 
         $this->sanitation_total = (
             $this->phaseOneTotal +
             $this->phaseTwoTotal +
             $this->phaseThreeTotal +
-            $this->phaseFourTotal
+            $this->phaseFourTotal +
+            $this->rulesTotal
         );
 
         $this->comment('Sanitized: '.$this->sanitation_total);
         $this->comment('Unsanitized: '.($counter - $this->sanitation_total));
-        $this->comment('  Rules applied: '.$this->rulesTotal);
         $this->comment('  Formatted name:'.$this->formattedNameTotal);
-        $this->comment('  Untouched: '.(($counter - $this->sanitation_total) - ($this->rulesTotal + $this->formattedNameTotal)) );
+        $this->comment('  Untouched: '.(($counter - $this->sanitation_total) - $this->formattedNameTotal));
 
         $this->info('');
         $this->info('Duration: '.date("H:i:s",$endSanitation-$startSanitation));
