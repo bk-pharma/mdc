@@ -337,7 +337,7 @@ class SanitationConsole extends Command
 
                             $this->rules->applyRules($md->raw_id, $group, $mdName, $mdName, $universe, $mdCode);
 
-                             $this->comment('     Rules ID: '.$rawDoctor->details_id.' Rule Code: '.$rawDoctor->rule_code.' (rules applied)');
+                             $this->comment('   Rules ID: '.$rawDoctor->details_id.' Rule Code: '.$rawDoctor->rule_code.' (rules applied)');
 
                              $this->rulesTotal += 1;
 
