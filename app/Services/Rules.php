@@ -27,6 +27,20 @@ class Rules implements RulesInterface
     	return DB::select('CALL getDoctorByRuleDetails(:column, :value, :column1, :value1);', $data);
     }
 
+    public function getRuleDetailsTriple($column, $value, $column1, $value1, $column2, $value2)
+    {
+        $data = [
+            'column' => $column,
+            'value' => $value,
+            'column1' => $column1,
+            'value1' => $value1,
+            'column2' => $column2,
+            'value2' => $value2
+        ];
+
+        return DB::select('CALL getDoctorByRuleDetailsTriple(:column, :value, :column1, :value1, :column2, :value2);', $data);
+    }
+
     public function getRulesSanitation($mdName)
     {
         $data = ['mdName' => $mdName];

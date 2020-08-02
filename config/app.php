@@ -180,7 +180,8 @@ return [
         App\Providers\SanitationTwoProvider::class,
         App\Providers\SanitationThreeProvider::class,
         App\Providers\SanitationFourProvider::class,
-        App\Providers\RulesProvider::class
+        App\Providers\RulesProvider::class,
+        App\Providers\NameFormatProvider::class
     ],
 
     /*

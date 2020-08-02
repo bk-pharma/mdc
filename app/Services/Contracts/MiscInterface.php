@@ -13,4 +13,10 @@ Interface MiscInterface
 	public function isExist($value, $array);
 
 	public function isSingleWord($str);
+
+	public function countWords($str);
+
+	public function getLastElement($array);
+
+	public function setAsFirstElement($value, $array);
 }
