@@ -9,6 +9,8 @@ use App\Services\Contracts\SanitationOneInterface;
 use App\Services\Contracts\SanitationTwoInterface;
 use App\Services\Contracts\SanitationThreeInterface;
 use App\Services\Contracts\SanitationFourInterface;
+use App\Services\Contracts\RulesInterface;
+use App\Services\Contracts\NameFormatInterface;
 
 class Dashboard extends Controller
 {
@@ -19,6 +21,8 @@ class Dashboard extends Controller
     private $sanitation_two;
     private $sanitation_three;
     private $sanitation_four;
+    private $rules;
+    private $name_format;
 
     function __construct(
     	RawDataInterface $raw_data,
@@ -26,7 +30,9 @@ class Dashboard extends Controller
     	SanitationOneInterface $sanitation_one,
     	SanitationTwoInterface $sanitation_two,
     	SanitationThreeInterface $sanitation_three,
-    	SanitationFourInterface $sanitation_four
+    	SanitationFourInterface $sanitation_four,
+    	RulesInterface $rules,
+    	NameFormatInterface $name_format
     )
     {
     	$this->raw_data = $raw_data;
@@ -35,6 +41,8 @@ class Dashboard extends Controller
     	$this->sanitation_two = $sanitation_two;
     	$this->sanitation_three = $sanitation_three;
     	$this->sanitation_four = $sanitation_four;
+    	$this->rules = $rules;
+    	$this->name_format = $name_format;
     }
 
 	public function index()
@@ -303,7 +311,7 @@ class Dashboard extends Controller
 		return view('rules.rules');
 	}
 
-    private function getDoctorByRules(Request $req)
+    public function getDoctorByRules(Request $req)
     {
     	$rawId = $req->input('raw_id');
     	$sanitizedName = $this->misc->stripPrefix($this->misc->stripSuffix($req->input('mdName')));
@@ -349,11 +357,7 @@ class Dashboard extends Controller
 
                             $this->rules->applyRules($rawId, $group, $mdName, $mdName, $universe, $mdCode);
 
-                             $this->comment('   Rule Code: '.$rawDoctor->rule_code.' (rules applied)');
-
-                             $this->rulesTotal += 1;
-
-                            return $rulesArr;
+                            return response()->json($rulesArr);
                         }
                     }
 
@@ -361,8 +365,36 @@ class Dashboard extends Controller
                 }
             }
         }
-
-        $this->formatName($md, $sanitizedName);
     }
+
+    public function formatName(Request $req)
+    {
+    	$rawId = $req->input('raw_id');
+    	$sanitizedName = $this->misc->stripPrefix($this->misc->stripSuffix($req->input('mdName')));
+
+        $mdName1 = explode(' ', $sanitizedName);
+
+        if(!$this->name_format->isUnclassified($sanitizedName))
+        {
+            if(count($mdName1) > 1)
+            {
+                $lastElement = $this->misc->getLastElement($mdName1);
+                $nameArr = $this->misc->setAsFirstElement($lastElement.',', $mdName1);
+
+                $updatedLastElement = $this->misc->getLastElement($nameArr);
+
+                if($this->name_format->isLastNameMultiple($updatedLastElement))
+                {
+                    $nameArr = $this->misc->setAsFirstElement($updatedLastElement, $nameArr);
+                }
+
+                $finalName = implode(' ', $nameArr);
+
+                return response()->json($this->name_format->formatName($rawId, $sanitizedName, $finalName));
+            }
+
+        }
+    }
+
 
 }
