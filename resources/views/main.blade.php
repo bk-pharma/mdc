@@ -125,19 +125,33 @@
                   <p>Phase 4</p>
                 </a>
               </li>
-             
+
             </ul>
           </li>
+
+          <li class="nav-item">
+          @if(Request::is('rules'))
+            <a href="#" class="nav-link active">
+          @else
+            <a href="{{ url('/rules') }}" class="nav-link">
+          @endif
+            <i class="nav-icon fas fa-sign-in-alt"></i>
+              <p>
+                Rules
+              </p>
+            </a>
+          </li>
+
           @if (!Auth::check())
           <li class="nav-item">
             <a href="{{ route('login') }}" class="nav-link">
               <i class="nav-icon fas fa-sign-in-alt"></i>
               <p>
-                Sign In 
+                Sign In
               </p>
             </a>
           </li>
-         
+
           @else
           <li class="nav-item">
             <a  href="{{ route('logout') }}"
@@ -163,6 +177,7 @@
     @yield('sanitationPhaseTwo')
     @yield('sanitationPhaseThree')
     @yield('sanitationPhaseFour')
+    @yield('rules');
   </div>
 
 </div>
@@ -197,13 +212,11 @@
   <script src="{{asset('dist/js/adminlte.js')}}"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   {{-- <script src="{{asset('dist/js/pages/dashboard.js')}}"></script> --}}
-  <!-- AdminLTE for demo purposes -->
-  <script src="{{asset('dist/js/demo.js')}}"></script>
 
   @stack('sanitationPhaseOne-scripts')
   @stack('sanitationPhaseTwo-scripts')
   @stack('sanitationPhaseThree-scripts')
   @stack('sanitationPhaseFour-scripts')
-
+  @stack('rules-scripts')
 </body>
 </html>

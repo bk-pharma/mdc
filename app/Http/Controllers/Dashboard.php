@@ -44,7 +44,10 @@ class Dashboard extends Controller
 
 	public function getRawData()
 	{
-		return response()->json($this->raw_data->getRawData());
+		$rowStart = 0;
+		$rowCount = 300;
+
+		return response()->json($this->raw_data->getRawData($rowStart, $rowCount));
 	}
 
 	public function phaseOne()
@@ -67,7 +70,7 @@ class Dashboard extends Controller
         $universe = $req->input('universe');
         $mdCode = $req->input('mdCode');
 
-		return response()->json($this->sanitation_one->update($id, $group, $mdName, $universe, $mdCode));
+		return response()->json($this->sanitation_one->update($id, $group, $mdName, $mdName, $universe, $mdCode));
 	}
 
 	public function phaseTwo()
@@ -85,6 +88,7 @@ class Dashboard extends Controller
 			$this->sanitation_two->update(
 				$rawId,
 				$md->sanit_group,
+				$md->sanit_mdname,
 				$md->sanit_mdname,
 				$md->sanit_universe,
 				$md->sanit_mdcode
@@ -110,7 +114,7 @@ class Dashboard extends Controller
 
 		if($this->misc->isSingleWord($mdName)) {
 
-			$findSurname = $this->sanitation_two->getDoctorByName2($mdName, 'sanit_surname');
+			$findSurname = $this->sanitation_two->getDoctorByName($mdName, 'sanit_surname');
 
 			if(count($findSurname) > 0)
 			{
@@ -125,7 +129,7 @@ class Dashboard extends Controller
 				}
 			}else
 			{
-				$findFirstName = $this->sanitation_two->getDoctorByName2($mdName, 'sanit_firstname');
+				$findFirstName = $this->sanitation_two->getDoctorByName($mdName, 'sanit_firstname');
 
 				if(count($findFirstName) > 0)
 				{
@@ -141,7 +145,7 @@ class Dashboard extends Controller
 				}else
 				{
 
-					$findMiddleName = $this->sanitation_two->getDoctorByName2($mdName, 'sanit_middlename');
+					$findMiddleName = $this->sanitation_two->getDoctorByName($mdName, 'sanit_middlename');
 
 					if(count($findMiddleName) > 0)
 					{
@@ -166,7 +170,7 @@ class Dashboard extends Controller
 
 		return response()->json($result);
 	}
-	
+
 	public function phaseThree()
 	{
 		return view('sanitation.phaseThree');
@@ -178,7 +182,7 @@ class Dashboard extends Controller
 		$mdName = $this->misc->stripPrefix($this->misc->stripSuffix($req->input('mdName')));
 		$licenseNo = $req->input('licenseNo');
 
-		$hasMD = $this->sanitation_three->getDoctorByName3($mdName, $licenseNo);
+		$hasMD = $this->sanitation_three->getDoctorByName($mdName, $licenseNo);
 
 		if(count($hasMD) > 0)
 		{
@@ -189,21 +193,12 @@ class Dashboard extends Controller
 				$sanitUniverse = $md->sanit_universe;
 				$sanitMdcode = $md->sanit_mdcode;
 
-				$this->sanitation_three->update($rawId, $sanitGroup, $sanitName, $sanitUniverse, $sanitMdcode);
+				$this->sanitation_three->update($rawId, $sanitGroup, $sanitName, $sanitName, $sanitUniverse, $sanitMdcode);
 			}
 		}
 
 		return response()->json($hasMD);
 	}
-
-
-
-
-
-
-
-	/* Phase 4 */
-
 
 	public function phaseFour()
 	{
@@ -220,6 +215,7 @@ class Dashboard extends Controller
 			$this->sanitation_four->update(
 				$rawId,
 				$md->sanit_group,
+				$md->sanit_mdname,
 				$md->sanit_mdname,
 				$md->sanit_universe,
 				$md->sanit_mdcode
@@ -245,7 +241,7 @@ class Dashboard extends Controller
 
 		if($this->misc->isSingleWord($mdName)) {
 
-			$findSurname = $this->sanitation_four->getDoctorByName4($mdName, 'sanit_surname');
+			$findSurname = $this->sanitation_four->getDoctorByName($mdName, 'sanit_surname');
 
 			if(count($findSurname) > 0)
 			{
@@ -260,7 +256,7 @@ class Dashboard extends Controller
 				}
 			}else
 			{
-				$findFirstName = $this->sanitation_four->getDoctorByName4($mdName, 'sanit_firstname');
+				$findFirstName = $this->sanitation_four->getDoctorByName($mdName, 'sanit_firstname');
 
 				if(count($findFirstName) > 0)
 				{
@@ -276,7 +272,7 @@ class Dashboard extends Controller
 				}else
 				{
 
-					$findMiddleName = $this->sanitation_four->getDoctorByName4($mdName, 'sanit_middlename');
+					$findMiddleName = $this->sanitation_four->getDoctorByName($mdName, 'sanit_middlename');
 
 					if(count($findMiddleName) > 0)
 					{
@@ -301,5 +297,71 @@ class Dashboard extends Controller
 
 		return response()->json($result);
 	}
+
+	public function rules()
+	{
+		return view('rules.rules');
+	}
+
+    private function getDoctorByRules(Request $req)
+    {
+    	$rawId = $req->input('raw_id');
+    	$rawLicense = $req->input('raw_license');
+
+        $rulesArr = [];
+
+        $rawDoctors = $this->rules->getRuleDetails('details_column_name', 'raw_doctor', 'details_value', $sanitizedName);
+
+        if(count($rawDoctors) > 0)
+        {
+            foreach($rawDoctors as $rawDoctor)
+            {
+                $rawLicenses = $this->rules->getRuleDetails(
+                    'rule_code',
+                    $rawDoctor->rule_code,
+                    'details_value',
+                    $rawLicense
+                );
+
+
+                if(count($rawLicenses) > 0)
+                {
+                    if($rawLicenses[0]->details_value === $md->raw_license)
+                    {
+                        if(count($this->rules->getRules($rawLicenses[0]->rule_code)) > 0)
+                        {
+                            $mdName = $this->rules->getRules($rawLicenses[0]->rule_code)[0]->rule_assign_to;
+                            $sanitation = $this->rules->getRulesSanitation($mdName);
+
+                            $universe = (isset($sanitation[0]->sanit_universe)) ? $sanitation[0]->sanit_universe : '';
+                            $group = (isset($sanitation[0]->sanit_group)) ? $sanitation[0]->sanit_group : '';
+                            $mdCode = (isset($sanitation[0]->sanit_mdcode)) ? $sanitation[0]->sanit_mdcode : '';
+
+                            $rulesArr = [
+                                'rawId' => $rawId,
+                                'ruleCode' => $rawLicenses[0]->rule_code,
+                                'mdName' => $mdName,
+                                'sanit_universe' => $universe,
+                                'sanit_group' => $group,
+                                'sanit_mdcode' => $mdCode
+                            ];
+
+                            $this->rules->applyRules($rawId, $group, $mdName, $mdName, $universe, $mdCode);
+
+                             $this->comment('   Rule Code: '.$rawDoctor->rule_code.' (rules applied)');
+
+                             $this->rulesTotal += 1;
+
+                            return $rulesArr;
+                        }
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        $this->formatName($md, $sanitizedName);
+    }
 
 }

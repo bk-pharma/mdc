@@ -36,24 +36,24 @@ Route::prefix('/sanitation')->group(function() {
 	Route::prefix('/phase-two')->group(function() {
 		Route::get('/', 'Dashboard@phaseTwo');
 		Route::post('/get-single-md', 'Dashboard@getDoctorPhaseTwo');
-		Route::get('/test', 'Dashboard@testPhaseTwo');
 	});
 
 	Route::prefix('/phase-three')->group(function() {
 		Route::get('/', 'Dashboard@phaseThree');
-		Route::post('/get-single-md', 'Dashboard@getDoctorPhaseThree');
 		Route::post('/get-single-md', 'Dashboard@getDoctorPhaseThree');
 	});
 
 	Route::prefix('/phase-four')->group(function() {
 		Route::get('/', 'Dashboard@phaseFour');
 		Route::post('/get-single-md', 'Dashboard@getDoctorPhaseFour');
-		Route::get('/test', 'Dashboard@testPhaseFour');
 	});
-
-	
 });
 
+
+Route::prefix('/rules')->group(function() {
+	Route::get('/', 'Dashboard@rules');
+	Route::post('/get-single-md', 'Dashboard@getDoctorByRules');
+});
 
 
 // Route::get('/sanitize', 'Dashboard@sanitation');
