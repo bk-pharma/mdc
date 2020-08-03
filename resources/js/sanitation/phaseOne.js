@@ -1,12 +1,3 @@
-const BASE_URL = "http://localhost/mdc/public";
-const SUB_PHASE_URL = "http://localhost/mdc/public/sanitation/phase-two";
-
-/* const BASE_URL = "http://server001.bell-kenz.com/mdc-new/mdc/public";
-const SUB_PHASE_URL = "http://server001.bell-kenz.com/mdc-new/mdc/public/sanitation/phase-one";  CPANEL*/
-/* 
-const BASE_URL = "https://68.183.229.231/dev/public";
-const SUB_PHASE_URL = "https://68.183.229.231/dev/public/sanitation/phase-one";  DO*/
-
 new Vue({
   el: '#sanitationPhaseOne-container',
   data() {
@@ -34,7 +25,7 @@ new Vue({
 
   		this.sanitationLabel = 'Scanning....';
 
-		axios.get(`${BASE_URL}/sanitation/get-all-md`)
+		axios.get(`get-all-md`)
 		.then((response) => {
 
 			this.dataToBeSanitized = response.data;
@@ -64,7 +55,7 @@ new Vue({
 			mdName: mdName
 		}
 
-		axios.post(`${BASE_URL}/sanitation/phase-one/get-single-md`, data)
+		axios.post(`phase-one/get-single-md`, data)
 		.then((response) => {
 
 			this.sanitizedByDoctorName = response.data;
@@ -149,9 +140,12 @@ new Vue({
 					// this.sanitationBtn = false;
 					this.sanitationLabel = 'Moving to next Phase . . . ';
 					window.setTimeout(function () {
-						window.location.href = `${SUB_PHASE_URL}`;
+						window.location.href = `phase-two`;
 					}, 3000);
 				}
+			}else {
+				console.log("end end end");
+				window.open('phase-two', '_blank');
 			}
 
 
@@ -170,7 +164,7 @@ new Vue({
   			mdCode: mdCode
   		}
 
-  		axios.post(`${BASE_URL}/sanitation/phase-one/get-single-md/sanitize`, data, {
+  		axios.post(`phase-one/get-single-md/sanitize`, data, {
   			headers:{
   				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
   			}

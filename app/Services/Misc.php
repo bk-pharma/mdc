@@ -25,7 +25,8 @@ class Misc implements MiscInterface
         "DR/ ",
         "DR] ",
         "DR]",
-        "DRA  "
+        "DRA  ",
+        "DRA "
 	];
 
 	private $suffix = [
@@ -57,7 +58,8 @@ class Misc implements MiscInterface
         return false;
     }
 
-    public function isSingleWord($str) {
+    public function isSingleWord($str)
+    {
 
         $str1 = explode(' ', $str);
 
@@ -67,5 +69,23 @@ class Misc implements MiscInterface
         }else
 
         return false;
+    }
+
+    public function countWords($str)
+    {
+        $str1 = explode(' ', $str);
+        return count($str1);
+    }
+
+    public function getLastElement($array)
+    {
+        return $array[count($array) - 1];
+    }
+
+    public function setAsFirstElement($value, $array)
+    {
+        array_unshift($array, $value);
+        array_pop($array);
+        return $array;
     }
 }
