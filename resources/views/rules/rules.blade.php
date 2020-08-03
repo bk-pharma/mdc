@@ -29,7 +29,7 @@
 		</div>
 
 		<div class="col-md text-right">
-			<button type="button" @click="startRules()" class="btn btn-sm btn-success" :disabled="rulesBtn">Apply Rules <i class="fa fa-robot"></i></button>
+			<button type="button" @click="startRules()" class="btn btn-sm btn-success disabled" :disabled="rulesBtn">Apply Rules <i class="fa fa-robot"></i></button>
 		</div>
 	</div>
 
@@ -46,7 +46,7 @@
 
 		</div>
 		<div class="col-md">
-			<div id="ruleLogs" contenteditable="true" v-html="ruleByDoctorNameFoundLogs" style="overflow-x: scroll; max-height: 300px; background-color:white;">
+			<div id="ruleLogs" contenteditable="true" v-html="rulesByDoctorNameFoundLogs" style="overflow-x: scroll; max-height: 300px; background-color:white;">
 
 		    </div>
 		</div>
