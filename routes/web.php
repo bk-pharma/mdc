@@ -54,6 +54,10 @@ Route::prefix('/rules')->group(function() {
 	Route::post('/get-single-md', 'Dashboard@getDoctorByRules');
 });
 
+Route::prefix('/name-formatter')->group(function() {
+	Route::get('/', 'Dashboard@nameFormatter');
+	Route::post('/get-single-md', 'Dashboard@formatName');
+});
 
 // Route::get('/sanitize', 'Dashboard@sanitation');
 

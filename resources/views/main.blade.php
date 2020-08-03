@@ -130,14 +130,29 @@
           </li>
 
           <li class="nav-item">
+
           @if(Request::is('rules'))
             <a href="#" class="nav-link active">
           @else
             <a href="{{ url('/rules') }}" class="nav-link">
           @endif
-            <i class="nav-icon fas fa-sign-in-alt"></i>
+            <i class="nav-icon fab fa-rev"></i>
               <p>
                 Rules
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+
+          @if(Request::is('name-formatter'))
+            <a href="#" class="nav-link active">
+          @else
+            <a href="{{ url('/name-formatter') }}" class="nav-link">
+          @endif
+            <i class="nav-icon far fa-keyboard"></i>
+              <p>
+                Name Formatter
               </p>
             </a>
           </li>
@@ -177,7 +192,8 @@
     @yield('sanitationPhaseTwo')
     @yield('sanitationPhaseThree')
     @yield('sanitationPhaseFour')
-    @yield('rules');
+    @yield('rules')
+    @yield('nameFormatter')
   </div>
 
 </div>
@@ -218,5 +234,6 @@
   @stack('sanitationPhaseThree-scripts')
   @stack('sanitationPhaseFour-scripts')
   @stack('rules-scripts')
+  @stack('nameFormatter-scripts')
 </body>
 </html>

@@ -367,6 +367,11 @@ class Dashboard extends Controller
         }
     }
 
+	public function nameFormatter()
+	{
+		return view('nameFormatter.nameFormatter');
+	}
+
     public function formatName(Request $req)
     {
     	$rawId = $req->input('raw_id');
