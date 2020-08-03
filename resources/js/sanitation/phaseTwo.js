@@ -1,5 +1,5 @@
-const BASE_URL = "https://68.183.229.231/dev/public";
-const SUB_PHASE_URL = "https://68.183.229.231/dev/public/sanitation/phase-three";
+const BASE_URL = "http://localhost/mdc/public";
+const SUB_PHASE_URL = "http://localhost/mdc/public/sanitation/phase-three";
 
 
 
@@ -73,7 +73,6 @@ new Vue({
         this.sanitationLabel = 'Phase 2 done.';
 
         if(this.foundMD.length > 0) {
-          console.log('1');
           this.leftLogs += `
             <span style="font-size:13px;">
               (${this.dataToBeSanitized[this.getByDoctorIndex].raw_id}) ${this.dataToBeSanitized[this.getByDoctorIndex].raw_doctor}
@@ -94,8 +93,6 @@ new Vue({
 
           this.totalFound += 1;
         }else {
-          console.log('2');
-
           this.leftLogs += `
           <span style="font-size:13px;">
             (${this.dataToBeSanitized[this.getByDoctorIndex].raw_id}) ${this.dataToBeSanitized[this.getByDoctorIndex].raw_doctor}

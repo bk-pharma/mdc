@@ -1,6 +1,6 @@
 
-const BASE_URL = "https://68.183.229.231/dev/public";
-const SUB_PHASE_URL = "https://68.183.229.231/dev/public/sanitation/phase-four";
+const BASE_URL = "http://localhost/mdc/public";
+const SUB_PHASE_URL = "http://localhost/mdc/public/sanitation/phase-four";
 
 
 
