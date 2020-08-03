@@ -306,6 +306,7 @@ class Dashboard extends Controller
     private function getDoctorByRules(Request $req)
     {
     	$rawId = $req->input('raw_id');
+    	$sanitizedName = $this->misc->stripPrefix($this->misc->stripSuffix($req->input('mdName')));
     	$rawLicense = $req->input('raw_license');
 
         $rulesArr = [];

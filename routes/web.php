@@ -49,7 +49,6 @@ Route::prefix('/sanitation')->group(function() {
 	});
 });
 
-
 Route::prefix('/rules')->group(function() {
 	Route::get('/', 'Dashboard@rules');
 	Route::post('/get-single-md', 'Dashboard@getDoctorByRules');
