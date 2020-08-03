@@ -114,6 +114,8 @@ class SanitationConsole extends Command
 
             $this->comment('   Phase 2');
 
+            $this->phaseTwoTotal += 1;
+
             return array(
                 'raw_id' => $mdName->raw_id,
                 'raw_md' => $sanitizedName,
@@ -138,11 +140,6 @@ class SanitationConsole extends Command
             foreach($findSurname as $md)
             {
                 $data = $this->phaseTwoGetLicense($mdName, $sanitizedName, $md);
-
-                if($data != null)
-                {
-                    $this->phaseTwoTotal += 1;
-                }
             }
         }else
         {
@@ -154,11 +151,6 @@ class SanitationConsole extends Command
                 foreach($findFirstName as $md)
                 {
                     $data = $this->phaseTwoGetLicense($mdName, $sanitizedName, $md);
-
-                    if($data !== null)
-                    {
-                        $this->phaseTwoTotal += 1;
-                    }
                 }
             }else
             {
@@ -169,11 +161,6 @@ class SanitationConsole extends Command
                     foreach($findMiddleName as $md)
                     {
                         $data = $this->phaseTwoGetLicense($mdName, $sanitizedName, $md);
-
-                        if($data !== null)
-                        {
-                            $this->phaseTwoTotal += 1;
-                        }
                     }
                 }else
                 {
