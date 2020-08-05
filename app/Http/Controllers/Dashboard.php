@@ -70,7 +70,7 @@ class Dashboard extends Controller
 	{
 		// $process = new Process(['php artisan sanitize --row_start=0 --row_count=5000', 'C:/xampp/htdocs/dev']);
 		$process = new Process(['ls']);
-		$process->setWorkingDirectory('public_html/mdc/dev');;
+		$process->setWorkingDirectory('/home/bkadmin/public_html/mdc/dev');;
 		// $process->setTimeout(0);
 		$process->run();
 
