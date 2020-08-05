@@ -69,7 +69,7 @@ class Dashboard extends Controller
 	public function sanitationProcess()
 	{
 		// $process = new Process(['php artisan sanitize --row_start=0 --row_count=5000', 'C:/xampp/htdocs/dev']);
-		$process = new Process(['ls']);
+		$process = new Process(['cd /public_html/mdc/dev', 'ls -a']);
 		// $process->setWorkingDirectory('C:/xampp/htdocs/dev/');;
 		// $process->setTimeout(0);
 		$process->run();
