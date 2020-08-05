@@ -40,12 +40,12 @@ class Misc implements MiscInterface
 
     public function stripPrefix($str)
     {
-    	return str_replace($this->prefix, '', $str);
+    	return ltrim(str_replace($this->prefix, '', $str));
     }
 
     public function stripSuffix($str)
     {
-    	return str_replace($this->suffix, '', $str);
+    	return rtrim(str_replace($this->suffix, '', $str));
     }
 
     public function isExist($value, $array)
