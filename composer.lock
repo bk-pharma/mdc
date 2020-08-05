@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b3ee94242b8991c0addbc5c7df2941be",
+    "content-hash": "163076e4d7f28b181c7115afc8dd73bc",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2626,7 +2626,7 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v5.1.2",
+            "version": "v5.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",

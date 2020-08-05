@@ -24,9 +24,9 @@ Route::get('/admin', function () {
 
 Route::prefix('/sanitation')->group(function() {
 
-	
-	
-	
+
+
+
 
 	route::get('/console/get-all-md', 'Dashboard@getRawDataConsole');
 	Route::get('/get-all-md', 'Dashboard@getRawData');
@@ -66,12 +66,14 @@ Route::prefix('/name-formatter')->group(function() {
 
 Route::prefix('/automated')->group(function() {
 	Route::get('/', 'Dashboard@automated');
-	
+
 	Route::get('/start-sanitize', function () {
 		set_time_limit(8000000);
 		Artisan::queue('sanitize --row_start=0 --row_count=100000');
 	});
-	
+
+	Route::get('/start-process', 'Dashboard@sanitationProcess');
+
 });
 
 // Route::get('/sanitize', 'Dashboard@sanitation');

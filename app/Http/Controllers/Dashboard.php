@@ -11,6 +11,8 @@ use App\Services\Contracts\SanitationThreeInterface;
 use App\Services\Contracts\SanitationFourInterface;
 use App\Services\Contracts\RulesInterface;
 use App\Services\Contracts\NameFormatInterface;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 
 class Dashboard extends Controller
 {
@@ -58,10 +60,27 @@ class Dashboard extends Controller
 		return response()->json($this->raw_data->getRawData($rowStart, $rowCount));
 	}
 
-	
-	public function automated(){
+
+	public function automated()
+	{
 		return view('sanitation.automated');
 	}
+
+	public function sanitationProcess()
+	{
+		// $process = new Process(['php artisan sanitize --row_start=0 --row_count=5000', 'C:/xampp/htdocs/dev']);
+		$process = new Process(['ls']);
+		// $process->setWorkingDirectory('C:/xampp/htdocs/dev/');;
+		// $process->setTimeout(0);
+		$process->run();
+
+		if (!$process->isSuccessful()) {
+		    throw new ProcessFailedException($process);
+		}
+
+		echo $process->getOutput();
+	}
+
 	public function phaseOne()
 	{
 		return view('sanitation.phaseOne');
