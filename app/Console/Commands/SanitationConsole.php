@@ -264,26 +264,29 @@ class SanitationConsole extends Command
     {
         $sanitation = $this->rules->getRulesSanitation($mdNameFromRules);
 
-        $universe = (isset($sanitation[0]->sanit_universe)) ? $sanitation[0]->sanit_universe : '';
-        $group = (isset($sanitation[0]->sanit_group)) ? $sanitation[0]->sanit_group : '';
-        $mdCode = (isset($sanitation[0]->sanit_mdcode)) ? $sanitation[0]->sanit_mdcode : '';
+        if(count($sanitation) > 0)
+        {
+            $universe = (isset($sanitation[0]->sanit_universe)) ? $sanitation[0]->sanit_universe : '';
+            $group = (isset($sanitation[0]->sanit_group)) ? $sanitation[0]->sanit_group : '';
+            $mdCode = (isset($sanitation[0]->sanit_mdcode)) ? $sanitation[0]->sanit_mdcode : '';
 
-        $rulesArr = [
-            'rawId' => $md->raw_id,
-            'ruleCode' => $ruleCode,
-            'mdName' => $mdNameFromRules,
-            'sanit_universe' => $universe,
-            'sanit_group' => $group,
-            'sanit_mdcode' => $mdCode
-        ];
+            $rulesArr = [
+                'rawId' => $md->raw_id,
+                'ruleCode' => $ruleCode,
+                'mdName' => $mdNameFromRules,
+                'sanit_universe' => $universe,
+                'sanit_group' => $group,
+                'sanit_mdcode' => $mdCode
+            ];
 
-        $this->rules->applyRules($md->raw_id, $group, $mdNameFromRules, $mdNameFromRules, $universe, $mdCode);
+            $this->rules->applyRules($md->raw_id, $group, $mdNameFromRules, $mdNameFromRules, $universe, $mdCode);
 
-         $this->comment('   Rule Code: '.$rawDoctor->rule_code.'  ('.$ruleApply.') rules applied ');
+             $this->comment('   Rule Code: '.$rawDoctor->rule_code.'  ('.$ruleApply.') rules applied ');
 
-         $this->rulesTotal += 1;
+             $this->rulesTotal += 1;
 
-        return $rulesArr;
+            return $rulesArr;
+        }
     }
 
     private function rules($md, $sanitizedName)
