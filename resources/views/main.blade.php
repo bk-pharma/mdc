@@ -145,6 +145,20 @@
 
           <li class="nav-item">
 
+            @if(Request::is('automated'))
+              <a href="#" class="nav-link active">
+            @else
+              <a href="{{ url('/automated') }}" class="nav-link ">
+            @endif
+              <i class="nav-icon fas fa-cogs"></i>
+                <p>
+                  Automated
+                </p>
+              </a>
+            </li>
+
+          <li class="nav-item">
+
           @if(Request::is('name-formatter'))
             <a href="#" class="nav-link active">
           @else
@@ -194,6 +208,7 @@
     @yield('sanitationPhaseFour')
     @yield('rules')
     @yield('nameFormatter')
+    @yield('automatedPhases')
   </div>
 
 </div>
@@ -235,5 +250,6 @@
   @stack('sanitationPhaseFour-scripts')
   @stack('rules-scripts')
   @stack('nameFormatter-scripts')
+  @stack('automatedPhases-scripts')
 </body>
 </html>

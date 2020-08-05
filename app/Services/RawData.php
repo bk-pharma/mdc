@@ -17,4 +17,18 @@ class RawData implements RawDataInterface
 
         return DB::select('CALL getDataToBeSanitized(:rowStart, :rowCount)', $data);
     }
+
+
+    public function automated(){
+        
+    }
+    public function getSanitizedCount(){
+       
+        $rawCount = DB::table('sanitation_result_new')
+        ->where('raw_status', '!=', '')
+        ->count();
+
+        return $rawCount;
+
+    }
 }

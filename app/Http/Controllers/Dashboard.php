@@ -53,11 +53,15 @@ class Dashboard extends Controller
 	public function getRawData()
 	{
 		$rowStart = 0;
-		$rowCount = 300;
+		$rowCount = 200;
 
 		return response()->json($this->raw_data->getRawData($rowStart, $rowCount));
 	}
 
+	
+	public function automated(){
+		return view('sanitation.automated');
+	}
 	public function phaseOne()
 	{
 		return view('sanitation.phaseOne');
@@ -335,7 +339,7 @@ class Dashboard extends Controller
 
                 if(count($rawLicenses) > 0)
                 {
-                    if($rawLicenses[0]->details_value === $md->raw_license)
+                    if($rawLicenses[0]->details_value === $rawLicense)
                     {
                         if(count($this->rules->getRules($rawLicenses[0]->rule_code)) > 0)
                         {
@@ -400,6 +404,5 @@ class Dashboard extends Controller
 
         }
     }
-
 
 }

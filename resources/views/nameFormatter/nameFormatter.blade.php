@@ -29,7 +29,7 @@
 		</div>
 
 		<div class="col-md text-right">
-			<button type="button" @click="startFormatter()" class="btn btn-sm btn-success" :disabled="rulesBtn">Format Name <i class="fa fa-robot"></i></button>
+			<button type="button" @click="nameFormat()" class="btn btn-sm btn-success" :disabled="nfBtn">Format Name <i class="fa fa-robot"></i></button>
 		</div>
 	</div>
 
@@ -39,14 +39,14 @@
 			<div class="form-group">
 			  <!-- <textarea class="form-control" rows="12" id="sanitationLogs" v-model="sanitizedByDoctorNameLogs" spellcheck="false"></textarea> -->
 
-				<div id="nfLogs" contenteditable="true" v-html="nfByDoctorNameLogs" style="overflow-x: scroll; max-height: 300px; background-color:white;">
+				<div id="leftLogsNameFormatter" contenteditable="true" v-html="leftNFLogs" style="overflow-x: scroll; max-height: 300px; background-color:white;">
 			    </div>
 
 			</div>
 
 		</div>
 		<div class="col-md">
-			<div id="nfLogs" contenteditable="true" v-html="nfByDoctorNameFoundLogs" style="overflow-x: scroll; max-height: 300px; background-color:white;">
+			<div id="rightLogsNameFormatter" contenteditable="true" v-html="rightNFLogs" style="overflow-x: scroll; max-height: 300px; background-color:white;">
 
 		    </div>
 		</div>

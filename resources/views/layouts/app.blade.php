@@ -35,19 +35,15 @@
                     <ul class="navbar-nav mr-auto">
                         @if (Auth::check())
                         <li class="nav-item">
-                            <a href="http://localhost/mdc/public/sanitation/phase-one" class="nav-link">Phase - 1</a>
+                            <a href="http://localhost/mdc/public/sanitation/phase-one" class="nav-link">Sanitation Phases </a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="http://localhost/mdc/public/sanitation/phase-two" class="nav-link">Phase - 2</a>
+                            <a href="http://localhost/mdc/public/rules" class="nav-link">Rules</a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="http://localhost/mdc/public/sanitation/phase-three" class="nav-link">Phase - 3</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="http://localhost/mdc/public/sanitation/phase-four" class="nav-link">Phase - 4</a>
+                            <a href="http://localhost/mdc/public/name-formatter" class="nav-link">Name Formatter</a>
                         </li>
                         @endif
                        

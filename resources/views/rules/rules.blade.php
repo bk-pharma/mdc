@@ -14,7 +14,7 @@
 			@{{ rulesLabel }}
 		</div>
 		<div class="col-md">
-			@{{ rulesByDoctorNameCount }} / @{{ rulesCount }}
+			@{{ rulesByDoctorNameIndex }} / @{{ rulesCount }}
 		</div>
 	</div>
 
@@ -29,7 +29,7 @@
 		</div>
 
 		<div class="col-md text-right">
-			<button type="button" @click="startRules()" class="btn btn-sm btn-success disabled" :disabled="rulesBtn">Apply Rules <i class="fa fa-robot"></i></button>
+			<button type="button" @click="applyRules()" class="btn btn-sm btn-success " :disabled="rulesBtn">Apply Rules <i class="fa fa-robot"></i></button>
 		</div>
 	</div>
 
@@ -39,16 +39,17 @@
 			<div class="form-group">
 			  <!-- <textarea class="form-control" rows="12" id="sanitationLogs" v-model="sanitizedByDoctorNameLogs" spellcheck="false"></textarea> -->
 
-				<div id="ruleLogs" contenteditable="true" v-html="rulesByDoctorNameLogs" style="overflow-x: scroll; max-height: 300px; background-color:white;">
+				<div id="leftLogsRule" contenteditable="true" v-html="leftRuleLogs" style="overflow-x: scroll; max-height: 300px; background-color:white;">
 			    </div>
 
 			</div>
 
 		</div>
 		<div class="col-md">
-			<div id="ruleLogs" contenteditable="true" v-html="rulesByDoctorNameFoundLogs" style="overflow-x: scroll; max-height: 300px; background-color:white;">
+			<div id="rightLogsRule" contenteditable="true" v-html="rightRuleLogs" style="overflow-x: scroll; max-height: 300px; background-color:white;">
 
-		    </div>
+			</div>
+			<span style="color: green;">Apllied Rules:</span> @{{ rulesTotalFound }} / @{{ rulesCount }}
 		</div>
 	</div>
 </div>
