@@ -79,20 +79,21 @@ class SanitationConsole extends Command
 
         if(count($md) > 0)
         {
-            $this->sanitation_one->update(
-                $mdName->raw_id,
-                $md[0]->sanit_group,
-                $md[0]->sanit_mdname,
-                $md[0]->sanit_mdname,
-                $md[0]->sanit_universe,
-                $md[0]->sanit_mdcode
-            );
-
             $this->comment('   Phase 1');
+
             $this->phaseOneTotal += 1;
+
+            return $this->sanitation_one->update(
+                        $mdName->raw_id,
+                        $md[0]->sanit_group,
+                        $md[0]->sanit_mdname,
+                        $md[0]->sanit_mdname,
+                        $md[0]->sanit_universe,
+                        $md[0]->sanit_mdcode
+                    );
         }else
         {
-            $this->phaseThree($mdName, $sanitizedName);
+            $this->phaseTwo($mdName, $sanitizedName);
         }
     }
 
@@ -103,30 +104,18 @@ class SanitationConsole extends Command
 
         if($this->misc->isExist($mdName->raw_license, $licenseArr))
         {
-            $this->sanitation_two->update(
-                $mdName->raw_id,
-                $md->sanit_group,
-                $md->sanit_mdname,
-                $md->sanit_mdname,
-                $md->sanit_universe,
-                $md->sanit_mdcode
-            );
-
             $this->comment('   Phase 2');
 
             $this->phaseTwoTotal += 1;
 
-            return array(
-                'raw_id' => $mdName->raw_id,
-                'raw_md' => $sanitizedName,
-                'raw_license' => $mdName->raw_license,
-                'sanit_id' => $md->sanit_id,
-                'sanit_mdname' => $md->sanit_mdname,
-                'sanit_group' => $md->sanit_group,
-                'sanit_universe' => $md->sanit_universe,
-                'sanit_mdcode' => $md->sanit_mdcode,
-                'sanit_license' => $md->sanit_license
-            );
+            return $this->sanitation_two->update(
+                        $mdName->raw_id,
+                        $md->sanit_group,
+                        $md->sanit_mdname,
+                        $md->sanit_mdname,
+                        $md->sanit_universe,
+                        $md->sanit_mdcode
+                    );
         }
     }
 
@@ -139,7 +128,7 @@ class SanitationConsole extends Command
         {
             foreach($findSurname as $md)
             {
-                $data = $this->phaseTwoGetLicense($mdName, $sanitizedName, $md);
+                $this->phaseTwoGetLicense($mdName, $sanitizedName, $md);
             }
         }else
         {
@@ -150,7 +139,7 @@ class SanitationConsole extends Command
             {
                 foreach($findFirstName as $md)
                 {
-                    $data = $this->phaseTwoGetLicense($mdName, $sanitizedName, $md);
+                    $this->phaseTwoGetLicense($mdName, $sanitizedName, $md);
                 }
             }else
             {
@@ -160,7 +149,7 @@ class SanitationConsole extends Command
                 {
                     foreach($findMiddleName as $md)
                     {
-                        $data = $this->phaseTwoGetLicense($mdName, $sanitizedName, $md);
+                        $this->phaseTwoGetLicense($mdName, $sanitizedName, $md);
                     }
                 }else
                 {
@@ -176,18 +165,18 @@ class SanitationConsole extends Command
 
         if(count($md) > 0)
         {
-            $this->sanitation_three->update(
-                $mdName->raw_id,
-                $md[0]->sanit_group,
-                $md[0]->sanit_mdname,
-                $md[0]->sanit_mdname,
-                $md[0]->sanit_universe,
-                $md[0]->sanit_mdcode
-            );
-
             $this->comment('   Phase 3');
 
             $this->phaseThreeTotal += 1;
+
+            return $this->sanitation_three->update(
+                        $mdName->raw_id,
+                        $md[0]->sanit_group,
+                        $md[0]->sanit_mdname,
+                        $md[0]->sanit_mdname,
+                        $md[0]->sanit_universe,
+                        $md[0]->sanit_mdcode
+                    );
         }else
         {
             $this->phaseFour($mdName, $sanitizedName);
@@ -212,6 +201,8 @@ class SanitationConsole extends Command
             );
 
             $this->comment('   Phase 4');
+
+            $this->phaseFourTotal += 1;
 
             return array(
                 'raw_id' => $mdName->raw_id,
@@ -239,47 +230,60 @@ class SanitationConsole extends Command
         {
             foreach($findSurname as $md)
             {
-                $data = $this->phaseFourGetBranch($mdName, $sanitizedName, $md);
-
-                if($data != null)
-                {
-                    $this->phaseFourTotal += 1;
-                }
+                $this->phaseFourGetBranch($mdName, $sanitizedName, $md);
             }
-        }
-
-        $findFirstName = $this->sanitation_four->getDoctorByName($sanitizedName, 'sanit_firstname');
-
-        if(count($findFirstName) > 0)
+        }else
         {
-            foreach($findFirstName as $md)
-            {
-                $data = $this->phaseFourGetBranch($mdName, $sanitizedName, $md);
+            $findFirstName = $this->sanitation_four->getDoctorByName($sanitizedName, 'sanit_firstname');
 
-                if($data !== null)
+            if(count($findFirstName) > 0)
+            {
+                foreach($findFirstName as $md)
                 {
-                    $this->phaseFourTotal += 1;
+                    $this->phaseFourGetBranch($mdName, $sanitizedName, $md);
+                }
+            }else
+            {
+                $findMiddleName = $this->sanitation_four->getDoctorByName($sanitizedName, 'sanit_middlename');
+
+                if(count($findMiddleName) > 0)
+                {
+                    foreach($findMiddleName as $md)
+                    {
+                        $this->phaseFourGetBranch($mdName, $sanitizedName, $md);
+                    }
+                }else
+                {
+                    $this->rules($mdName, $sanitizedName);
                 }
             }
         }
+    }
 
+    private function applyRules($md, $rawDoctor, $mdNameFromRules, $ruleCode, $ruleApply)
+    {
+        $sanitation = $this->rules->getRulesSanitation($mdNameFromRules);
 
-        $findMiddleName = $this->sanitation_four->getDoctorByName($sanitizedName, 'sanit_middlename');
+        $universe = (isset($sanitation[0]->sanit_universe)) ? $sanitation[0]->sanit_universe : '';
+        $group = (isset($sanitation[0]->sanit_group)) ? $sanitation[0]->sanit_group : '';
+        $mdCode = (isset($sanitation[0]->sanit_mdcode)) ? $sanitation[0]->sanit_mdcode : '';
 
-        if(count($findMiddleName) > 0)
-        {
-            foreach($findMiddleName as $md)
-            {
-                $data = $this->phaseFourGetBranch($mdName, $sanitizedName, $md);
+        $rulesArr = [
+            'rawId' => $md->raw_id,
+            'ruleCode' => $ruleCode,
+            'mdName' => $mdNameFromRules,
+            'sanit_universe' => $universe,
+            'sanit_group' => $group,
+            'sanit_mdcode' => $mdCode
+        ];
 
-                if($data !== null)
-                {
-                    $this->phaseFourTotal += 1;
-                }
-            }
-        }
+        $this->rules->applyRules($md->raw_id, $group, $mdNameFromRules, $mdNameFromRules, $universe, $mdCode);
 
-        $this->rules($mdName, $sanitizedName);
+         $this->comment('   Rule Code: '.$rawDoctor->rule_code.'  ('.$ruleApply.') rules applied ');
+
+         $this->rulesTotal += 1;
+
+        return $rulesArr;
     }
 
     private function rules($md, $sanitizedName)
@@ -302,42 +306,110 @@ class SanitationConsole extends Command
 
                 if(count($rawLicenses) > 0)
                 {
-                    if($rawLicenses[0]->details_value === $md->raw_license)
+
+                    $stripLicense = $this->misc->stripPrefix($this->misc->stripSuffix($md->raw_license));
+                    $stripLicenseFromRules = $this->misc->stripPrefix($this->misc->stripSuffix($rawLicenses[0]->details_value));
+
+                    if($stripLicenseFromRules === $stripLicense)
                     {
                         if(count($this->rules->getRules($rawLicenses[0]->rule_code)) > 0)
                         {
-                            $mdName = $this->rules->getRules($rawLicenses[0]->rule_code)[0]->rule_assign_to;
-                            $sanitation = $this->rules->getRulesSanitation($mdName);
+                            $mdNameFromRules = $this->rules->getRules($rawLicenses[0]->rule_code)[0]->rule_assign_to;
+                            $ruleCode = $rawLicenses[0]->rule_code;
 
-                            $universe = (isset($sanitation[0]->sanit_universe)) ? $sanitation[0]->sanit_universe : '';
-                            $group = (isset($sanitation[0]->sanit_group)) ? $sanitation[0]->sanit_group : '';
-                            $mdCode = (isset($sanitation[0]->sanit_mdcode)) ? $sanitation[0]->sanit_mdcode : '';
-
-                            $rulesArr = [
-                                'rawId' => $md->raw_id,
-                                'ruleCode' => $rawLicenses[0]->rule_code,
-                                'mdName' => $mdName,
-                                'sanit_universe' => $universe,
-                                'sanit_group' => $group,
-                                'sanit_mdcode' => $mdCode
-                            ];
-
-                            $this->rules->applyRules($md->raw_id, $group, $mdName, $mdName, $universe, $mdCode);
-
-                             $this->comment('   Rule Code: '.$rawDoctor->rule_code.' (rules applied)');
-
-                             $this->rulesTotal += 1;
-
-                            return $rulesArr;
+                            $this->applyRules($md, $rawDoctor, $mdNameFromRules, $ruleCode, 'License');
+                            break;
                         }
                     }
+                }else
+                {
+                    $rawLBU = $this->rules->getRuleDetails(
+                        'rule_code',
+                        $rawDoctor->rule_code,
+                        'details_value',
+                        $md->raw_lburebate
+                    );
 
-                    break;
+                    if(count($rawLBU) > 0)
+                    {
+
+                        $stripLBU = $this->misc->stripPrefix($this->misc->stripSuffix($md->raw_lburebate));
+                        $stripLBUfromRules = $this->misc->stripPrefix($this->misc->stripPrefix($rawLBU[0]->details_value));
+
+                        if($stripLBUfromRules === $stripLBU)
+                        {
+                            if(count($this->rules->getRules($rawLBU[0]->rule_code)) > 0)
+                            {
+                                $mdNameFromRules = $this->rules->getRules($rawLBU[0]->rule_code)[0]->rule_assign_to;
+                                $ruleCode = $rawLBU[0]->rule_code;
+
+                                $this->applyRules($md, $rawDoctor, $mdNameFromRules, $ruleCode, 'LBU');
+                                break;
+                            }
+                        }
+                    }else
+                    {
+                        $rawBranchName = $this->rules->getRuleDetails(
+                            'rule_code',
+                            $rawDoctor->rule_code,
+                            'details_value',
+                            $md->raw_branchname
+                        );
+
+                        if(count($rawBranchName) > 0)
+                        {
+
+                            $stripBranch = $this->misc->stripPrefix($this->misc->stripSuffix($md->raw_branchname));
+                            $stripBranchNameFromRules = $this->misc->stripPrefix($this->misc->stripSuffix($rawBranchName[0]->details_value));
+
+                            if($stripBranchNameFromRules === $stripBranch)
+                            {
+                                if(count($this->rules->getRules($rawBranchName[0]->rule_code)) > 0)
+                                {
+                                    $mdNameFromRules = $this->rules->getRules($rawBranchName[0]->rule_code)[0]->rule_assign_to;
+                                    $ruleCode = $rawBranchName[0]->rule_code;
+
+                                    $this->applyRules($md, $rawDoctor, $mdNameFromRules, $ruleCode, 'Branch Name');
+                                    break;
+                                }
+                            }
+                        }else
+                        {
+                            $rawAddress = $this->rules->getRuleDetails(
+                                'rule_code',
+                                $rawDoctor->rule_code,
+                                'details_value',
+                                $md->raw_address
+                            );
+
+                            if(count($rawAddress) > 0)
+                            {
+                                $stripAddress = $this->misc->stripPrefix($this->misc->stripSuffix($md->raw_address));
+                                $stripAddressFromRules = $this->misc->stripPrefix($this->misc->stripSuffix($rawAddress[0]->details_value));
+
+                                if($stripAddressFromRules === $stripAddress)
+                                {
+                                    if(count($this->rules->getRules($rawAddress[0]->rule_code)) > 0)
+                                    {
+                                        $mdNameFromRules = $this->rules->getRules($rawAddress[0]->rule_code)[0]->rule_assign_to;
+                                        $ruleCode = $rawAddress[0]->rule_code;
+
+                                        $this->applyRules($md, $rawDoctor, $mdNameFromRules, $ruleCode, 'Address');
+                                        break;
+                                    }else
+                                    {
+                                        $this->formatName($md, $sanitizedName);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
+        }else
+        {
+            $this->formatName($md, $sanitizedName);
         }
-
-        $this->formatName($md, $sanitizedName);
     }
 
 
@@ -361,13 +433,12 @@ class SanitationConsole extends Command
 
                 $finalName = implode(' ', $nameArr);
 
-                $this->name_format->formatName($md->raw_id, $sanitizedName, $finalName);
-
                 $this->comment('   Name Formatted');
 
                 $this->formattedNameTotal += 1;
-            }
 
+                return $this->name_format->formatName($md->raw_id, $sanitizedName, $finalName);
+            }
         }
     }
 
@@ -398,14 +469,10 @@ class SanitationConsole extends Command
 
             $this->info($counter.'. '.$md->raw_doctor.' ['.$sanitizedName.']');
 
-            if($this->misc->isSingleWord($sanitizedName))
-            {
-                $this->phaseTwo($md, $sanitizedName);
-            }else
+            if(strlen($sanitizedName) > 1)
             {
                 $this->phaseOne($md, $sanitizedName);
             }
-
             $counter += 1;
         }
 
