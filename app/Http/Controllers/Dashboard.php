@@ -53,11 +53,7 @@ class Dashboard extends Controller
 	public function getRawData()
 	{
 		$rowStart = 0;
-<<<<<<< HEAD
 		$rowCount = 200;
-=======
-		$rowCount = 1500000;
->>>>>>> 2807e9bd70cb9b829ca8c0a10c71d370209d0eaa
 
 		return response()->json($this->raw_data->getRawData($rowStart, $rowCount));
 	}
