@@ -69,7 +69,7 @@ class Dashboard extends Controller
 	public function sanitationProcess()
 	{
 		//$process = new Process(['php artisan sanitize --row_start=0 --row_count=5000']);
-		$process = new Process(['pwd']);
+		$process = new Process(['php -v']);
 		$process->setWorkingDirectory('/home/bkadmin/public_html/mdc/dev');;
 		$process->setTimeout(0);
 		$process->run();
