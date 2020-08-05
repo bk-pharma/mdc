@@ -72,8 +72,6 @@ class Dashboard extends Controller
 		$process->setWorkingDirectory('/home/bkadmin/public_html/mdc/dev');;
 		$process->start();
 
-		$counter = 0;
-
 		$process->wait(function ($type, $buffer) {
 		    if (Process::ERR === $type) {
 		        echo 'ERR > '.$buffer;
