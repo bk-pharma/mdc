@@ -264,10 +264,9 @@ class SanitationConsole extends Command
     {
         $sanitation = $this->rules->getRulesSanitation($mdNameFromRules);
 
-        print_r($sanitation);
-
         if(count($sanitation) > 0)
         {
+            $sanitId = (isset($sanitation[0]->sanit_id)) ? $sanitation[0]->sanit_id : '';
             $universe = (isset($sanitation[0]->sanit_universe)) ? $sanitation[0]->sanit_universe : '';
             $group = (isset($sanitation[0]->sanit_group)) ? $sanitation[0]->sanit_group : '';
             $mdCode = (isset($sanitation[0]->sanit_mdcode)) ? $sanitation[0]->sanit_mdcode : '';
@@ -276,6 +275,7 @@ class SanitationConsole extends Command
                 'rawId' => $md->raw_id,
                 'ruleCode' => $ruleCode,
                 'mdName' => $mdNameFromRules,
+                'sanit_id' => $sanitId,
                 'sanit_universe' => $universe,
                 'sanit_group' => $group,
                 'sanit_mdcode' => $mdCode
@@ -283,7 +283,7 @@ class SanitationConsole extends Command
 
             $this->rules->applyRules($md->raw_id, $group, $mdNameFromRules, $mdNameFromRules, $universe, $mdCode);
 
-             $this->comment('   Rule Code: '.$rawDoctor->rule_code.'  ('.$ruleApply.') rules applied ');
+             $this->comment('   Rule Code: '.$rawDoctor->rule_code.'  ('.$ruleApply.') rules applied, sanit_id = '.$sanitId);
 
              $this->rulesTotal += 1;
 
