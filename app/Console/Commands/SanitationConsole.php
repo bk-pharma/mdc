@@ -264,6 +264,8 @@ class SanitationConsole extends Command
     {
         $sanitation = $this->rules->getRulesSanitation($mdNameFromRules);
 
+        print_r($sanitation);
+
         if(count($sanitation) > 0)
         {
             $universe = (isset($sanitation[0]->sanit_universe)) ? $sanitation[0]->sanit_universe : '';

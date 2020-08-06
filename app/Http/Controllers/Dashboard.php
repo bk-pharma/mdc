@@ -69,25 +69,24 @@ class Dashboard extends Controller
 	public function sanitationProcess()
 	{
 		$process = Process::fromShellCommandline('php artisan sanitize --row_start=0 --row_count=5000');
-		// $process->setWorkingDirectory('/home/bkadmin/public_html/mdc/dev');
 		$process->setWorkingDirectory(base_path());
 		$process->setTimeout(3600);
 		$process->setIdleTimeout(60);
 		$process->start();
 
-		$process->wait(function ($type, $buffer) {
-		    if (Process::ERR === $type) {
-		        echo 'ERR > '.$buffer;
-		    } else {
-		    	if(is_numeric(substr($buffer, 0, 2)))
-		    	{
-		        	echo '<b>>'.$buffer.'</b><br>';
-		    	}else
-		    	{
-		    		echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-'.$buffer.'<br>';
-		    	}
-		    }
-		});
+		// $process->wait(function ($type, $buffer) {
+		//     if (Process::ERR === $type) {
+		//         echo 'ERR > '.$buffer;
+		//     } else {
+		//     	if(is_numeric(substr($buffer, 0, 2)))
+		//     	{
+		//         	echo '<b>>'.$buffer.'</b><br>';
+		//     	}else
+		//     	{
+		//     		echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-'.$buffer.'<br>';
+		//     	}
+		//     }
+		// });
 
 		if (!$process->isSuccessful()) {
 		    throw new ProcessFailedException($process);
