@@ -85,7 +85,7 @@ class Dashboard extends Controller
 
 		    	$counter += 1;
 
-		    	array_pop();
+		    	array_pop($outputArr);
 		    	array_push($outputArr, $counter);
 		    	echo $outputArr[0];
 		    	// if(is_numeric(substr($buffer, 0, 2)))
