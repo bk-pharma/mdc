@@ -72,6 +72,7 @@ class Dashboard extends Controller
 		$process->setWorkingDirectory(base_path());
 		$process->setTimeout(3600);
 		$process->setIdleTimeout(60);
+		$process->stop(3, SIGINT);
 		$process->start();
 
 
