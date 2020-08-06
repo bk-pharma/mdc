@@ -87,7 +87,7 @@ class Dashboard extends Controller
 		        	echo '<b>>'.$buffer.'</b><br>';
 		    	}else
 		    	{
-		    		echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-'.$buffer.'<br>';
+		    		echo '<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-'.$buffer.'<br>';
 		    	}
 		    }
 		});
