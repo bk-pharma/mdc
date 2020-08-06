@@ -74,14 +74,27 @@ class Dashboard extends Controller
 		$process->setIdleTimeout(60);
 		$process->start();
 
-		try {
 
-		    $process->mustRun();
-		    echo $process->getOutput();
-
-		}catch (ProcessFailedException $exception)
+		$process->wait(function ($type, $buffer)
 		{
-		    echo $exception->getMessage();
+
+		    if (Process::ERR === $type)
+		    {
+		        echo 'ERR > '.$buffer;
+		    } else
+		    {
+		    	if(is_numeric(substr($buffer, 0, 2)))
+		    	{
+		        	echo '<b>>'.$buffer.'</b><br>';
+		    	}else
+		    	{
+		    		echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-'.$buffer.'<br>';
+		    	}
+		    }
+		});
+
+		if (!$process->isSuccessful()) {
+		    throw new ProcessFailedException($process);
 		}
 	}
 
