@@ -74,20 +74,26 @@ class Dashboard extends Controller
 		$process->setIdleTimeout(60);
 		$process->start();
 
-		$process->wait(function ($type, $buffer) {
 
-			$outputArr = ['0'];
-			$counter = 0;
+		$process->wait(function ($type, $buffer) {
 
 		    if (Process::ERR === $type) {
 		        echo 'ERR > '.$buffer;
 		    } else {
 
-		    	$counter += 1;
+		    	$number = substr($buffer, 0, 2);
+		    	$number1 = (int)$number;
 
-		    	array_pop($outputArr);
-		    	array_push($outputArr, $counter);
-		    	echo $outputArr[0];
+		    	if($number1 === 1000)
+		    	{
+		    		echo "1,000";
+		    	}
+
+		    	if($number1 === 2000)
+		    	{
+		    		echo "2,000";
+		    	}
+
 		    	// if(is_numeric(substr($buffer, 0, 2)))
 		    	// {
 		     //    	echo '<b>>'.$buffer.'</b><br>';
