@@ -476,7 +476,13 @@ class SanitationConsole extends Command
 
             if(strlen($sanitizedName) > 1)
             {
-                $this->phaseOne($md, $sanitizedName);
+                if($this->misc->isSingleWord($sanitizedName))
+                {
+                    $this->phaseTwo($md, $sanitizedName);
+                }else
+                {
+                    $this->phaseOne($md, $sanitizedName);
+                }
             }
             $counter += 1;
         }
