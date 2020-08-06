@@ -74,13 +74,13 @@ class Dashboard extends Controller
 		$process->setIdleTimeout(60);
 		$process->start();
 
+		echo 'Sanitation started.';
+
+		$process->wait();
+
 		if (!$process->isSuccessful()) {
 		    throw new ProcessFailedException($process);
 		}
-
-		echo 'Sanitation started.'
-
-		$process->wait();
 
 		echo $process->getOutput();
 	}
