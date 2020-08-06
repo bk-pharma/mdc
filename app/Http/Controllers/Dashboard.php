@@ -66,9 +66,9 @@ class Dashboard extends Controller
 		return view('sanitation.automated');
 	}
 
-	public function sanitationProcess()
+	public function sanitationProcess($rowStart, $rowCount)
 	{
-		$process = Process::fromShellCommandline('php artisan sanitize --row_start=0 --row_count=5000');
+		$process = Process::fromShellCommandline('php artisan sanitize --row_start='.$rowStart.' --row_count='.$rowCount);
 		$process->setWorkingDirectory(base_path());
 		$process->setTimeout(3600);
 		$process->setIdleTimeout(60);
@@ -82,23 +82,21 @@ class Dashboard extends Controller
 		    {
 		        echo 'ERR > '.$buffer;
 		    }
-		    // else
-		    // {
-		    // 	if(is_numeric(substr($buffer, 0, 2)))
-		    // 	{
-		    //     	echo '<b>>'.$buffer.'</b><br>';
-		    // 	}else
-		    // 	{
-		    // 		echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-'.$buffer.'<br>';
-		    // 	}
-		    // }
+		    else
+		    {
+		    	if(is_numeric(substr($buffer, 0, 2)))
+		    	{
+		        	echo '<b>>'.$buffer.'</b><br>';
+		    	}else
+		    	{
+		    		echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-'.$buffer.'<br>';
+		    	}
+		    }
 		});
 
 		if (!$process->isSuccessful()) {
 		    throw new ProcessFailedException($process);
 		}
-
-		echo $process->getOutput();
 	}
 
 	public function phaseOne()
