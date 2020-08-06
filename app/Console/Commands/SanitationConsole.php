@@ -79,8 +79,7 @@ class SanitationConsole extends Command
 
         if(count($md) > 0)
         {
-            $this->comment('   Phase 1');
-            $this->comment(' ');
+            $this->info('   Phase 1');
 
             $this->phaseOneTotal += 1;
 
@@ -105,8 +104,7 @@ class SanitationConsole extends Command
 
         if($this->misc->isExist($mdName->raw_license, $licenseArr))
         {
-            $this->comment('   Phase 2');
-            $this->comment(' ');
+            $this->info('   Phase 2');
 
             $this->phaseTwoTotal += 1;
 
@@ -167,8 +165,7 @@ class SanitationConsole extends Command
 
         if(count($md) > 0)
         {
-            $this->comment('   Phase 3');
-            $this->comment(' ');
+            $this->info('   Phase 3');
 
             $this->phaseThreeTotal += 1;
 
@@ -203,8 +200,7 @@ class SanitationConsole extends Command
                 $md->sanit_mdcode
             );
 
-            $this->comment('   Phase 4');
-            $this->comment(' ');
+            $this->info('   Phase 4');
 
             $this->phaseFourTotal += 1;
 
@@ -287,8 +283,7 @@ class SanitationConsole extends Command
 
             $this->rules->applyRules($md->raw_id, $group, $mdNameFromRules, $mdNameFromRules, $universe, $mdCode);
 
-             $this->comment('   Rule Code: '.$rawDoctor->rule_code.'  ('.$ruleApply.') rules applied, sanit_id = '.$sanitId);
-             $this->comment(' ');
+             $this->info('   Rule Code: '.$rawDoctor->rule_code.'  ('.$ruleApply.') rules applied, sanit_id = '.$sanitId);
 
              $this->rulesTotal += 1;
 
@@ -443,8 +438,7 @@ class SanitationConsole extends Command
 
                 $finalName = implode(' ', $nameArr);
 
-                $this->comment('   Name Formatted');
-                $this->comment(' ');
+                $this->info('   Name Formatted');
 
                 $this->formattedNameTotal += 1;
 
