@@ -73,10 +73,8 @@ Route::prefix('/automated')->group(function() {
 		Artisan::queue('sanitize --row_start=0 --row_count=100000');
 	});
 
-	Route::get('/start-process', function() {
-		Dashboard::sanitationProcess(0, 5000);
-	});
-
+	Route::get('/start-process/{rowStart}/{rowCount}', 'Dashboard@sanitationProcess');
+	Route::get('/sanitized-total', 'Dashboard@getSanitizedCount');
 });
 
 // Route::get('/sanitize', 'Dashboard@sanitation');

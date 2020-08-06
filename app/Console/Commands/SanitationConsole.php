@@ -20,7 +20,7 @@ class SanitationConsole extends Command
      *
      * @var string
      */
-    protected $signature = 'sanitize {--row_start=0} {--row_count=100}';
+    protected $signature = 'sanitize {--row_start=0} {--row_count=100} {show?} ';
 
     /**
      * The console command description.
@@ -79,7 +79,7 @@ class SanitationConsole extends Command
 
         if(count($md) > 0)
         {
-            $this->comment('   Phase 1');
+            if($this->argument('show')) $this->comment('   Phase 1');
 
             $this->phaseOneTotal += 1;
 
@@ -104,7 +104,7 @@ class SanitationConsole extends Command
 
         if($this->misc->isExist($mdName->raw_license, $licenseArr))
         {
-            $this->comment('   Phase 2');
+            if($this->argument('show')) $this->comment('   Phase 2');
 
             $this->phaseTwoTotal += 1;
 
@@ -165,7 +165,7 @@ class SanitationConsole extends Command
 
         if(count($md) > 0)
         {
-            $this->comment('   Phase 3');
+            if($this->argument('show')) $this->comment('   Phase 3');
 
             $this->phaseThreeTotal += 1;
 
@@ -200,7 +200,7 @@ class SanitationConsole extends Command
                 $md->sanit_mdcode
             );
 
-            $this->comment('   Phase 4');
+            if($this->argument('show')) $this->comment('   Phase 4');
 
             $this->phaseFourTotal += 1;
 
@@ -273,7 +273,10 @@ class SanitationConsole extends Command
 
             $this->rules->applyRules($md->raw_id, $group, $mdNameFromRules, $mdNameFromRules, $universe, $mdCode);
 
-             $this->comment('   Rule Code: '.$rawDoctor->rule_code.'  ('.$ruleApply.') rules applied, sanit_id: '.$sanitId.'');
+            if($this->argument('show'))
+            {
+                $this->comment('   Rule Code: '.$rawDoctor->rule_code.'  ('.$ruleApply.') rules applied, sanit_id: '.$sanitId.'');
+            }
 
              $this->rulesTotal += 1;
 
@@ -436,7 +439,7 @@ class SanitationConsole extends Command
 
                 $finalName = implode(' ', $nameArr);
 
-                $this->comment('   Name Formatted');
+                if($this->argument('show')) $this->comment('   Name Formatted');
 
                 $this->formattedNameTotal += 1;
 
@@ -470,19 +473,20 @@ class SanitationConsole extends Command
 
             $counter += 1;
 
-            $sanitizedName = $this->misc->stripPrefix($this->misc->stripSuffix($md->raw_doctor));
+             $sanitizedName = $this->misc->stripPrefix($this->misc->stripSuffix($md->raw_doctor));
 
-            $this->info($counter.'. '.$md->raw_doctor.' ['.$sanitizedName.']');
+            if($this->argument('show'))
+            {
+                $this->info($counter.'. '.$md->raw_doctor.' ['.$sanitizedName.']');
+            }else
+            {
+               $this->info($counter);
+            }
 
             if(strlen($sanitizedName) > 1)
             {
-                if($this->misc->isSingleWord($sanitizedName))
-                {
-                    $this->phaseTwo($md, $sanitizedName);
-                }else
-                {
-                    $this->phaseOne($md, $sanitizedName);
-                }
+                if($this->misc->isSingleWord($sanitizedName)) $this->phaseTwo($md, $sanitizedName);
+                else $this->phaseOne($md, $sanitizedName);
             }
         }
 
