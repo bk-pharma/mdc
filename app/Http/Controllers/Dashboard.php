@@ -68,6 +68,9 @@ class Dashboard extends Controller
 
 	public function sanitationProcess()
 	{
+		$outputArr = [0];
+		$counter = 0;
+
 		$process = Process::fromShellCommandline('php artisan sanitize --row_start=0 --row_count=5000');
 		$process->setWorkingDirectory(base_path());
 		$process->setTimeout(3600);
@@ -76,13 +79,14 @@ class Dashboard extends Controller
 
 		$process->wait(function ($type, $buffer) {
 
-		    $counter = 0;
-
 		    if (Process::ERR === $type) {
 		        echo 'ERR > '.$buffer;
 		    } else {
 
-		    	echo $counter += 1;
+		    	$counter += 1;
+
+		    	array_pop();
+		    	array_push($outputArr, $counter);
 
 		    	// if(is_numeric(substr($buffer, 0, 2)))
 		    	// {
