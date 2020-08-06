@@ -73,7 +73,7 @@ Route::prefix('/automated')->group(function() {
 	});
 
 	Route::get('/start-process', function() {
-		new \App\Http\Controllers\Dashboard::sanitationProcess(0, 5000);
+		return App\Http\Controllers\Dashboard::sanitationProcess(0, 5000);
 	});
 
 });
