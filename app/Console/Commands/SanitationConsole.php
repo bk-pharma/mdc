@@ -79,7 +79,7 @@ class SanitationConsole extends Command
 
         if(count($md) > 0)
         {
-            $this->info('   Phase 1');
+            $this->comment('   Phase 1');
 
             $this->phaseOneTotal += 1;
 
@@ -104,7 +104,7 @@ class SanitationConsole extends Command
 
         if($this->misc->isExist($mdName->raw_license, $licenseArr))
         {
-            $this->info('   Phase 2');
+            $this->comment('   Phase 2');
 
             $this->phaseTwoTotal += 1;
 
@@ -165,7 +165,7 @@ class SanitationConsole extends Command
 
         if(count($md) > 0)
         {
-            $this->info('   Phase 3');
+            $this->comment('   Phase 3');
 
             $this->phaseThreeTotal += 1;
 
@@ -200,7 +200,7 @@ class SanitationConsole extends Command
                 $md->sanit_mdcode
             );
 
-            $this->info('   Phase 4');
+            $this->comment('   Phase 4');
 
             $this->phaseFourTotal += 1;
 
@@ -271,21 +271,21 @@ class SanitationConsole extends Command
             $group = (isset($sanitation[0]->sanit_group)) ? $sanitation[0]->sanit_group : '';
             $mdCode = (isset($sanitation[0]->sanit_mdcode)) ? $sanitation[0]->sanit_mdcode : '';
 
-            $rulesArr = [
-                'rawId' => $md->raw_id,
-                'ruleCode' => $ruleCode,
-                'mdName' => $mdNameFromRules,
-                'sanit_id' => $sanitId,
-                'sanit_universe' => $universe,
-                'sanit_group' => $group,
-                'sanit_mdcode' => $mdCode
-            ];
-
             $this->rules->applyRules($md->raw_id, $group, $mdNameFromRules, $mdNameFromRules, $universe, $mdCode);
 
-             $this->info('   Rule Code: '.$rawDoctor->rule_code.'  ('.$ruleApply.') rules applied, sanit_id: '.$sanitId.'');
+             $this->comment('   Rule Code: '.$rawDoctor->rule_code.'  ('.$ruleApply.') rules applied, sanit_id: '.$sanitId.'');
 
              $this->rulesTotal += 1;
+
+            return $rulesArr = [
+                        'rawId' => $md->raw_id,
+                        'ruleCode' => $ruleCode,
+                        'mdName' => $mdNameFromRules,
+                        'sanit_id' => $sanitId,
+                        'sanit_universe' => $universe,
+                        'sanit_group' => $group,
+                        'sanit_mdcode' => $mdCode
+                    ];
         }
     }
 
@@ -436,7 +436,7 @@ class SanitationConsole extends Command
 
                 $finalName = implode(' ', $nameArr);
 
-                $this->info('   Name Formatted');
+                $this->comment('   Name Formatted');
 
                 $this->formattedNameTotal += 1;
 
@@ -468,6 +468,8 @@ class SanitationConsole extends Command
         foreach($raw_data->getRawData($rowStart, $rowCount) as $md)
         {
 
+            $counter += 1;
+
             $sanitizedName = $this->misc->stripPrefix($this->misc->stripSuffix($md->raw_doctor));
 
             $this->info($counter.'. '.$md->raw_doctor.' ['.$sanitizedName.']');
@@ -482,7 +484,6 @@ class SanitationConsole extends Command
                     $this->phaseOne($md, $sanitizedName);
                 }
             }
-            $counter += 1;
         }
 
         $endSanitation = microtime(true);
