@@ -75,38 +75,15 @@ class Dashboard extends Controller
 		$process->start();
 
 
-		$process->wait(function ($type, $buffer) {
-
-		    if (Process::ERR === $type) {
-		        echo 'ERR > '.$buffer;
-		    } else {
-
-		    	$number = substr($buffer, 0, 2);
-		    	$number1 = (int)$number;
-
-		    	if($number1 === 1000)
-		    	{
-		    		echo "1,000";
-		    	}
-
-		    	if($number1 === 2000)
-		    	{
-		    		echo "2,000";
-		    	}
-
-		    	// if(is_numeric(substr($buffer, 0, 2)))
-		    	// {
-		     //    	echo '<b>>'.$buffer.'</b><br>';
-		    	// }else
-		    	// {
-		    	// 	echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-'.$buffer.'<br>';
-		    	// }
-		    }
-		});
+		while ($process->isRunning()) {
+		    echo 'Sanitizing';
+		}
 
 		if (!$process->isSuccessful()) {
 		    throw new ProcessFailedException($process);
 		}
+
+		echo $process->getOutput();
 	}
 
 	public function phaseOne()
