@@ -74,11 +74,15 @@ class Dashboard extends Controller
 		$process->setIdleTimeout(60);
 		$process->start();
 
-		if (!$process->isSuccessful()) {
-		    throw new ProcessFailedException($process);
-		}
+		try {
 
-		echo $process->getOutput();
+		    $process->mustRun();
+		    echo $process->getOutput();
+
+		}catch (ProcessFailedException $exception)
+		{
+		    echo $exception->getMessage();
+		}
 	}
 
 	public function phaseOne()
