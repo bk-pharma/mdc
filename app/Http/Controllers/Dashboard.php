@@ -74,9 +74,10 @@ class Dashboard extends Controller
 		$process->setIdleTimeout(60);
 		$process->start();
 
-		$counter = 0;
-
 		$process->wait(function ($type, $buffer) {
+
+		    $counter = 0;
+
 		    if (Process::ERR === $type) {
 		        echo 'ERR > '.$buffer;
 		    } else {
