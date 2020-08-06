@@ -81,21 +81,24 @@ class Dashboard extends Controller
 		    if (Process::ERR === $type)
 		    {
 		        echo 'ERR > '.$buffer;
-		    } else
-		    {
-		    	if(is_numeric(substr($buffer, 0, 2)))
-		    	{
-		        	echo '<b>>'.$buffer.'</b><br>';
-		    	}else
-		    	{
-		    		echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-'.$buffer.'<br>';
-		    	}
 		    }
+		    // else
+		    // {
+		    // 	if(is_numeric(substr($buffer, 0, 2)))
+		    // 	{
+		    //     	echo '<b>>'.$buffer.'</b><br>';
+		    // 	}else
+		    // 	{
+		    // 		echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-'.$buffer.'<br>';
+		    // 	}
+		    // }
 		});
 
 		if (!$process->isSuccessful()) {
 		    throw new ProcessFailedException($process);
 		}
+
+		echo $process->getOutput();
 	}
 
 	public function phaseOne()
