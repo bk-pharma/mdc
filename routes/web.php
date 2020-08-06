@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,7 +74,7 @@ Route::prefix('/automated')->group(function() {
 	});
 
 	Route::get('/start-process', function() {
-		return App\Http\Controllers\Dashboard::sanitationProcess(0, 5000);
+		Dashboard::sanitationProcess(0, 5000);
 	});
 
 });

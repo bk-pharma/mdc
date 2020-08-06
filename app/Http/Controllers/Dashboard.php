@@ -66,7 +66,7 @@ class Dashboard extends Controller
 		return view('sanitation.automated');
 	}
 
-	public function sanitationProcess($rowStart, $rowCount)
+	public static function sanitationProcess($rowStart, $rowCount)
 	{
 		$process = Process::fromShellCommandline('php artisan sanitize --row_start='.$rowStart.' --row_count='.$rowCount);
 		$process->setWorkingDirectory(base_path());
