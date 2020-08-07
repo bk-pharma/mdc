@@ -51,6 +51,7 @@ class SanitationConsole extends Command
     private $phaseFourTotal = 0;
     private $rulesTotal = 0;
     private $formattedNameTotal = 0;
+    private $sanitizeFormattedNameTotal = 0;
 
     public function __construct(
         MiscInterface $misc,
@@ -77,7 +78,7 @@ class SanitationConsole extends Command
     {
         $md = $this->sanitation_one->getDoctorByName($sanitizedName);
 
-        if(count($md) > 0)
+        if(count($md) === 1)
         {
             if($this->argument('show')) $this->comment('   Phase 1');
 
@@ -439,13 +440,41 @@ class SanitationConsole extends Command
 
                 $finalName = implode(' ', $nameArr);
 
-                if($this->argument('show')) $this->comment('   Name Formatted');
+                if(!$this->sanitizeFormattedName($md, $finalName))
+                {
+                    if($this->argument('show')) $this->comment('   Name Formatted');
 
-                $this->formattedNameTotal += 1;
+                    $this->formattedNameTotal += 1;
 
-                return $this->name_format->formatName($md->raw_id, $sanitizedName, $finalName);
+                    $this->name_format->formatName($md->raw_id, $sanitizedName, $finalName);
+                }
             }
         }
+    }
+
+    private function sanitizeFormattedName($mdName, $sanitizedName)
+    {
+        $md = $this->sanitation_one->getDoctorByFormattedName($sanitizedName);
+
+        if(count($md) > 0)
+        {
+            if($this->argument('show')) $this->comment('   Phase 1 (Formatted Name)');
+
+            $this->sanitizeFormattedNameTotal += 1;
+
+            $this->sanitation_one->update(
+                $mdName->raw_id,
+                $md[0]->sanit_group,
+                $md[0]->sanit_mdname,
+                $md[0]->sanit_mdname,
+                $md[0]->sanit_universe,
+                $md[0]->sanit_mdcode
+            );
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -483,10 +512,9 @@ class SanitationConsole extends Command
                $this->info($counter);
             }
 
-            if(strlen($sanitizedName) > 1)
+            if(!$this->name_format->isUnclassified($sanitizedName))
             {
-                if($this->misc->isSingleWord($sanitizedName)) $this->phaseTwo($md, $sanitizedName);
-                else $this->phaseOne($md, $sanitizedName);
+                $this->phaseOne($md, $sanitizedName);
             }
         }
 
@@ -498,6 +526,7 @@ class SanitationConsole extends Command
         $this->comment('Phase 3: '.$this->phaseThreeTotal);
         $this->comment('Phase 4: '.$this->phaseFourTotal);
         $this->comment('Rules applied: '.$this->rulesTotal);
+        $this->comment('Sanitized Formatted Name: '.$this->sanitizeFormattedNameTotal);
         $this->info(' ');
 
         $this->sanitation_total = (
@@ -505,12 +534,19 @@ class SanitationConsole extends Command
             $this->phaseTwoTotal +
             $this->phaseThreeTotal +
             $this->phaseFourTotal +
-            $this->rulesTotal
+            $this->rulesTotal +
+            $this->sanitizeFormattedNameTotal
         );
 
-        $this->comment('Sanitized: '.$this->sanitation_total);
-        $this->comment('Unsanitized: '.($counter - $this->sanitation_total));
-        $this->comment('  Formatted name:'.$this->formattedNameTotal);
+        $sanitizedPercentage = ($this->sanitation_total / $counter) * 100;
+
+        $unsanitizedTotal = round(($counter - $this->sanitation_total),2);
+
+        $formattedNamePercentage = round(($this->formattedNameTotal / $unsanitizedTotal) * 100,2);
+
+        $this->comment('Sanitized: '.$this->sanitation_total.' ('.$sanitizedPercentage.'%)');
+        $this->comment('Unsanitized: '.$unsanitizedTotal);
+        $this->comment('  Formatted name:'.$this->formattedNameTotal.' ('.$formattedNamePercentage.'%)');
         $this->comment('  Untouched: '.(($counter - $this->sanitation_total) - $this->formattedNameTotal));
 
         $this->info('');

@@ -18,6 +18,15 @@ class SanitationOne implements SanitationOneInterface
         return DB::select('CALL getDoctorByName(:mdName);', $data);
     }
 
+    public function getDoctorByFormattedName($mdName)
+    {
+        $data = [
+            'mdName' => $mdName
+        ];
+
+        return DB::select('CALL getDoctorByFormattedName(:mdName);', $data);
+    }
+
     public function update($rawId, $group, $mdName, $correctedName, $universe, $mdCode)
     {
         $data = [

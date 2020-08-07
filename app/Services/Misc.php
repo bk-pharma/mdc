@@ -26,7 +26,16 @@ class Misc implements MiscInterface
         "DR] ",
         "DR]",
         "DRA  ",
-        "DRA "
+        "DRA ",
+        "]",
+        "]]",
+        "]]]",
+        "[",
+        "[[",
+        "[[[",
+        "`",
+        "``",
+        "```"
 	];
 
 	private $suffix = [
@@ -35,17 +44,26 @@ class Misc implements MiscInterface
         " JR",
         "JR ",
         " SR",
-        "SR "
+        "SR ",
+        "]",
+        "]]",
+        "]]]",
+        "[",
+        "[[",
+        "[[[",
+        "`",
+        "``",
+        "```"
 	];
 
     public function stripPrefix($str)
     {
-    	return ltrim(str_replace($this->prefix, '', $str));
+    	return trim(str_replace($this->prefix, '', $str));
     }
 
     public function stripSuffix($str)
     {
-    	return rtrim(str_replace($this->suffix, '', $str));
+    	return trim(str_replace($this->suffix, '', $str));
     }
 
     public function isExist($value, $array)
