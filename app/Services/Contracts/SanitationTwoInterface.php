@@ -8,5 +8,7 @@ Interface SanitationTwoInterface
 {
 	public function getDoctorByName($mdName, $clauseCols);
 
+	public function getDoctorByFormattedName($mdName);
+
 	public function update($id, $group, $mdName, $correctedName, $universe, $mdCode);
 }

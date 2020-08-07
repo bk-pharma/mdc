@@ -18,6 +18,15 @@ class SanitationFour implements SanitationFourInterface
          return DB::select('CALL getDoctorByName4(:mdName, :cols);', $data);
     }
 
+    public function getDoctorByFormattedName($mdName)
+    {
+        $data = [
+            'mdName' => $mdName
+        ];
+
+        return DB::select('CALL getDoctorByFormattedName4(:mdName);', $data);
+    }
+
     public function update($id, $group, $mdName, $correctedName, $universe, $mdCode)
     {
 

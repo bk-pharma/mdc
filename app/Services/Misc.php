@@ -68,7 +68,9 @@ class Misc implements MiscInterface
 
     public function isExist($value, $array)
     {
-        if(in_array($value, $array))
+        $array1 = array_map('trim', $array);
+
+        if(in_array($value, $array1))
         {
             return true;
         }
