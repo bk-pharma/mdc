@@ -69,7 +69,7 @@ class Dashboard extends Controller
 	public function sanitationProcess($rowStart, $rowCount)
 	{
 		$process = Process::fromShellCommandline('php artisan sanitize --row_start='.$rowStart.' --row_count='.$rowCount);
-		$process->setWorkingDirectory(base_path());
+		$process->setWorkingDirectory('/home/bkadmin/public_html/mdc/dev');
 		$process->setTimeout(3600);
 		$process->setIdleTimeout(600);
 		$process->start();
