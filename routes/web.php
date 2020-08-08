@@ -25,10 +25,6 @@ Route::get('/admin', function () {
 
 Route::prefix('/sanitation')->group(function() {
 
-
-
-
-
 	route::get('/console/get-all-md', 'Dashboard@getRawDataConsole');
 	Route::get('/get-all-md', 'Dashboard@getRawData');
 
