@@ -104,7 +104,7 @@ class Dashboard extends Controller
 			'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
 			'totalSanitized' => $this->raw_data->getSanitizedCount()[0]->totalSanitized,
 			'totalAmount' => $this->raw_data->getSanitizedCount()[0]->totalAmount,
-			'process' => $this->isSanitationProcessRunning()
+			'process' => trim($this->isSanitationProcessRunning())
 		];
 
 		return response()->json($data);
