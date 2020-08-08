@@ -102,7 +102,7 @@ class Dashboard extends Controller
 	{
 
 		$processTotal = trim($this->isSanitationProcessRunning());
-		$processTotal1 = (int)$processTotal;
+		$processTotal1 = $processTotal(int);
 
 		$data = [
 			'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
