@@ -72,12 +72,13 @@ class Dashboard extends Controller
 		$process->setWorkingDirectory(base_path());
 		$process->start();
 
+		while ($process->isRunning()) {
+		    $process->stop(3, SIGINT);
+		}
+
 		if (!$process->isSuccessful()) {
 		    throw new ProcessFailedException($process);
 		}
-
-		$process->wait();
-		$process->stop(3, SIGINT);
 	}
 
 	public function getSanitizedCount()
