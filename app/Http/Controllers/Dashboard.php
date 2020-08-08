@@ -74,12 +74,27 @@ class Dashboard extends Controller
 		while ($process->isRunning())
 		{
 			echo "Sanitation started";
-			usleep(7200000000); //2hrs
+			usleep(120000000); //2mins
 			exit;
 		}
 
 		if (!$process->isSuccessful()) {
 		    throw new ProcessFailedException($process);
+		}
+	}
+
+	public function isSanitationProcessRunning()
+	{
+		$process = Process::fromShellCommandline('ps aux --no-heading | grep artisan | wc -l');
+		$process->setWorkingDirectory(base_path());
+
+		try {
+
+		    $process->mustRun();
+		    echo $process->getOutput();
+
+		} catch (ProcessFailedException $exception) {
+		    echo $exception->getMessage();
 		}
 	}
 
