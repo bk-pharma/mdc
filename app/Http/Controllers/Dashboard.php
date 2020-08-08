@@ -60,7 +60,6 @@ class Dashboard extends Controller
 		return response()->json($this->raw_data->getRawData($rowStart, $rowCount));
 	}
 
-
 	public function automated()
 	{
 		return view('sanitation.automated');
@@ -72,13 +71,16 @@ class Dashboard extends Controller
 		$process->setWorkingDirectory(base_path());
 		$process->start();
 
-		$process->wait();
-		$process->stop(3, SIGINT);
+		while ($process->isRunning())
+		{
+			echo "Sanitation started";
+			usleep(7200000000); //2hrs
+			exit;
+		}
 
 		if (!$process->isSuccessful()) {
 		    throw new ProcessFailedException($process);
 		}
-
 	}
 
 	public function getSanitizedCount()

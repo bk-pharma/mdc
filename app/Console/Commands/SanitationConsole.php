@@ -589,9 +589,6 @@ class SanitationConsole extends Command
             if($this->argument('show'))
             {
                 $this->info($counter.'. '.$md->raw_doctor.' ['.$sanitizedName.']');
-            }else
-            {
-               $this->info($counter);
             }
 
             if(!$this->name_format->isUnclassified($sanitizedName))
@@ -602,43 +599,50 @@ class SanitationConsole extends Command
 
         $endSanitation = microtime(true);
 
-        $this->info(' ');
-        $this->comment('Phase 1: '.$this->phaseOneTotal);
-        $this->comment('Phase 2: '.$this->phaseTwoTotal);
-        $this->comment('Phase 3: '.$this->phaseThreeTotal);
-        $this->comment('Phase 4: '.$this->phaseFourTotal);
-        $this->comment('Rules applied: '.$this->rulesTotal);
-        $this->comment('Phase 1 Formatted Name: '.$this->phaseOneFormattedNameTotal);
-        $this->comment('Phase 2 Formatted Name: '.$this->phaseTwoFormattedNameTotal);
-        $this->comment('Phase 3 Formatted Name: '.$this->phaseThreeFormattedNameTotal);
-        $this->comment('Phase 4 Formatted Name: '.$this->phaseFourFormattedNameTotal);
-        $this->info(' ');
 
-        $this->sanitation_total = (
-            $this->phaseOneTotal +
-            $this->phaseTwoTotal +
-            $this->phaseThreeTotal +
-            $this->phaseFourTotal +
-            $this->rulesTotal +
-            $this->phaseOneFormattedNameTotal +
-            $this->phaseTwoFormattedNameTotal +
-            $this->phaseThreeFormattedNameTotal +
-            $this->phaseFourFormattedNameTotal
-        );
+        if($this->argument('show'))
+        {
+            $this->info(' ');
+            $this->comment('Phase 1: '.$this->phaseOneTotal);
+            $this->comment('Phase 2: '.$this->phaseTwoTotal);
+            $this->comment('Phase 3: '.$this->phaseThreeTotal);
+            $this->comment('Phase 4: '.$this->phaseFourTotal);
+            $this->comment('Rules applied: '.$this->rulesTotal);
+            $this->comment('Phase 1 Formatted Name: '.$this->phaseOneFormattedNameTotal);
+            $this->comment('Phase 2 Formatted Name: '.$this->phaseTwoFormattedNameTotal);
+            $this->comment('Phase 3 Formatted Name: '.$this->phaseThreeFormattedNameTotal);
+            $this->comment('Phase 4 Formatted Name: '.$this->phaseFourFormattedNameTotal);
+            $this->info(' ');
 
-        $sanitizedPercentage = ($this->sanitation_total / $counter) * 100;
+            $this->sanitation_total = (
+                $this->phaseOneTotal +
+                $this->phaseTwoTotal +
+                $this->phaseThreeTotal +
+                $this->phaseFourTotal +
+                $this->rulesTotal +
+                $this->phaseOneFormattedNameTotal +
+                $this->phaseTwoFormattedNameTotal +
+                $this->phaseThreeFormattedNameTotal +
+                $this->phaseFourFormattedNameTotal
+            );
 
-        $unsanitizedTotal = round(($counter - $this->sanitation_total),2);
+            $sanitizedPercentage = ($this->sanitation_total / $counter) * 100;
 
-        $formattedNamePercentage = round(($this->formattedNameTotal / $unsanitizedTotal) * 100,2);
+            $unsanitizedTotal = round(($counter - $this->sanitation_total),2);
 
-        $this->comment('Sanitized: '.$this->sanitation_total.' ('.$sanitizedPercentage.'%)');
-        $this->comment('Unsanitized: '.$unsanitizedTotal);
-        $this->comment('  Formatted name:'.$this->formattedNameTotal.' ('.$formattedNamePercentage.'%)');
-        $this->comment('  Untouched: '.(($counter - $this->sanitation_total) - $this->formattedNameTotal));
+            $formattedNamePercentage = round(($this->formattedNameTotal / $unsanitizedTotal) * 100,2);
 
-        $this->info('');
-        $this->info('Duration: '.date("H:i:s",$endSanitation-$startSanitation));
-        $this->info('Completed: '.date('M d Y g:i A'));
+            $this->comment('Sanitized: '.$this->sanitation_total.' ('.$sanitizedPercentage.'%)');
+            $this->comment('Unsanitized: '.$unsanitizedTotal);
+            $this->comment('  Formatted name:'.$this->formattedNameTotal.' ('.$formattedNamePercentage.'%)');
+            $this->comment('  Untouched: '.(($counter - $this->sanitation_total) - $this->formattedNameTotal));
+
+            $this->info('');
+            $this->info('Duration: '.date("H:i:s",$endSanitation-$startSanitation));
+            $this->info('Completed: '.date('M d Y g:i A'));
+        }else
+        {
+            $this->line('done');
+        }
     }
 }
