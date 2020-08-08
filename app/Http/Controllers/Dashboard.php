@@ -70,7 +70,6 @@ class Dashboard extends Controller
 	{
 		$process = Process::fromShellCommandline('php artisan sanitize --row_start='.$rowStart.' --row_count='.$rowCount);
 		$process->setWorkingDirectory(base_path());
-		$process->disableOutput();
 		$process->start();
 
 		while (!$process->isRunning()) {
