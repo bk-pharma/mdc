@@ -83,7 +83,13 @@ class Dashboard extends Controller
 
 	public function getSanitizedCount()
 	{
-		return response()->json($this->raw_data->getSanitizedCount());
+		$data = [
+			'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
+			'totalSanitized' => $this->raw_data->getSanitizedCount()[0]->totalSanitized,
+			'totalAmount' => $this->raw_data->getSanitizedCount()[0]->totalAmount
+		];
+
+		return response()->json($data);
 	}
 
 	public function phaseOne()
