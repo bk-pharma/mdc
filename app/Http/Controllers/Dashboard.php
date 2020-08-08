@@ -71,18 +71,17 @@ class Dashboard extends Controller
 		$process = Process::fromShellCommandline('php artisan sanitize --row_start='.$rowStart.' --row_count='.$rowCount);
 		$process->setWorkingDirectory(base_path());
 		$process->setTimeout(3600);
-		$process->setIdleTimeout(600);
+		$process->setIdleTimeout(60);
+		$process->disableOutput();
 		$process->start();
 
-		while ($process->isRunning()) {
-		    // waiting for process to finish
+		while (!$process->isRunning()) {
+		    $process->stop(3, SIGINT);
 		}
 
 		if (!$process->isSuccessful()) {
 		    throw new ProcessFailedException($process);
 		}
-
-		echo $process->getOutput();
 	}
 
 	public function getSanitizedCount()
