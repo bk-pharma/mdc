@@ -72,7 +72,7 @@ class Dashboard extends Controller
 		$process->setWorkingDirectory(base_path());
 		$process->start();
 
-		while ($process->isRunning()) {
+		if(!$process->isRunning()) {
 		    $process->stop(3, SIGINT);
 		}
 
