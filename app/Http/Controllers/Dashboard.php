@@ -73,9 +73,8 @@ class Dashboard extends Controller
 
 		while ($process->isRunning())
 		{
-			echo "Sanitation started";
-			usleep(120000000); //2mins
-			exit;
+			usleep(7200000000); //2hrs
+			echo "Sanitation is back!";
 		}
 
 		if (!$process->isSuccessful()) {
