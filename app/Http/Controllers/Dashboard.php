@@ -105,7 +105,7 @@ class Dashboard extends Controller
 
 		if($processTotal === 1)
 		{
-			$processTotal = 0
+			$processTotal = 0;
 		}else
 		{
 			$processTotal -= 1;
