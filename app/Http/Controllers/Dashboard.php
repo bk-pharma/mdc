@@ -100,11 +100,20 @@ class Dashboard extends Controller
 
 	public function getSanitizedCount()
 	{
+
+		$process = trim($this->isSanitationProcessRunning())
+		$processTotal = 0;
+
+		if(is_numeric($process))
+		{
+			$processTotal = ((int)$process - 2);
+		}
+
 		$data = [
 			'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
 			'totalSanitized' => $this->raw_data->getSanitizedCount()[0]->totalSanitized,
 			'totalAmount' => $this->raw_data->getSanitizedCount()[0]->totalAmount,
-			'process' => trim($this->isSanitationProcessRunning())
+			'process' => $processTotal
 		];
 
 		return response()->json($data);
