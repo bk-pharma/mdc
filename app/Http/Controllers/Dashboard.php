@@ -83,7 +83,7 @@ class Dashboard extends Controller
 		}
 	}
 
-	public function isSanitationProcessRunning()
+	private function isSanitationProcessRunning()
 	{
 		$process = Process::fromShellCommandline('ps aux --no-heading | grep artisan | wc -l');
 		$process->setWorkingDirectory(base_path());
@@ -91,7 +91,7 @@ class Dashboard extends Controller
 		try {
 
 		    $process->mustRun();
-		    echo $process->getOutput();
+		    return $process->getOutput();
 
 		} catch (ProcessFailedException $exception) {
 		    echo $exception->getMessage();
@@ -103,7 +103,8 @@ class Dashboard extends Controller
 		$data = [
 			'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
 			'totalSanitized' => $this->raw_data->getSanitizedCount()[0]->totalSanitized,
-			'totalAmount' => $this->raw_data->getSanitizedCount()[0]->totalAmount
+			'totalAmount' => $this->raw_data->getSanitizedCount()[0]->totalAmount,
+			'process' => $this->isSanitationProcessRunning()
 		];
 
 		return response()->json($data);
