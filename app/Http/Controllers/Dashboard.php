@@ -76,12 +76,13 @@ class Dashboard extends Controller
 
 		}
 
+		$process->wait();
+		$process->stop(3, SIGINT);
+
 		if (!$process->isSuccessful()) {
 		    throw new ProcessFailedException($process);
 		}
 
-		$process->wait();
-		$process->stop(3, SIGINT);
 	}
 
 	public function getSanitizedCount()
