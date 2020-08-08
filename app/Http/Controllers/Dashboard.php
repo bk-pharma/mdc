@@ -76,7 +76,7 @@ class Dashboard extends Controller
 		{
 			$process->checkTimeout();
 			usleep(600000000); //10mins
-			die();
+			die("Terminating");
 		}
 
 		if (!$process->isSuccessful()) {
