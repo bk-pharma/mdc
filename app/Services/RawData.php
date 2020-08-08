@@ -20,9 +20,10 @@ class RawData implements RawDataInterface
 
     public function getSanitizedCount()
     {
-        return DB::select('
+        return DB::select("
             SELECT DISTINCT COUNT(raw_id) as totalSanitized, SUM(raw_amount) as totalAmount
             FROM sanitation_result_new
-            WHERE raw_status != NULL');
+            WHERE raw_status != ''
+        ");
     }
 }
