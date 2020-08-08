@@ -103,19 +103,11 @@ class Dashboard extends Controller
 
 		$processTotal = (int)trim($this->isSanitationProcessRunning());
 
-		if($processTotal === 1)
-		{
-			$processTotal = 0;
-		}else
-		{
-			$processTotal -= 1;
-		}
-
 		$data = [
 			'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
 			'totalSanitized' => $this->raw_data->getSanitizedCount()[0]->totalSanitized,
 			'totalAmount' => $this->raw_data->getSanitizedCount()[0]->totalAmount,
-			'process' => $processTotal
+			'process' => ($processTotal - 1)
 		];
 
 		return response()->json($data);
