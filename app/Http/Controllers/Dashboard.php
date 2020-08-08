@@ -101,7 +101,7 @@ class Dashboard extends Controller
 	public function getSanitizedCount()
 	{
 
-		$processTotal = int(trim($this->isSanitationProcessRunning()));
+		$processTotal = (int)trim($this->isSanitationProcessRunning());
 
 		if($processTotal === 1)
 		{
