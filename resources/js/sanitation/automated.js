@@ -26,7 +26,7 @@ new Vue({
                 return num.toLocaleString();
             }else
             {
-                return 0;
+                return num;
             }
         }
     },
