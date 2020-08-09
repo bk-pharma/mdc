@@ -115,7 +115,6 @@ new Vue({
                 if(callFrom === 'start')
                 {
                     this.rowCount = this.totalUnsanitizedRow;
-                    this.percentageSanitizedRow = 0;
                     this.percentageSanitationProcess = 0;
                 }
             })
