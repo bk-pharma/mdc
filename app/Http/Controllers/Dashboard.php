@@ -67,6 +67,26 @@ class Dashboard extends Controller
 
 	public function sanitationProcess($rowStart, $rowCount)
 	{
+
+		$rowsPerProcess = 100;
+		$processNeeded = ($rowCount / $rowsPerProcess);
+
+		for($i = 0; $i < $processNeeded; $i++)
+		{
+			if($i === 0)
+			{
+				$processRowStart = 0;
+			}else
+			{
+				$processRowStart = $rowsPerProcess + $i;
+			}
+
+			$this->startSanitationProcess($processRowStart, $rowCount);
+		}
+	}
+
+	private function startSanitationProcess($rowStart, $rowCount)
+	{
 		$process = Process::fromShellCommandline('php artisan sanitize --row_start='.$rowStart.' --row_count='.$rowCount);
 		$process->setWorkingDirectory(base_path());
 		$process->setTimeout(3600);
