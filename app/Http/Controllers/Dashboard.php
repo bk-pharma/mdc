@@ -67,7 +67,6 @@ class Dashboard extends Controller
 
 	public function sanitationProcess($rowStart, $rowCount)
 	{
-
 		$rowsPerProcess = 100;
 		$processNeeded = ($rowCount / $rowsPerProcess);
 
@@ -85,6 +84,9 @@ class Dashboard extends Controller
 
 			$this->startSanitationProcess($processRowStart, $rowsPerProcess);
 		}
+
+		usleep(600000000);
+		exit;
 	}
 
 	private function startSanitationProcess($rowStart, $rowCount)
@@ -95,8 +97,8 @@ class Dashboard extends Controller
 
 		while ($process->isRunning())
 		{
-			$process->checkTimeout();
-			usleep(600000000); //10mins
+			// $process->checkTimeout();
+			// usleep(600000000); //10mins
 		}
 
 		if (!$process->isSuccessful()) {
