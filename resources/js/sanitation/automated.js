@@ -7,7 +7,7 @@ new Vue({
            rowCount: 1000,
            processRowStartArr: [],
            totalSanitizedRow: 0,
-           totalSanitizedAmount: 0
+           totalSanitizedAmount: 0,
            totalRaw: 0
         }
     },
