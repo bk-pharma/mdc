@@ -31,7 +31,7 @@
 				Total Sanitized:
 				<span>
 					@{{ totalSanitizedRow | numberFormat }}
-					<span style="color:#ff0000;">@{{ percentageSanitizedRow | decimalFormat }}</span>
+					<span style="color:#ff0000;">@{{ percentageSanitizedRow | decimalFormat }}%</span>
 				</span>
 			</h6>
 			<h6 class="mt-3">
