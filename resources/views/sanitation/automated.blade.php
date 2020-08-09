@@ -28,7 +28,7 @@
 			</button>
 
 			<h6 class="mt-3">Total Sanitized: <span>@{{ totalSanitizedRow }} / @{{ rowCount }}</span></h6>
-			<h6 class="mt-3">Total Amount: <span>@{{ totalSanitizedAmount }}</span></h6>
+			<h6 class="mt-3">Total Amount: <span>@{{ totalSanitizedAmount | numberFormat }}</span></h6>
 			<h6 class="mt-3">Progress: <span>@{{ currentSanitationProcess }} / @{{ totalSanitationProcess }}</span></h6>
 			<h6 class="mt-3">Total Unsanitized: <span>@{{ totalUnsanitizedRow }}</span></h6>
 		</div>

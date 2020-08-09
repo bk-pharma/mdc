@@ -18,6 +18,11 @@ new Vue({
     created() {
         this.sanitizedCount('start');
     },
+    filters: {
+        numberFormat: function(num) {
+            return num.toLocaleString();
+        }
+    },
     methods : {
         startConsole: function()
         {
