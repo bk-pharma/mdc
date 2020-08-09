@@ -81,7 +81,7 @@ class Dashboard extends Controller
 				$processRowStart = $rowsPerProcess + $i;
 			}
 
-			$this->startSanitationProcess($processRowStart, $rowCount);
+			$this->startSanitationProcess($processRowStart, $rowsPerProcess);
 		}
 	}
 
