@@ -38,7 +38,7 @@
 				Progress: <span>@{{ currentSanitationProcess | numberFormat }} / @{{ totalSanitationProcess | numberFormat }}</span>
 			</h6>
 			<h6 class="mt-3">
-				Total Unsanitized: <span>@{{ totalUnsanitizedRow }}</span>
+				Total Unsanitized: <span>@{{ totalUnsanitizedRow | numberFormat }}</span>
 			</h6>
 		</div>
 	</div>
