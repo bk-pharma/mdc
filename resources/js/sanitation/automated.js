@@ -66,6 +66,7 @@ new Vue({
 
                 let resp = response.data;
                 console.log(resp);
+                this.totalSanitizedRow = resp.totalSanitized;
 
             })
             .catch((error) => {
