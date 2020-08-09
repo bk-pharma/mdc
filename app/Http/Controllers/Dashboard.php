@@ -84,9 +84,6 @@ class Dashboard extends Controller
 
 			$this->startSanitationProcess($processRowStart, $rowsPerProcess);
 		}
-
-		usleep(600000000);
-		exit;
 	}
 
 	private function startSanitationProcess($rowStart, $rowCount)
@@ -104,6 +101,8 @@ class Dashboard extends Controller
 		if (!$process->isSuccessful()) {
 		    throw new ProcessFailedException($process);
 		}
+
+		usleep(3000000);
 	}
 
 	private function isSanitationProcessRunning()
