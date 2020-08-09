@@ -2,7 +2,7 @@ new Vue({
     el: '#automatedPhases-container',
     data() {
         return {
-           sanitationIterator: 3,
+           sanitationIterator: 4,
            automatedLabel : '',
            sanitationBtn: false,
            processRowStartArr: [],
@@ -13,6 +13,7 @@ new Vue({
            totalUnsanitizedRow: 0,
            totalSanitizedAmount: 0,
            totalRaw: 0,
+           rowsPerSanitationProcess: 50,
            currentSanitationProcess: 0,
            totalSanitationProcess:  0,
            percentageSanitationProcess: 0
@@ -48,8 +49,7 @@ new Vue({
         {
             this.automatedLabel = 'Sanitation in process...';
 
-            let rowsPerSanitationProcess = 50;
-            let sanitationProcessNeeded = (this.rowCount / rowsPerSanitationProcess);
+            let sanitationProcessNeeded = (this.rowCount / this.rowsPerSanitationProcess);
             let processRowStart = 0;
 
             for(let i = 0; i < sanitationProcessNeeded; i++)
@@ -59,7 +59,7 @@ new Vue({
                     processRowStart = 0;
                 }else
                 {
-                    processRowStart = (i * rowsPerSanitationProcess) + 1;
+                    processRowStart = (i * this.rowsPerSanitationProcess) + 1;
                 }
 
                 this.processRowStartArr.push(processRowStart);
@@ -67,11 +67,12 @@ new Vue({
 
             this.totalSanitationProcess = (this.processRowStartArr.length - 1);
 
-            this.sanitationProcess1(0, rowsPerSanitationProcess);
-            this.sanitationProcess2(1, rowsPerSanitationProcess);
-            this.sanitationProcess2(2, rowsPerSanitationProcess);
+            this.sanitationProcess1(0);
+            this.sanitationProcess2(1);
+            this.sanitationProcess2(2);
+            this.sanitationProcess2(3);
         },
-        sanitationProcess1: function(index, rowCount)
+        sanitationProcess1: function(index)
         {
            this.currentSanitationProcess = index;
            this.rowCountField = true;
@@ -79,7 +80,7 @@ new Vue({
 
            let rowStart = this.processRowStartArr[index];
 
-            axios.get(`automated/start-process/${rowStart}/${rowCount}`)
+            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
             .then((response) =>
             {
                 this.sanitizedCount(null);
@@ -89,7 +90,7 @@ new Vue({
 
                 if(typeof nextRowStart !== 'undefined')
                 {
-                    this.sanitationProcess1(nextIndex, nextRowStart, rowCount);
+                    this.sanitationProcess1(nextIndex);
                 }else
                 {
                     this.automatedLabel = '';
@@ -110,7 +111,7 @@ new Vue({
 
            let rowStart = this.processRowStartArr[index];
 
-            axios.get(`automated/start-process/${rowStart}/${rowCount}`)
+            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
             .then((response) =>
             {
                 this.sanitizedCount(null);
@@ -120,7 +121,7 @@ new Vue({
 
                 if(typeof nextRowStart !== 'undefined')
                 {
-                    this.sanitationProcess2(nextIndex, nextRowStart, rowCount);
+                    this.sanitationProcess2(nextIndex);
                 }else
                 {
                     this.automatedLabel = '';
@@ -141,7 +142,7 @@ new Vue({
 
            let rowStart = this.processRowStartArr[index];
 
-            axios.get(`automated/start-process/${rowStart}/${rowCount}`)
+            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
             .then((response) =>
             {
                 this.sanitizedCount(null);
@@ -151,7 +152,38 @@ new Vue({
 
                 if(typeof nextRowStart !== 'undefined')
                 {
-                    this.sanitationProcess3(nextIndex, nextRowStart, rowCount);
+                    this.sanitationProcess3(nextIndex);
+                }else
+                {
+                    this.automatedLabel = '';
+                    this.rowCountField = false;
+                    this.sanitationBtn = false;
+                }
+            })
+            .catch((error) =>
+            {
+                console.log(error);
+            })
+        },
+        sanitationProcess4: function(index, rowCount)
+        {
+           this.currentSanitationProcess = index;
+           this.rowCountField = true;
+           this.sanitationBtn = true;
+
+           let rowStart = this.processRowStartArr[index];
+
+            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
+            .then((response) =>
+            {
+                this.sanitizedCount(null);
+
+                let nextRowStart = this.processRowStartArr[index + this.sanitationIterator];
+                let nextIndex = index + this.sanitationIterator;
+
+                if(typeof nextRowStart !== 'undefined')
+                {
+                    this.sanitationProcess4(nextIndex);
                 }else
                 {
                     this.automatedLabel = '';
