@@ -77,6 +77,7 @@ new Vue({
             this.currentSanitationProcess = index;
 
              this.processRowStartArr.splice(index, 1);
+             this.totalSanitationProcess = this.processRowStartArr.length;
 
             let rowStart = this.processRowStartArr[index];
 
