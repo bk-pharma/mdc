@@ -76,6 +76,8 @@ new Vue({
 
             this.currentSanitationProcess = index;
 
+             this.processRowStartArr.splice(index, 1);
+
             let rowStart = this.processRowStartArr[index];
 
             axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
