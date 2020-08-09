@@ -2,7 +2,7 @@ new Vue({
     el: '#automatedPhases-container',
     data() {
         return {
-           sanitationIterator: 50,
+           sanitationIterator: 20,
            automatedLabel : '',
            sanitationBtn: false,
            processRowStartArr: [],
