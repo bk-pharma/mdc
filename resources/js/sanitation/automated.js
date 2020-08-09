@@ -21,7 +21,7 @@ new Vue({
     filters: {
         numberFormat: function(num)
         {
-            if(!isNaN(num))
+            if(!isNaN(num) || num !== null)
             {
                 return num.toLocaleString();
             }else
