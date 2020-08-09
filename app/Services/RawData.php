@@ -21,7 +21,7 @@ class RawData implements RawDataInterface
     public function getAllRawData()
     {
         return DB::select("
-            SELECT DISTINCT FORMAT(COUNT(raw_id),0) as totalData
+            SELECT DISTINCT COUNT(raw_id) as totalData
             FROM sanitation_result_new
         ");
     }
