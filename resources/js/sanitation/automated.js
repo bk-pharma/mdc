@@ -3,17 +3,45 @@ new Vue({
     data() {
         return {
            automatedLabel : '',
-
+           sanitationBtn: false,
+           rowCount: 1000
         }
     },
 
 methods : {
-    startConsole : function(){
+    startConsole: function() {
+
         this.automatedLabel = 'Starting to Sanitize all the data . . . .';
-        /* setInterval(function(){ alert("Hello"); }, 60 * 1000); */
-        window.location.href = `automated/start-sanitize`;
+
+        let rowsPerSanitationProcess = 100;
+        let sanitationProcessNeeded = (this.rowCount / rowsPerSanitationProcess);
+        let processRowStart = 0;
+
+        for(let i = 0; i < sanitationProcessNeeded; i++)
+        {
+            if(i === 0)
+            {
+                processRowStart = 0;
+            }else
+            {
+                processRowStart = (i * rowsPerSanitationProcess) + 1;
+            }
+
+            this.sanitationProcess(processRowStart, rowsPerSanitationProcess);
+        }
     },
-    
+    sanitationProcess: function(rowStart, rowCount)
+    {
+        axios.get(`automated/start-process/${rowStart}/${rowCount}`)
+        .then((response) =>
+        {
+            console.log(response.data);
+        })
+        .catch((error) =>
+        {
+
+        })
+    }
 }
 
 });

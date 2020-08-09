@@ -9,23 +9,26 @@
 		</div>
 	</div>
 
-	
+
 	<div class="row mt-3">
 
 		<div class="col-md-6">
-			<h3>@{{automatedLabel}}</h3>
+			<h5>@{{automatedLabel}}</h5>
 		</div>
 
-		
-		
+
+
 	</div>
 	<div class="row mt-2">
 		<div class="col-md text-left">
-			<button type="button" @click="startConsole()" class="btn btn-sm btn-success" :disabled="sanitationBtn">Automated Sanitize <i class="fa fa-robot"></i></button>
-
+			<label>Total Sanitation</label>
+			<input type="text" :value="rowCount">
+			<button type="button" @click="startConsole()" class="btn btn-sm btn-success" :disabled="sanitationBtn">
+				<i class="fa fa-play"></i> Start
+			</button>
 		</div>
 	</div>
-	
+
 </div>
 
 @endsection
