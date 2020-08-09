@@ -76,7 +76,14 @@ new Vue({
                 this.totalRaw = resp.totalRaw;
                 this.totalSanitizedRow = resp.totalSanitized;
                 this.totalSanitizedAmount = resp.totalAmount;
-                this.totalUnsanitizedRow = (resp.totalRaw - this.totalSanitizedRow);
+
+                if(resp.totalRaw !== null)
+                {
+                    this.totalUnsanitizedRow = (resp.totalRaw - this.totalSanitizedRow);
+                }else
+                {
+                    this.totalUnsanitizedRow = resp.totalRaw;
+                }
             })
             .catch((error) => {
 
