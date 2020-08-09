@@ -67,7 +67,7 @@ new Vue({
 
             this.totalSanitationProcess = (this.processRowStartArr.length - 1);
 
-            for(let i = 0; <= this.sanitationIterator; i++)
+            for(let i = 0; i <= this.sanitationIterator; i++)
             {
                 setTimeout(function(){
                     this.sanitationProcess(i);
