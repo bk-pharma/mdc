@@ -32,7 +32,7 @@ new Vue({
         },
         decimalFormat: function(num)
         {
-            if(num)
+            if(num || !isNaN(num))
             {
                 return num.toFixed(2);
             }else

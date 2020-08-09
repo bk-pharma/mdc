@@ -38,7 +38,7 @@
 				Progress:
 				<span>
 					@{{ currentSanitationProcess | numberFormat }} / @{{ totalSanitationProcess | numberFormat }}
-					(@{{ percentageSanitationProcess | decimalFormat }}%)
+					<span style="color:#ff0000;">@{{ percentageSanitationProcess | decimalFormat }}%</span>
 				</span>
 			</h6>
 			<h6 class="mt-3">
