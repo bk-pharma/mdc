@@ -27,10 +27,19 @@
 				<i class="fa fa-play"></i> Start
 			</button>
 
-			<h6 class="mt-3">Total Sanitized: <span>@{{ totalSanitizedRow }} / @{{ rowCount }}</span></h6>
-			<h6 class="mt-3">Total Amount: <span>@{{ totalSanitizedAmount | numberFormat }}</span></h6>
-			<h6 class="mt-3">Progress: <span>@{{ currentSanitationProcess }} / @{{ totalSanitationProcess }}</span></h6>
-			<h6 class="mt-3">Total Unsanitized: <span>@{{ totalUnsanitizedRow }}</span></h6>
+			<h6 class="mt-3">
+				Total Sanitized:
+				<span>@{{ totalSanitizedRow | numberFormat }} / @{{ rowCount | numberFormat }}</span>
+			</h6>
+			<h6 class="mt-3">
+				Total Amount: <span>₱ @{{ totalSanitizedAmount | numberFormat }}</span>
+			</h6>
+			<h6 class="mt-3">
+				Progress: <span>@{{ currentSanitationProcess | numberFormat }} / @{{ totalSanitationProcess | numberFormat }}</span>
+			</h6>
+			<h6 class="mt-3">
+				Total Unsanitized: <span>@{{ totalUnsanitizedRow | numberFormat }}</span>
+			</h6>
 		</div>
 	</div>
 
