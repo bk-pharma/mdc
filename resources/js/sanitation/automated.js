@@ -76,9 +76,6 @@ new Vue({
 
             this.currentSanitationProcess = index;
 
-             this.processRowStartArr.splice(index, 1);
-             this.totalSanitationProcess = this.processRowStartArr.length;
-
             let rowStart = this.processRowStartArr[index];
 
             axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
@@ -97,6 +94,9 @@ new Vue({
                     this.rowCountField = false;
                     this.sanitationBtn = false;
                 }
+
+                this.processRowStartArr.splice(index, 1);
+                this.totalSanitationProcess = this.processRowStartArr.length;
 
                 this.totalRaw = resp.totalRaw;
                 this.totalSanitizedRow = resp.totalSanitized;
