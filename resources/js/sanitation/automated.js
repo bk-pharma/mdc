@@ -69,9 +69,7 @@ new Vue({
 
             for(let i = 0; i <= this.sanitationIterator; i++)
             {
-                setTimeout(function(){
-                    this.sanitationProcess(i);
-                },7000);
+                this.sanitationProcess(i);
             }
         },
         sanitationProcess: function(index)
@@ -82,28 +80,33 @@ new Vue({
 
            let rowStart = this.processRowStartArr[index];
 
-            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
-            .then((response) =>
-            {
-                this.sanitizedCount(null);
+            setTimeout(function() {
 
-                let nextRowStart = this.processRowStartArr[index + this.sanitationIterator];
-                let nextIndex = index + this.sanitationIterator;
+                axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
+                .then((response) =>
+                {
+                    this.sanitizedCount(null);
 
-                if(typeof nextRowStart !== 'undefined')
+                    let nextRowStart = this.processRowStartArr[index + this.sanitationIterator];
+                    let nextIndex = index + this.sanitationIterator;
+
+                    if(typeof nextRowStart !== 'undefined')
+                    {
+                        this.sanitationProcess(nextIndex);
+                    }else
+                    {
+                        this.automatedLabel = '';
+                        this.rowCountField = false;
+                        this.sanitationBtn = false;
+                    }
+                })
+                .catch((error) =>
                 {
-                    this.sanitationProcess(nextIndex);
-                }else
-                {
-                    this.automatedLabel = '';
-                    this.rowCountField = false;
-                    this.sanitationBtn = false;
-                }
-            })
-            .catch((error) =>
-            {
-                console.log(error);
-            })
+                    console.log(error);
+                })
+
+            },7000);
+
         },
         sanitizedCount: function(callFrom)
         {
