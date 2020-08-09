@@ -2,7 +2,7 @@ new Vue({
     el: '#automatedPhases-container',
     data() {
         return {
-           sanitationIterator: 2,
+           sanitationIterator: 3,
            automatedLabel : '',
            sanitationBtn: false,
            processRowStartArr: [],
@@ -67,42 +67,9 @@ new Vue({
 
             this.totalSanitationProcess = (this.processRowStartArr.length - 1);
 
-            this.sanitationProcess(0, rowsPerSanitationProcess);
-
-            setTimeout(function(){
-                this.sanitationProcess1(1, rowsPerSanitationProcess);
-            },200);
-        },
-        sanitationProcess: function(index, rowCount)
-        {
-           this.currentSanitationProcess = index;
-           this.rowCountField = true;
-           this.sanitationBtn = true;
-
-           let rowStart = this.processRowStartArr[index];
-
-            axios.get(`automated/start-process/${rowStart}/${rowCount}`)
-            .then((response) =>
-            {
-                this.sanitizedCount(null);
-
-                let nextRowStart = this.processRowStartArr[index + this.sanitationIterator];
-                let nextIndex = index + this.sanitationIterator;
-
-                if(typeof nextRowStart !== 'undefined')
-                {
-                    this.sanitationProcess(nextIndex, nextRowStart, rowCount);
-                }else
-                {
-                    this.automatedLabel = '';
-                    this.rowCountField = false;
-                    this.sanitationBtn = false;
-                }
-            })
-            .catch((error) =>
-            {
-                console.log(error);
-            })
+            this.sanitationProcess1(0, rowsPerSanitationProcess);
+            this.sanitationProcess2(1, rowsPerSanitationProcess);
+            this.sanitationProcess2(2, rowsPerSanitationProcess);
         },
         sanitationProcess1: function(index, rowCount)
         {
@@ -122,7 +89,69 @@ new Vue({
 
                 if(typeof nextRowStart !== 'undefined')
                 {
-                    this.sanitationProcess(nextIndex, nextRowStart, rowCount);
+                    this.sanitationProcess1(nextIndex, nextRowStart, rowCount);
+                }else
+                {
+                    this.automatedLabel = '';
+                    this.rowCountField = false;
+                    this.sanitationBtn = false;
+                }
+            })
+            .catch((error) =>
+            {
+                console.log(error);
+            })
+        },
+        sanitationProcess2: function(index, rowCount)
+        {
+           this.currentSanitationProcess = index;
+           this.rowCountField = true;
+           this.sanitationBtn = true;
+
+           let rowStart = this.processRowStartArr[index];
+
+            axios.get(`automated/start-process/${rowStart}/${rowCount}`)
+            .then((response) =>
+            {
+                this.sanitizedCount(null);
+
+                let nextRowStart = this.processRowStartArr[index + this.sanitationIterator];
+                let nextIndex = index + this.sanitationIterator;
+
+                if(typeof nextRowStart !== 'undefined')
+                {
+                    this.sanitationProcess2(nextIndex, nextRowStart, rowCount);
+                }else
+                {
+                    this.automatedLabel = '';
+                    this.rowCountField = false;
+                    this.sanitationBtn = false;
+                }
+            })
+            .catch((error) =>
+            {
+                console.log(error);
+            })
+        },
+        sanitationProcess3: function(index, rowCount)
+        {
+           this.currentSanitationProcess = index;
+           this.rowCountField = true;
+           this.sanitationBtn = true;
+
+           let rowStart = this.processRowStartArr[index];
+
+            axios.get(`automated/start-process/${rowStart}/${rowCount}`)
+            .then((response) =>
+            {
+                this.sanitizedCount(null);
+
+                let nextRowStart = this.processRowStartArr[index + this.sanitationIterator];
+                let nextIndex = index + this.sanitationIterator;
+
+                if(typeof nextRowStart !== 'undefined')
+                {
+                    this.sanitationProcess3(nextIndex, nextRowStart, rowCount);
                 }else
                 {
                     this.automatedLabel = '';
