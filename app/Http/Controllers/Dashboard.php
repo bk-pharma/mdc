@@ -80,8 +80,13 @@ class Dashboard extends Controller
 		    throw new ProcessFailedException($process);
 		}
 
-		$this->getSanitizedCount();
+		$data = [
+			'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
+			'totalSanitized' => $this->raw_data->getSanitizedCount()[0]->totalSanitized,
+			'totalAmount' => $this->raw_data->getSanitizedCount()[0]->totalAmount,
+		];
 
+		return response()->json($data);
 	}
 
 	private function isSanitationProcessRunning()
