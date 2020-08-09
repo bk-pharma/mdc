@@ -2,7 +2,7 @@ new Vue({
     el: '#automatedPhases-container',
     data() {
         return {
-           sanitationIterator: 1,
+           sanitationIterator: 2,
            automatedLabel : '',
            sanitationBtn: false,
            processRowStartArr: [],
@@ -48,7 +48,7 @@ new Vue({
         {
             this.automatedLabel = 'Sanitation in process...';
 
-            let rowsPerSanitationProcess = 100;
+            let rowsPerSanitationProcess = 50;
             let sanitationProcessNeeded = (this.rowCount / rowsPerSanitationProcess);
             let processRowStart = 0;
 
@@ -68,8 +68,40 @@ new Vue({
             this.totalSanitationProcess = (this.processRowStartArr.length - 1);
 
             this.sanitationProcess(0, rowsPerSanitationProcess);
+            this.sanitationProcess1(1, rowsPerSanitationProcess);
         },
         sanitationProcess: function(index, rowCount)
+        {
+           this.currentSanitationProcess = index;
+           this.rowCountField = true;
+           this.sanitationBtn = true;
+
+           let rowStart = this.processRowStartArr[index];
+
+            axios.get(`automated/start-process/${rowStart}/${rowCount}`)
+            .then((response) =>
+            {
+                this.sanitizedCount(null);
+
+                let nextRowStart = this.processRowStartArr[index + this.sanitationIterator];
+                let nextIndex = index + this.sanitationIterator;
+
+                if(typeof nextRowStart !== 'undefined')
+                {
+                    this.sanitationProcess(nextIndex, nextRowStart, rowCount);
+                }else
+                {
+                    this.automatedLabel = '';
+                    this.rowCountField = false;
+                    this.sanitationBtn = false;
+                }
+            })
+            .catch((error) =>
+            {
+                console.log(error);
+            })
+        },
+        sanitationProcess1: function(index, rowCount)
         {
            this.currentSanitationProcess = index;
            this.rowCountField = true;
