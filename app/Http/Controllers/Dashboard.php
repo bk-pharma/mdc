@@ -79,6 +79,9 @@ class Dashboard extends Controller
 		if (!$process->isSuccessful()) {
 		    throw new ProcessFailedException($process);
 		}
+
+		$this->getSanitizedCount();
+
 	}
 
 	private function isSanitationProcessRunning()

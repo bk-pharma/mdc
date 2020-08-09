@@ -83,7 +83,11 @@ new Vue({
             axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
             .then((response) =>
             {
-                this.sanitizedCount(null);
+                // this.sanitizedCount(null);
+
+                let resp = response.data;
+
+                console.log(resp);
 
                 let nextRowStart = this.processRowStartArr[index + this.sanitationIterator];
                 let nextIndex = index + this.sanitationIterator;
