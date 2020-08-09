@@ -8,6 +8,7 @@ new Vue({
            processRowStartArr: [],
            totalSanitizedRow: 0,
            totalSanitizedAmount: 0
+           totalRaw: 0
         }
     },
     created() {
@@ -62,12 +63,13 @@ new Vue({
         sanitizedCount: function()
         {
             axios.get(`automated/sanitized-total`)
-            .then((response) => {
-
+            .then((response) =>
+            {
                 let resp = response.data;
-                console.log(resp);
-                this.totalSanitizedRow = resp.totalSanitized;
 
+                this.totalRaw = resp.totalRaw;
+                this.totalSanitizedRow = resp.totalSanitized;
+                this.totalSanitizedAmount = resp.totalAmount;
             })
             .catch((error) => {
 
