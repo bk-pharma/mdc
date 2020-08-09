@@ -15,8 +15,7 @@ new Vue({
         }
     },
     created() {
-        this.sanitizedCount();
-        this.rowCount = this.totalRaw;
+        this.sanitizedCount('start');
     },
     methods : {
         startConsole: function()
@@ -51,7 +50,7 @@ new Vue({
             axios.get(`automated/start-process/${rowStart}/${rowCount}`)
             .then((response) =>
             {
-                this.sanitizedCount();
+                this.sanitizedCount(null);
 
                 let nextRowStart = this.processRowStartArr[index + 1];
                 let nextIndex = index + 1;
@@ -66,7 +65,7 @@ new Vue({
                 console.log(error);
             })
         },
-        sanitizedCount: function()
+        sanitizedCount: function(callFrom)
         {
             axios.get(`automated/sanitized-total`)
             .then((response) =>
@@ -77,6 +76,11 @@ new Vue({
                 this.totalSanitizedRow = resp.totalSanitized;
                 this.totalSanitizedAmount = resp.totalAmount;
                 this.totalUnsanitizedRow = (parseInt(resp.totalRaw) - parseInt(resp.totalSanitized));
+
+                if(callFrom === 'start')
+                {
+                    this.rowCount = this.totalUnsanitizedRow;
+                }
             })
             .catch((error) => {
 
