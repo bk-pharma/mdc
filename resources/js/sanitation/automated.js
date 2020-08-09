@@ -29,6 +29,16 @@ new Vue({
             {
                 return num;
             }
+        },
+        decimalFormat: function(num)
+        {
+            if(num)
+            {
+                return num.toFixed(2);
+            }else
+            {
+                return num;
+            }
         }
     },
     methods : {
