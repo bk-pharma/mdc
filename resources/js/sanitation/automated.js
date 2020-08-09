@@ -2,7 +2,7 @@ new Vue({
     el: '#automatedPhases-container',
     data() {
         return {
-           sanitationIterator: 1000,
+           sanitationIterator: 10,
            automatedLabel : '',
            sanitationBtn: false,
            processRowStartArr: [],
@@ -74,39 +74,34 @@ new Vue({
         },
         sanitationProcess: function(index)
         {
-           this.currentSanitationProcess = index;
-           this.rowCountField = true;
-           this.sanitationBtn = true;
+            this.currentSanitationProcess = index;
+            this.rowCountField = true;
+            this.sanitationBtn = true;
 
-           let rowStart = this.processRowStartArr[index];
+            let rowStart = this.processRowStartArr[index];
 
-            setTimeout(function() {
+            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
+            .then((response) =>
+            {
+                this.sanitizedCount(null);
 
-                axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
-                .then((response) =>
+                let nextRowStart = this.processRowStartArr[index + this.sanitationIterator];
+                let nextIndex = index + this.sanitationIterator;
+
+                if(typeof nextRowStart !== 'undefined')
                 {
-                    this.sanitizedCount(null);
-
-                    let nextRowStart = this.processRowStartArr[index + this.sanitationIterator];
-                    let nextIndex = index + this.sanitationIterator;
-
-                    if(typeof nextRowStart !== 'undefined')
-                    {
-                        this.sanitationProcess(nextIndex);
-                    }else
-                    {
-                        this.automatedLabel = '';
-                        this.rowCountField = false;
-                        this.sanitationBtn = false;
-                    }
-                })
-                .catch((error) =>
+                    this.sanitationProcess(nextIndex);
+                }else
                 {
-                    console.log(error);
-                })
-
-            },7000);
-
+                    this.automatedLabel = '';
+                    this.rowCountField = false;
+                    this.sanitationBtn = false;
+                }
+            })
+            .catch((error) =>
+            {
+                console.log(error);
+            })
         },
         sanitizedCount: function(callFrom)
         {
