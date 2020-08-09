@@ -78,8 +78,10 @@ class Dashboard extends Controller
 				$processRowStart = 0;
 			}else
 			{
-				$processRowStart = $rowsPerProcess + $i;
+				$processRowStart = ($i * $rowsPerProcess) + 1;
 			}
+
+			echo $processRowStart."<br>";
 
 			$this->startSanitationProcess($processRowStart, $rowsPerProcess);
 		}
@@ -89,7 +91,6 @@ class Dashboard extends Controller
 	{
 		$process = Process::fromShellCommandline('php artisan sanitize --row_start='.$rowStart.' --row_count='.$rowCount);
 		$process->setWorkingDirectory(base_path());
-		$process->setTimeout(3600);
 		$process->start();
 
 		while ($process->isRunning())
