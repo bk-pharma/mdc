@@ -26,6 +26,9 @@
 			<button type="button" @click="startConsole()" class="btn btn-sm btn-success" :disabled="sanitationBtn">
 				<i class="fa fa-play"></i> Start
 			</button>
+
+			<h6 class="mt-3">Total Sanitized: <span>@{{ totalSanitizedRow }}</span></h6>
+			<h6 class="mt-3">Total Amount: <span>@{{ totalSanitizedAmount }}</span></h6>
 		</div>
 	</div>
 
