@@ -94,11 +94,13 @@ new Vue({
                 if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
                 {
                     this.sanitationProcess1(nextIndex);
-                }else
+                }
+
+                if(this.currentSanitationProcess === this.totalSanitationProcess)
                 {
                     this.automatedLabel = '';
-                    this.rowCountField = false;
                     this.sanitationBtn = false;
+                    this.rowCountField = false;
                 }
 
                 this.totalRaw = resp.totalRaw;
@@ -133,11 +135,13 @@ new Vue({
                 if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
                 {
                     this.sanitationProcess2(nextIndex);
-                }else
+                }
+
+                if(this.currentSanitationProcess === this.totalSanitationProcess)
                 {
                     this.automatedLabel = '';
-                    this.rowCountField = false;
                     this.sanitationBtn = false;
+                    this.rowCountField = false;
                 }
 
                 this.totalRaw = resp.totalRaw;
@@ -172,11 +176,13 @@ new Vue({
                 if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
                 {
                     this.sanitationProcess3(nextIndex);
-                }else
+                }
+
+                if(this.currentSanitationProcess === this.totalSanitationProcess)
                 {
                     this.automatedLabel = '';
-                    this.rowCountField = false;
                     this.sanitationBtn = false;
+                    this.rowCountField = false;
                 }
 
                 this.totalRaw = resp.totalRaw;
@@ -211,11 +217,13 @@ new Vue({
                 if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
                 {
                     this.sanitationProcess4(nextIndex);
-                }else
+                }
+
+                if(this.currentSanitationProcess === this.totalSanitationProcess)
                 {
                     this.automatedLabel = '';
-                    this.rowCountField = false;
                     this.sanitationBtn = false;
+                    this.rowCountField = false;
                 }
 
                 this.totalRaw = resp.totalRaw;
@@ -250,11 +258,13 @@ new Vue({
                 if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
                 {
                     this.sanitationProcess5(nextIndex);
-                }else
+                }
+
+                if(this.currentSanitationProcess === this.totalSanitationProcess)
                 {
                     this.automatedLabel = '';
-                    this.rowCountField = false;
                     this.sanitationBtn = false;
+                    this.rowCountField = false;
                 }
 
                 this.totalRaw = resp.totalRaw;
@@ -289,11 +299,13 @@ new Vue({
                 if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
                 {
                     this.sanitationProcess6(nextIndex);
-                }else
+                }
+
+                if(this.currentSanitationProcess === this.totalSanitationProcess)
                 {
                     this.automatedLabel = '';
-                    this.rowCountField = false;
                     this.sanitationBtn = false;
+                    this.rowCountField = false;
                 }
 
                 this.totalRaw = resp.totalRaw;
@@ -328,11 +340,13 @@ new Vue({
                 if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
                 {
                     this.sanitationProcess7(nextIndex);
-                }else
+                }
+
+                if(this.currentSanitationProcess === this.totalSanitationProcess)
                 {
                     this.automatedLabel = '';
-                    this.rowCountField = false;
                     this.sanitationBtn = false;
+                    this.rowCountField = false;
                 }
 
                 this.totalRaw = resp.totalRaw;
@@ -367,11 +381,13 @@ new Vue({
                 if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
                 {
                     this.sanitationProcess8(nextIndex);
-                }else
+                }
+
+                if(this.currentSanitationProcess === this.totalSanitationProcess)
                 {
                     this.automatedLabel = '';
-                    this.rowCountField = false;
                     this.sanitationBtn = false;
+                    this.rowCountField = false;
                 }
 
                 this.totalRaw = resp.totalRaw;
@@ -406,11 +422,13 @@ new Vue({
                 if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
                 {
                     this.sanitationProcess9(nextIndex);
-                }else
+                }
+
+                if(this.currentSanitationProcess === this.totalSanitationProcess)
                 {
                     this.automatedLabel = '';
-                    this.rowCountField = false;
                     this.sanitationBtn = false;
+                    this.rowCountField = false;
                 }
 
                 this.totalRaw = resp.totalRaw;
@@ -445,11 +463,13 @@ new Vue({
                 if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
                 {
                     this.sanitationProcess10(nextIndex);
-                }else
+                }
+
+                if(this.currentSanitationProcess === this.totalSanitationProcess)
                 {
                     this.automatedLabel = '';
-                    this.rowCountField = false;
                     this.sanitationBtn = false;
+                    this.rowCountField = false;
                 }
 
                 this.totalRaw = resp.totalRaw;
@@ -464,15 +484,6 @@ new Vue({
             {
                 console.log(error);
             })
-        },
-        sanitizedCount: function(callFrom, response)
-        {
-
-            if(callFrom === 'start')
-            {
-                this.rowCount = this.totalUnsanitizedRow;
-                this.percentageSanitationProcess = 0;
-            }
         }
     }
 
