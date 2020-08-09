@@ -84,7 +84,7 @@ new Vue({
 
                 let nextIndex = index + this.sanitationIterator;
 
-                if(typeof this.processRowStartArr[nextRowStart] !== 'undefined')
+                if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
                 {
                     this.sanitationProcess(nextIndex);
                 }else
