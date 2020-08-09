@@ -29,7 +29,10 @@
 
 			<h6 class="mt-3">
 				Total Sanitized:
-				<span>@{{ totalSanitizedRow | numberFormat }} / @{{ rowCount | numberFormat }}</span>
+				<span>
+					@{{ totalSanitizedRow | numberFormat }}
+					<span style="color:#ff0000;">@{{ percentageSanitizedRow | decimalFormat }}</span>
+				</span>
 			</h6>
 			<h6 class="mt-3">
 				Total Amount: <span>₱ @{{ totalSanitizedAmount | numberFormat }}</span>
