@@ -19,9 +19,6 @@ new Vue({
            percentageSanitationProcess: 0
         }
     },
-    created() {
-        this.sanitizedCount('start', null);
-    },
     filters: {
         numberFormat: function(num)
         {
@@ -98,7 +95,13 @@ new Vue({
                     this.sanitationBtn = false;
                 }
 
-                this.sanitizedCount(null, resp);
+                this.totalRaw = resp.totalRaw;
+                this.totalSanitizedRow = resp.totalSanitized;
+                this.totalSanitizedAmount = resp.totalAmount;
+                this.totalUnsanitizedRow = (parseInt(resp.totalRaw) - parseInt(resp.totalSanitized));
+
+                this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
+                this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
             })
             .catch((error) =>
             {
@@ -107,15 +110,6 @@ new Vue({
         },
         sanitizedCount: function(callFrom, response)
         {
-            let resp = response;
-
-            this.totalRaw = resp.totalRaw;
-            this.totalSanitizedRow = resp.totalSanitized;
-            this.totalSanitizedAmount = resp.totalAmount;
-            this.totalUnsanitizedRow = (parseInt(resp.totalRaw) - parseInt(resp.totalSanitized));
-
-            this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
-            this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
 
             if(callFrom === 'start')
             {
