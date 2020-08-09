@@ -95,8 +95,8 @@ class Dashboard extends Controller
 
 		while ($process->isRunning())
 		{
-			// $process->checkTimeout();
-			// usleep(600000000); //10mins
+			$process->checkTimeout();
+			usleep(600000000); //10mins
 		}
 
 		if (!$process->isSuccessful()) {
