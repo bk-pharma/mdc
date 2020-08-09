@@ -71,7 +71,7 @@ new Vue({
         },
         sanitationProcess: function(index)
         {
-            this.currentSanitationProcess = index;
+            this.currentSanitationProcess += 1;
             this.rowCountField = true;
             this.sanitationBtn = true;
 
@@ -82,7 +82,6 @@ new Vue({
             {
                 let resp = response.data;
 
-                let nextRowStart = this.processRowStartArr[index + this.sanitationIterator];
                 let nextIndex = index + this.sanitationIterator;
 
                 if(typeof nextRowStart !== 'undefined')
