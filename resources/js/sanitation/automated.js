@@ -5,7 +5,9 @@ new Vue({
            automatedLabel : '',
            sanitationBtn: false,
            processRowStartArr: [],
+           rowCount: 0,
            totalSanitizedRow: 0,
+           totalUnsanitizedRow: 0,
            totalSanitizedAmount: 0,
            totalRaw: 0,
            currentSanitationProcess: 0,
@@ -14,6 +16,7 @@ new Vue({
     },
     created() {
         this.sanitizedCount();
+        this.rowCount = this.totalRaw;
     },
     methods : {
         startConsole: function()
@@ -21,7 +24,7 @@ new Vue({
             this.automatedLabel = 'Sanitation in process...';
 
             let rowsPerSanitationProcess = 50;
-            let sanitationProcessNeeded = (this.totalRaw / rowsPerSanitationProcess);
+            let sanitationProcessNeeded = (this.rowCount / rowsPerSanitationProcess);
             let processRowStart = 0;
 
             for(let i = 0; i < sanitationProcessNeeded; i++)
@@ -73,6 +76,7 @@ new Vue({
                 this.totalRaw = resp.totalRaw;
                 this.totalSanitizedRow = resp.totalSanitized;
                 this.totalSanitizedAmount = resp.totalAmount;
+                this.totalUnsanitizedRow = (resp.totalRaw - this.totalSanitizedRow);
             })
             .catch((error) => {
 
