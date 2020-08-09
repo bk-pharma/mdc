@@ -73,7 +73,8 @@ new Vue({
         {
             this.rowCountField = true;
             this.sanitationBtn = true;
-            this.currentSanitationProcess += 1;
+
+            this.currentSanitationProcess = index;
 
             let rowStart = this.processRowStartArr[index];
 
