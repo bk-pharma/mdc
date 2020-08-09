@@ -22,7 +22,7 @@
 	<div class="row mt-2">
 		<div class="col-md text-left">
 			<label>Raw Data</label>
-			<input type="text" v-model="rowCount">
+			<input type="text" v-model="rowCount" :disabled="rowCountField">
 			<button type="button" @click="startConsole()" class="btn btn-sm btn-success" :disabled="sanitationBtn">
 				<i class="fa fa-play"></i> Start
 			</button>
