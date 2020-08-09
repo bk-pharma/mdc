@@ -19,8 +19,15 @@ new Vue({
         this.sanitizedCount('start');
     },
     filters: {
-        numberFormat: function(num) {
-            return num.toLocaleString();
+        numberFormat: function(num)
+        {
+            if(!isNaN(num))
+            {
+                return num.toLocaleString();
+            }else
+            {
+                return 0;
+            }
         }
     },
     methods : {
