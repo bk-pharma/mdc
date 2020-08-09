@@ -22,7 +22,7 @@
 	<div class="row mt-2">
 		<div class="col-md text-left">
 			<label>Total Sanitation</label>
-			<input type="text" :value="rowCount">
+			<input type="text" v-model="rowCount">
 			<button type="button" @click="startConsole()" class="btn btn-sm btn-success" :disabled="sanitationBtn">
 				<i class="fa fa-play"></i> Start
 			</button>

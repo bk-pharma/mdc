@@ -9,8 +9,8 @@ new Vue({
     },
 
 methods : {
-    startConsole: function() {
-
+    startConsole: function()
+    {
         this.automatedLabel = 'Starting to Sanitize all the data . . . .';
 
         let rowsPerSanitationProcess = 100;
