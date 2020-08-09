@@ -20,7 +20,7 @@ new Vue({
         }
     },
     created() {
-        this.sanitizedCount('start');
+        this.sanitizedCount('start', null);
     },
     filters: {
         numberFormat: function(num)
@@ -83,11 +83,7 @@ new Vue({
             axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
             .then((response) =>
             {
-                // this.sanitizedCount(null);
-
                 let resp = response.data;
-
-                console.log(resp);
 
                 let nextRowStart = this.processRowStartArr[index + this.sanitationIterator];
                 let nextIndex = index + this.sanitationIterator;
@@ -101,36 +97,31 @@ new Vue({
                     this.rowCountField = false;
                     this.sanitationBtn = false;
                 }
+
+                this.sanitizedCount(null, resp);
             })
             .catch((error) =>
             {
                 console.log(error);
             })
         },
-        sanitizedCount: function(callFrom)
+        sanitizedCount: function(callFrom, response)
         {
-            axios.get(`automated/sanitized-total`)
-            .then((response) =>
+            let resp = response;
+
+            this.totalRaw = resp.totalRaw;
+            this.totalSanitizedRow = resp.totalSanitized;
+            this.totalSanitizedAmount = resp.totalAmount;
+            this.totalUnsanitizedRow = (parseInt(resp.totalRaw) - parseInt(resp.totalSanitized));
+
+            this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
+            this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
+
+            if(callFrom === 'start')
             {
-                let resp = response.data;
-
-                this.totalRaw = resp.totalRaw;
-                this.totalSanitizedRow = resp.totalSanitized;
-                this.totalSanitizedAmount = resp.totalAmount;
-                this.totalUnsanitizedRow = (parseInt(resp.totalRaw) - parseInt(resp.totalSanitized));
-
-                this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
-                this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
-
-                if(callFrom === 'start')
-                {
-                    this.rowCount = this.totalUnsanitizedRow;
-                    this.percentageSanitationProcess = 0;
-                }
-            })
-            .catch((error) => {
-
-            })
+                this.rowCount = this.totalUnsanitizedRow;
+                this.percentageSanitationProcess = 0;
+            }
         }
     }
 
