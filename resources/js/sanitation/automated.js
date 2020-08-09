@@ -35,7 +35,7 @@ new Vue({
         {
             this.automatedLabel = 'Sanitation in process...';
 
-            let rowsPerSanitationProcess = 50;
+            let rowsPerSanitationProcess = 100;
             let sanitationProcessNeeded = (this.rowCount / rowsPerSanitationProcess);
             let processRowStart = 0;
 
