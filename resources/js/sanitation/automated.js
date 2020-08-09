@@ -12,7 +12,8 @@ new Vue({
            totalSanitizedAmount: 0,
            totalRaw: 0,
            currentSanitationProcess: 0,
-           totalSanitationProcess:  0
+           totalSanitationProcess:  0,
+           percentageSanitationProcess: 0
         }
     },
     created() {
@@ -96,6 +97,8 @@ new Vue({
                 this.totalSanitizedRow = resp.totalSanitized;
                 this.totalSanitizedAmount = resp.totalAmount;
                 this.totalUnsanitizedRow = (parseInt(resp.totalRaw) - parseInt(resp.totalSanitized));
+
+                this.percentageSanitationProcess = (this.totalSanitationProcess / this.currentSanitationProcess) * 100;
 
                 if(callFrom === 'start')
                 {

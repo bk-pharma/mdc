@@ -35,7 +35,11 @@
 				Total Amount: <span>₱ @{{ totalSanitizedAmount | numberFormat }}</span>
 			</h6>
 			<h6 class="mt-3">
-				Progress: <span>@{{ currentSanitationProcess | numberFormat }} / @{{ totalSanitationProcess | numberFormat }}</span>
+				Progress:
+				<span>
+					@{{ currentSanitationProcess | numberFormat }} / @{{ totalSanitationProcess | numberFormat }}
+					(@{{ percentageSanitationProcess }})
+				</span>
 			</h6>
 			<h6 class="mt-3">
 				Total Unsanitized: <span>@{{ totalUnsanitizedRow | numberFormat }}</span>
