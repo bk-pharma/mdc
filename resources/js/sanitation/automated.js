@@ -21,7 +21,7 @@ new Vue({
             this.automatedLabel = 'Sanitation in process...';
 
             let rowsPerSanitationProcess = 50;
-            let sanitationProcessNeeded = (this.rowCount / rowsPerSanitationProcess);
+            let sanitationProcessNeeded = (this.totalRaw / rowsPerSanitationProcess);
             let processRowStart = 0;
 
             for(let i = 0; i < sanitationProcessNeeded; i++)
@@ -43,7 +43,6 @@ new Vue({
         },
         sanitationProcess: function(index, rowStart, rowCount)
         {
-
            this.currentSanitationProcess = index;
 
             axios.get(`automated/start-process/${rowStart}/${rowCount}`)
