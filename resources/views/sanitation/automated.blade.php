@@ -21,14 +21,15 @@
 	</div>
 	<div class="row mt-2">
 		<div class="col-md text-left">
-			<label>Total Sanitation</label>
-			<input type="text" v-model="rowCount">
+			<label>Raw Data</label>
+			<input type="text" v-model="totalRaw">
 			<button type="button" @click="startConsole()" class="btn btn-sm btn-success" :disabled="sanitationBtn">
 				<i class="fa fa-play"></i> Start
 			</button>
 
 			<h6 class="mt-3">Total Sanitized: <span>@{{ totalSanitizedRow }} / @{{ totalRaw }}</span></h6>
 			<h6 class="mt-3">Total Amount: <span>@{{ totalSanitizedAmount }}</span></h6>
+			<h6 class="mt-3">Progress: <span>@{{ currentSanitationProcess }} / @{{ totalSanitationProcess }}</span></h6>
 		</div>
 	</div>
 
