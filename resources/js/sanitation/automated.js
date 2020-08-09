@@ -68,7 +68,10 @@ new Vue({
             this.totalSanitationProcess = (this.processRowStartArr.length - 1);
 
             this.sanitationProcess(0, rowsPerSanitationProcess);
-            this.sanitationProcess1(1, rowsPerSanitationProcess);
+
+            setTimeout(function(){
+                this.sanitationProcess1(1, rowsPerSanitationProcess);
+            },200);
         },
         sanitationProcess: function(index, rowCount)
         {
