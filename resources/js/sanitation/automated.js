@@ -2,7 +2,7 @@ new Vue({
     el: '#automatedPhases-container',
     data() {
         return {
-           sanitationIterator: 1, // nextIndex = array[index + 6]
+           sanitationIterator: 2, // nextIndex = array[index + 6]
            automatedLabel : '',
            sanitationBtn: false,
            processRowStartArr: [],
@@ -80,7 +80,7 @@ new Vue({
 
 
             this.sanitationProcess1(0);
-            // this.sanitationProcess2(1);
+            this.sanitationProcess2(1);
             // this.sanitationProcess3(2);
             // this.sanitationProcess4(3);
             // this.sanitationProcess5(4);
