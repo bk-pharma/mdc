@@ -13,7 +13,7 @@ new Vue({
            totalUnsanitizedRow: 0,
            totalSanitizedAmount: 0,
            totalRaw: 0,
-           rowsPerSanitationProcess: 100,
+           rowsPerSanitationProcess: 1000,
            currentSanitationProcess: 0,
            totalSanitationProcess:  0,
            percentageSanitationProcess: 0
@@ -45,15 +45,15 @@ new Vue({
     {
         this.initialData();
     },
-    updated()
-    {
-        if(this.currentSanitationProcess === this.totalSanitationProcess)
-        {
-            this.automatedLabel = '';
-            this.sanitationBtn = false;
-            this.rowCountField = false;
-        }
-    },
+    // updated()
+    // {
+    //     if(this.currentSanitationProcess === this.totalSanitationProcess)
+    //     {
+    //         this.automatedLabel = '';
+    //         this.sanitationBtn = false;
+    //         this.rowCountField = false;
+    //     }
+    // },
     methods : {
         startConsole: function()
         {
@@ -77,6 +77,7 @@ new Vue({
 
             this.totalSanitationProcess = Math.round(sanitationProcessNeeded) - 1;
 
+            Object.freeze(this.totalSanitationProcess);
 
             this.sanitationProcess1(this.currentIndex);
             this.currentIndex += 1;
