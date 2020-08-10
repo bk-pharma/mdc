@@ -70,19 +70,20 @@ new Vue({
                 }else
                 {
                     processRowStart = (i * this.rowsPerSanitationProcess) + 1;
+                     this.processRowStartArr.push(processRowStart);
                 }
-
-                this.processRowStartArr.push(processRowStart);
             }
 
-            this.totalSanitationProcess = Math.round(sanitationProcessNeeded);
+            console.table(this.processRowStartArr);
 
-            this.sanitationProcess1(0);
-            this.sanitationProcess2(1);
-            this.sanitationProcess3(2);
-            this.sanitationProcess4(3);
-            this.sanitationProcess5(4);
-            this.sanitationProcess6(5);
+            // this.totalSanitationProcess = Math.round(sanitationProcessNeeded);
+
+            // this.sanitationProcess1(0);
+            // this.sanitationProcess2(1);
+            // this.sanitationProcess3(2);
+            // this.sanitationProcess4(3);
+            // this.sanitationProcess5(4);
+            // this.sanitationProcess6(5);
         },
         sanitationProcess1: function(index)
         {
