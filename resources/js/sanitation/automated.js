@@ -2,7 +2,7 @@ new Vue({
     el: '#automatedPhases-container',
     data() {
         return {
-           sanitationIterator: 10, // nextIndex = array[index + 10]
+           sanitationIterator: 20, // nextIndex = array[index + 10]
            automatedLabel : '',
            sanitationBtn: false,
            processRowStartArr: [],
@@ -87,6 +87,17 @@ new Vue({
             this.sanitationProcess1(7);
             this.sanitationProcess1(8);
             this.sanitationProcess1(9);
+            this.sanitationProcess1(10);
+            this.sanitationProcess1(11);
+            this.sanitationProcess1(12);
+            this.sanitationProcess1(13);
+            this.sanitationProcess1(14);
+            this.sanitationProcess1(15);
+            this.sanitationProcess1(16);
+            this.sanitationProcess1(17);
+            this.sanitationProcess1(18);
+            this.sanitationProcess1(19);
+
         },
         sanitationProcess1: function(index)
         {
@@ -428,6 +439,346 @@ new Vue({
                 console.log(error);
             })
         },
+        sanitationProcess11: function(index)
+        {
+            this.rowCountField = true;
+            this.sanitationBtn = true;
+
+            this.currentSanitationProcess += 1;
+
+            let rowStart = this.processRowStartArr[index];
+
+            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
+            .then((response) =>
+            {
+                let resp = response.data;
+
+                let nextIndex = index + this.sanitationIterator;
+
+                if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
+                {
+                    this.sanitationProcess11(nextIndex);
+                }
+
+                this.totalRaw = resp.totalRaw;
+                this.totalSanitizedRow = resp.totalSanitized;
+                this.totalSanitizedAmount = resp.totalAmount;
+                this.totalUnsanitizedRow = (parseInt(resp.totalRaw) - parseInt(resp.totalSanitized));
+
+                this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
+                this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
+            })
+            .catch((error) =>
+            {
+                console.log(error);
+            })
+        },
+        sanitationProcess12: function(index)
+        {
+            this.rowCountField = true;
+            this.sanitationBtn = true;
+
+            this.currentSanitationProcess += 1;
+
+            let rowStart = this.processRowStartArr[index];
+
+            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
+            .then((response) =>
+            {
+                let resp = response.data;
+
+                let nextIndex = index + this.sanitationIterator;
+
+                if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
+                {
+                    this.sanitationProcess12(nextIndex);
+                }
+
+                this.totalRaw = resp.totalRaw;
+                this.totalSanitizedRow = resp.totalSanitized;
+                this.totalSanitizedAmount = resp.totalAmount;
+                this.totalUnsanitizedRow = (parseInt(resp.totalRaw) - parseInt(resp.totalSanitized));
+
+                this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
+                this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
+            })
+            .catch((error) =>
+            {
+                console.log(error);
+            })
+        },
+        sanitationProcess13: function(index)
+        {
+            this.rowCountField = true;
+            this.sanitationBtn = true;
+
+            this.currentSanitationProcess += 1;
+
+            let rowStart = this.processRowStartArr[index];
+
+            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
+            .then((response) =>
+            {
+                let resp = response.data;
+
+                let nextIndex = index + this.sanitationIterator;
+
+                if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
+                {
+                    this.sanitationProcess13(nextIndex);
+                }
+
+                this.totalRaw = resp.totalRaw;
+                this.totalSanitizedRow = resp.totalSanitized;
+                this.totalSanitizedAmount = resp.totalAmount;
+                this.totalUnsanitizedRow = (parseInt(resp.totalRaw) - parseInt(resp.totalSanitized));
+
+                this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
+                this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
+            })
+            .catch((error) =>
+            {
+                console.log(error);
+            })
+        },
+        sanitationProcess14: function(index)
+        {
+            this.rowCountField = true;
+            this.sanitationBtn = true;
+
+            this.currentSanitationProcess += 1;
+
+            let rowStart = this.processRowStartArr[index];
+
+            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
+            .then((response) =>
+            {
+                let resp = response.data;
+
+                let nextIndex = index + this.sanitationIterator;
+
+                if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
+                {
+                    this.sanitationProcess14(nextIndex);
+                }
+
+                this.totalRaw = resp.totalRaw;
+                this.totalSanitizedRow = resp.totalSanitized;
+                this.totalSanitizedAmount = resp.totalAmount;
+                this.totalUnsanitizedRow = (parseInt(resp.totalRaw) - parseInt(resp.totalSanitized));
+
+                this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
+                this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
+            })
+            .catch((error) =>
+            {
+                console.log(error);
+            })
+        },
+        sanitationProcess15: function(index)
+        {
+            this.rowCountField = true;
+            this.sanitationBtn = true;
+
+            this.currentSanitationProcess += 1;
+
+            let rowStart = this.processRowStartArr[index];
+
+            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
+            .then((response) =>
+            {
+                let resp = response.data;
+
+                let nextIndex = index + this.sanitationIterator;
+
+                if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
+                {
+                    this.sanitationProcess15(nextIndex);
+                }
+
+                this.totalRaw = resp.totalRaw;
+                this.totalSanitizedRow = resp.totalSanitized;
+                this.totalSanitizedAmount = resp.totalAmount;
+                this.totalUnsanitizedRow = (parseInt(resp.totalRaw) - parseInt(resp.totalSanitized));
+
+                this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
+                this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
+            })
+            .catch((error) =>
+            {
+                console.log(error);
+            })
+        },
+        sanitationProcess16: function(index)
+        {
+            this.rowCountField = true;
+            this.sanitationBtn = true;
+
+            this.currentSanitationProcess += 1;
+
+            let rowStart = this.processRowStartArr[index];
+
+            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
+            .then((response) =>
+            {
+                let resp = response.data;
+
+                let nextIndex = index + this.sanitationIterator;
+
+                if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
+                {
+                    this.sanitationProcess16(nextIndex);
+                }
+
+                this.totalRaw = resp.totalRaw;
+                this.totalSanitizedRow = resp.totalSanitized;
+                this.totalSanitizedAmount = resp.totalAmount;
+                this.totalUnsanitizedRow = (parseInt(resp.totalRaw) - parseInt(resp.totalSanitized));
+
+                this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
+                this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
+            })
+            .catch((error) =>
+            {
+                console.log(error);
+            })
+        },
+        sanitationProcess17: function(index)
+        {
+            this.rowCountField = true;
+            this.sanitationBtn = true;
+
+            this.currentSanitationProcess += 1;
+
+            let rowStart = this.processRowStartArr[index];
+
+            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
+            .then((response) =>
+            {
+                let resp = response.data;
+
+                let nextIndex = index + this.sanitationIterator;
+
+                if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
+                {
+                    this.sanitationProcess17(nextIndex);
+                }
+
+                this.totalRaw = resp.totalRaw;
+                this.totalSanitizedRow = resp.totalSanitized;
+                this.totalSanitizedAmount = resp.totalAmount;
+                this.totalUnsanitizedRow = (parseInt(resp.totalRaw) - parseInt(resp.totalSanitized));
+
+                this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
+                this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
+            })
+            .catch((error) =>
+            {
+                console.log(error);
+            })
+        },
+        sanitationProcess18: function(index)
+        {
+            this.rowCountField = true;
+            this.sanitationBtn = true;
+
+            this.currentSanitationProcess += 1;
+
+            let rowStart = this.processRowStartArr[index];
+
+            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
+            .then((response) =>
+            {
+                let resp = response.data;
+
+                let nextIndex = index + this.sanitationIterator;
+
+                if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
+                {
+                    this.sanitationProcess18(nextIndex);
+                }
+
+                this.totalRaw = resp.totalRaw;
+                this.totalSanitizedRow = resp.totalSanitized;
+                this.totalSanitizedAmount = resp.totalAmount;
+                this.totalUnsanitizedRow = (parseInt(resp.totalRaw) - parseInt(resp.totalSanitized));
+
+                this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
+                this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
+            })
+            .catch((error) =>
+            {
+                console.log(error);
+            })
+        },
+        sanitationProcess19: function(index)
+        {
+            this.rowCountField = true;
+            this.sanitationBtn = true;
+
+            this.currentSanitationProcess += 1;
+
+            let rowStart = this.processRowStartArr[index];
+
+            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
+            .then((response) =>
+            {
+                let resp = response.data;
+
+                let nextIndex = index + this.sanitationIterator;
+
+                if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
+                {
+                    this.sanitationProcess19(nextIndex);
+                }
+
+                this.totalRaw = resp.totalRaw;
+                this.totalSanitizedRow = resp.totalSanitized;
+                this.totalSanitizedAmount = resp.totalAmount;
+                this.totalUnsanitizedRow = (parseInt(resp.totalRaw) - parseInt(resp.totalSanitized));
+
+                this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
+                this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
+            })
+            .catch((error) =>
+            {
+                console.log(error);
+            })
+        },
+        sanitationProcess20: function(index)
+        {
+            this.rowCountField = true;
+            this.sanitationBtn = true;
+
+            this.currentSanitationProcess += 1;
+
+            let rowStart = this.processRowStartArr[index];
+
+            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
+            .then((response) =>
+            {
+                let resp = response.data;
+
+                let nextIndex = index + this.sanitationIterator;
+
+                if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
+                {
+                    this.sanitationProcess20(nextIndex);
+                }
+
+                this.totalRaw = resp.totalRaw;
+                this.totalSanitizedRow = resp.totalSanitized;
+                this.totalSanitizedAmount = resp.totalAmount;
+                this.totalUnsanitizedRow = (parseInt(resp.totalRaw) - parseInt(resp.totalSanitized));
+
+                this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
+                this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
+            })
+            .catch((error) =>
+            {
+                console.log(error);
+            })
+        },
         initialData:function()
         {
             axios.get(`automated/sanitized-total`)
@@ -443,5 +794,4 @@ new Vue({
             })
         }
     }
-
 });
