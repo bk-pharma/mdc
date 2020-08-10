@@ -373,7 +373,7 @@ new Vue({
             let rowStart = this.processRowStartArr[index];
 
             let data = {
-                rowStart: 700 001,
+                rowStart: 700001,
                 rowCount: this.rowsPerSanitationProcess
             };
 
