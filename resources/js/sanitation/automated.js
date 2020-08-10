@@ -2,7 +2,7 @@ new Vue({
     el: '#automatedPhases-container',
     data() {
         return {
-           sanitationIterator: 2, // nextIndex = array[index + 6]
+           sanitationIterator: 10, // nextIndex = array[index + 10]
            automatedLabel : '',
            sanitationBtn: false,
            processRowStartArr: [],
@@ -81,14 +81,14 @@ new Vue({
 
             this.sanitationProcess1(0);
             this.sanitationProcess2(1);
-            // this.sanitationProcess3(2);
-            // this.sanitationProcess4(3);
-            // this.sanitationProcess5(4);
-            // this.sanitationProcess6(5);
-            // this.sanitationProcess7(6);
-            // this.sanitationProcess8(7);
-            // this.sanitationProcess9(8);
-            // this.sanitationProcess10(9);
+            this.sanitationProcess3(2);
+            this.sanitationProcess4(3);
+            this.sanitationProcess5(4);
+            this.sanitationProcess6(5);
+            this.sanitationProcess7(6);
+            this.sanitationProcess8(7);
+            this.sanitationProcess9(8);
+            this.sanitationProcess10(9);
         },
         sanitationProcess1: function(index)
         {
@@ -177,7 +177,12 @@ new Vue({
 
             let rowStart = this.processRowStartArr[index];
 
-            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
+            let data = {
+                rowStart: rowStart,
+                rowCount: this.rowsPerSanitationProcess
+            };
+
+            axios.post(`automated/start-process`, data)
             .then((response) =>
             {
                 let resp = response.data;
@@ -211,7 +216,12 @@ new Vue({
 
             let rowStart = this.processRowStartArr[index];
 
-            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
+            let data = {
+                rowStart: rowStart,
+                rowCount: this.rowsPerSanitationProcess
+            };
+
+            axios.post(`automated/start-process`, data)
             .then((response) =>
             {
                 let resp = response.data;
@@ -245,7 +255,12 @@ new Vue({
 
             let rowStart = this.processRowStartArr[index];
 
-            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
+            let data = {
+                rowStart: rowStart,
+                rowCount: this.rowsPerSanitationProcess
+            };
+
+            axios.post(`automated/start-process`, data)
             .then((response) =>
             {
                 let resp = response.data;
@@ -279,7 +294,12 @@ new Vue({
 
             let rowStart = this.processRowStartArr[index];
 
-            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
+            let data = {
+                rowStart: rowStart,
+                rowCount: this.rowsPerSanitationProcess
+            };
+
+            axios.post(`automated/start-process`, data)
             .then((response) =>
             {
                 let resp = response.data;
@@ -313,7 +333,12 @@ new Vue({
 
             let rowStart = this.processRowStartArr[index];
 
-            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
+            let data = {
+                rowStart: rowStart,
+                rowCount: this.rowsPerSanitationProcess
+            };
+
+            axios.post(`automated/start-process`, data)
             .then((response) =>
             {
                 let resp = response.data;
@@ -347,7 +372,12 @@ new Vue({
 
             let rowStart = this.processRowStartArr[index];
 
-            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
+            let data = {
+                rowStart: rowStart,
+                rowCount: this.rowsPerSanitationProcess
+            };
+
+            axios.post(`automated/start-process`, data)
             .then((response) =>
             {
                 let resp = response.data;
@@ -381,7 +411,12 @@ new Vue({
 
             let rowStart = this.processRowStartArr[index];
 
-            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
+            let data = {
+                rowStart: rowStart,
+                rowCount: this.rowsPerSanitationProcess
+            };
+
+            axios.post(`automated/start-process`, data)
             .then((response) =>
             {
                 let resp = response.data;
@@ -415,7 +450,12 @@ new Vue({
 
             let rowStart = this.processRowStartArr[index];
 
-            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
+            let data = {
+                rowStart: rowStart,
+                rowCount: this.rowsPerSanitationProcess
+            };
+
+            axios.post(`automated/start-process`, data)
             .then((response) =>
             {
                 let resp = response.data;
