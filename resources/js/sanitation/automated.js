@@ -495,8 +495,7 @@ new Vue({
             .then((response) =>
             {
                 let resp = response.data;
-
-                this.totalRaw = resp.totalRaw;
+                this.totalUnsanitizedRow = (resp.totalRaw - resp.totalSanitized);
             })
             .catch((error) =>
             {
