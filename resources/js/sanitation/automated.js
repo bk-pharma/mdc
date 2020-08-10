@@ -104,7 +104,7 @@ new Vue({
                 rowCount: this.rowsPerSanitationProcess
             };
 
-            axios.post(`automated/start-process/`, data)
+            axios.post(`automated/start-process`, data)
             .then((response) =>
             {
                 let resp = response.data;
