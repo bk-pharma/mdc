@@ -13,7 +13,7 @@ new Vue({
            totalUnsanitizedRow: 0,
            totalSanitizedAmount: 0,
            totalRaw: 0,
-           rowsPerSanitationProcess: 2000,
+           rowsPerSanitationProcess: 500,
            currentSanitationProcess: 0,
            totalSanitationProcess:  0,
            percentageSanitationProcess: 0
