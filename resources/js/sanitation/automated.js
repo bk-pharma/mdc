@@ -111,8 +111,6 @@ new Vue({
             this.rowCountField = true;
             this.sanitationBtn = true;
 
-            this.currentSanitationProcess += 1;
-
             let rowStart = this.processRowStartArr[index];
 
             let data = {
@@ -133,6 +131,7 @@ new Vue({
                     this.sanitationProcess1(nextIndex);
                 }
 
+                this.currentSanitationProcess += 1;
                 this.totalRaw = resp.totalRaw;
                 this.totalSanitizedRow = resp.totalSanitized;
                 this.totalSanitizedAmount = resp.totalAmount;
@@ -150,8 +149,6 @@ new Vue({
         {
             this.rowCountField = true;
             this.sanitationBtn = true;
-
-            this.currentSanitationProcess += 1;
 
             let rowStart = this.processRowStartArr[index];
 
@@ -173,6 +170,7 @@ new Vue({
                     this.sanitationProcess2(nextIndex);
                 }
 
+                this.currentSanitationProcess += 1;
                 this.totalRaw = resp.totalRaw;
                 this.totalSanitizedRow = resp.totalSanitized;
                 this.totalSanitizedAmount = resp.totalAmount;
