@@ -76,7 +76,7 @@ new Vue({
                 this.processRowStartArr.push(processRowStart);
             }
 
-            this.totalSanitationProcess = Math.round(sanitationProcessNeeded) + 1;
+            this.totalSanitationProcess = Math.round(sanitationProcessNeeded);
 
 
             this.sanitationProcess1(this.currentIndex);
