@@ -491,7 +491,7 @@ new Vue({
         },
         initialData:function()
         {
-            axios.get(`automated/start-process/sanitized-total`)
+            axios.get(`automated/sanitized-total`)
             .then((response) =>
             {
                 let resp = response.data;
