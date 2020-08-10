@@ -78,25 +78,25 @@ new Vue({
             this.totalSanitationProcess = sanitationProcessNeeded;
 
             this.sanitationProcess1(0);
-            this.sanitationProcess1(1);
-            this.sanitationProcess1(2);
-            this.sanitationProcess1(3);
-            this.sanitationProcess1(4);
-            this.sanitationProcess1(5);
-            this.sanitationProcess1(6);
-            this.sanitationProcess1(7);
-            this.sanitationProcess1(8);
-            this.sanitationProcess1(9);
-            this.sanitationProcess1(10);
-            this.sanitationProcess1(11);
-            this.sanitationProcess1(12);
-            this.sanitationProcess1(13);
-            this.sanitationProcess1(14);
-            this.sanitationProcess1(15);
-            this.sanitationProcess1(16);
-            this.sanitationProcess1(17);
-            this.sanitationProcess1(18);
-            this.sanitationProcess1(19);
+            this.sanitationProcess2(1);
+            this.sanitationProcess3(2);
+            this.sanitationProcess4(3);
+            this.sanitationProcess5(4);
+            this.sanitationProcess6(5);
+            this.sanitationProcess7(6);
+            this.sanitationProcess8(7);
+            this.sanitationProcess9(8);
+            this.sanitationProcess10(9);
+            this.sanitationProcess11(10);
+            this.sanitationProcess12(11);
+            this.sanitationProcess13(12);
+            this.sanitationProcess14(13);
+            this.sanitationProcess15(14);
+            this.sanitationProcess16(15);
+            this.sanitationProcess17(16);
+            this.sanitationProcess18(17);
+            this.sanitationProcess19(18);
+            this.sanitationProcess20(19);
 
         },
         sanitationProcess1: function(index)
