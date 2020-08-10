@@ -44,7 +44,7 @@ new Vue({
     created()
     {
         this.initialData();
-    }
+    },
     methods : {
         startConsole: function()
         {
