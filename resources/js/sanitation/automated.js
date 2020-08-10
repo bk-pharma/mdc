@@ -60,7 +60,6 @@ new Vue({
             this.automatedLabel = 'Sanitation in process...';
 
             let sanitationProcessNeeded = (this.rowCount / this.rowsPerSanitationProcess);
-            let processPerArray = (sanitationProcessNeeded / 10);
             let processRowStart = 0;
 
             for(let i = 0; i < sanitationProcessNeeded; i++)
@@ -76,7 +75,7 @@ new Vue({
                 this.processRowStartArr.push(processRowStart);
             }
 
-            this.totalSanitationProcess = Math.round(sanitationProcessNeeded);
+            this.totalSanitationProcess = Math.round(sanitationProcessNeeded) - 1;
 
 
             this.sanitationProcess1(this.currentIndex);
