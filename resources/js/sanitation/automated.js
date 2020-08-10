@@ -160,7 +160,7 @@ new Vue({
             {
                 console.log(error);
             })
-        }
+        },
         initialData:function()
         {
             axios.get(`automated/sanitized-total`)
