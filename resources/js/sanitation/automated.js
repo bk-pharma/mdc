@@ -13,7 +13,7 @@ new Vue({
            totalUnsanitizedRow: 0,
            totalSanitizedAmount: 0,
            totalRaw: 0,
-           rowsPerSanitationProcess: 100000,
+           rowsPerSanitationProcess: 100,
            currentSanitationProcess: 0,
            totalSanitationProcess:  0,
            percentageSanitationProcess: 0
@@ -459,7 +459,7 @@ new Vue({
             {
                 let resp = response.data;
 
-                let rowEnd = rowStart + this.rowsPerSanitationProcess;
+                let rowEnd = rowStart + 100000;
                 let nextRow = rowStart += 1;
 
                 if($nextRow !== rowEnd)
