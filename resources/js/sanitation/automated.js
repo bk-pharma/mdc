@@ -45,6 +45,15 @@ new Vue({
     {
         this.initialData();
     },
+    updated()
+    {
+        if(this.currentSanitationProcess === this.totalSanitationProcess)
+        {
+            this.automatedLabel = '';
+            this.sanitationBtn = false;
+            this.rowCountField = false;
+        }
+    },
     methods : {
         startConsole: function()
         {
@@ -100,13 +109,6 @@ new Vue({
                     this.sanitationProcess1(nextIndex);
                 }
 
-                if(this.currentSanitationProcess === this.totalSanitationProcess)
-                {
-                    this.automatedLabel = '';
-                    this.sanitationBtn = false;
-                    this.rowCountField = false;
-                }
-
                 this.totalRaw = resp.totalRaw;
                 this.totalSanitizedRow = resp.totalSanitized;
                 this.totalSanitizedAmount = resp.totalAmount;
@@ -139,13 +141,6 @@ new Vue({
                 if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
                 {
                     this.sanitationProcess2(nextIndex);
-                }
-
-                if(this.currentSanitationProcess === this.totalSanitationProcess)
-                {
-                    this.automatedLabel = '';
-                    this.sanitationBtn = false;
-                    this.rowCountField = false;
                 }
 
                 this.totalRaw = resp.totalRaw;
@@ -182,13 +177,6 @@ new Vue({
                     this.sanitationProcess3(nextIndex);
                 }
 
-                if(this.currentSanitationProcess === this.totalSanitationProcess)
-                {
-                    this.automatedLabel = '';
-                    this.sanitationBtn = false;
-                    this.rowCountField = false;
-                }
-
                 this.totalRaw = resp.totalRaw;
                 this.totalSanitizedRow = resp.totalSanitized;
                 this.totalSanitizedAmount = resp.totalAmount;
@@ -221,13 +209,6 @@ new Vue({
                 if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
                 {
                     this.sanitationProcess4(nextIndex);
-                }
-
-                if(this.currentSanitationProcess === this.totalSanitationProcess)
-                {
-                    this.automatedLabel = '';
-                    this.sanitationBtn = false;
-                    this.rowCountField = false;
                 }
 
                 this.totalRaw = resp.totalRaw;
@@ -264,13 +245,6 @@ new Vue({
                     this.sanitationProcess5(nextIndex);
                 }
 
-                if(this.currentSanitationProcess === this.totalSanitationProcess)
-                {
-                    this.automatedLabel = '';
-                    this.sanitationBtn = false;
-                    this.rowCountField = false;
-                }
-
                 this.totalRaw = resp.totalRaw;
                 this.totalSanitizedRow = resp.totalSanitized;
                 this.totalSanitizedAmount = resp.totalAmount;
@@ -303,13 +277,6 @@ new Vue({
                 if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
                 {
                     this.sanitationProcess6(nextIndex);
-                }
-
-                if(this.currentSanitationProcess === this.totalSanitationProcess)
-                {
-                    this.automatedLabel = '';
-                    this.sanitationBtn = false;
-                    this.rowCountField = false;
                 }
 
                 this.totalRaw = resp.totalRaw;
@@ -346,13 +313,6 @@ new Vue({
                     this.sanitationProcess7(nextIndex);
                 }
 
-                if(this.currentSanitationProcess === this.totalSanitationProcess)
-                {
-                    this.automatedLabel = '';
-                    this.sanitationBtn = false;
-                    this.rowCountField = false;
-                }
-
                 this.totalRaw = resp.totalRaw;
                 this.totalSanitizedRow = resp.totalSanitized;
                 this.totalSanitizedAmount = resp.totalAmount;
@@ -385,13 +345,6 @@ new Vue({
                 if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
                 {
                     this.sanitationProcess8(nextIndex);
-                }
-
-                if(this.currentSanitationProcess === this.totalSanitationProcess)
-                {
-                    this.automatedLabel = '';
-                    this.sanitationBtn = false;
-                    this.rowCountField = false;
                 }
 
                 this.totalRaw = resp.totalRaw;
@@ -428,13 +381,6 @@ new Vue({
                     this.sanitationProcess9(nextIndex);
                 }
 
-                if(this.currentSanitationProcess === this.totalSanitationProcess)
-                {
-                    this.automatedLabel = '';
-                    this.sanitationBtn = false;
-                    this.rowCountField = false;
-                }
-
                 this.totalRaw = resp.totalRaw;
                 this.totalSanitizedRow = resp.totalSanitized;
                 this.totalSanitizedAmount = resp.totalAmount;
@@ -467,13 +413,6 @@ new Vue({
                 if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
                 {
                     this.sanitationProcess10(nextIndex);
-                }
-
-                if(this.currentSanitationProcess === this.totalSanitationProcess)
-                {
-                    this.automatedLabel = '';
-                    this.sanitationBtn = false;
-                    this.rowCountField = false;
                 }
 
                 this.totalRaw = resp.totalRaw;
