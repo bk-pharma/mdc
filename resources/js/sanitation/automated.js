@@ -133,7 +133,12 @@ new Vue({
 
             let rowStart = this.processRowStartArr[index];
 
-            axios.get(`automated/start-process/${rowStart}/${this.rowsPerSanitationProcess}`)
+            let data = {
+                rowStart: rowStart,
+                rowCount: this.rowsPerSanitationProcess
+            };
+
+            axios.post(`automated/start-process`, data)
             .then((response) =>
             {
                 let resp = response.data;
