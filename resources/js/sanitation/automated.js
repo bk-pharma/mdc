@@ -2,7 +2,7 @@ new Vue({
     el: '#automatedPhases-container',
     data() {
         return {
-           sanitationIterator: 10, // nextIndex = array[index + 6]
+           sanitationIterator: 1, // nextIndex = array[index + 6]
            automatedLabel : '',
            sanitationBtn: false,
            processRowStartArr: [],
@@ -60,6 +60,7 @@ new Vue({
             this.automatedLabel = 'Sanitation in process...';
 
             let sanitationProcessNeeded = (this.rowCount / this.rowsPerSanitationProcess);
+            let processPerArray = (sanitationProcessNeeded / 10);
             let processRowStart = 0;
 
             for(let i = 0; i < sanitationProcessNeeded; i++)
@@ -77,16 +78,17 @@ new Vue({
 
             this.totalSanitationProcess = Math.round(sanitationProcessNeeded);
 
+
             this.sanitationProcess1(0);
-            this.sanitationProcess2(1);
-            this.sanitationProcess3(2);
-            this.sanitationProcess4(3);
-            this.sanitationProcess5(4);
-            this.sanitationProcess6(5);
-            this.sanitationProcess7(6);
-            this.sanitationProcess8(7);
-            this.sanitationProcess9(8);
-            this.sanitationProcess10(9);
+            // this.sanitationProcess2(1);
+            // this.sanitationProcess3(2);
+            // this.sanitationProcess4(3);
+            // this.sanitationProcess5(4);
+            // this.sanitationProcess6(5);
+            // this.sanitationProcess7(6);
+            // this.sanitationProcess8(7);
+            // this.sanitationProcess9(8);
+            // this.sanitationProcess10(9);
         },
         sanitationProcess1: function(index)
         {
