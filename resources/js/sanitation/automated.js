@@ -2,7 +2,7 @@ new Vue({
     el: '#automatedPhases-container',
     data() {
         return {
-           sanitationIterator: 10, // nextIndex = array[index + 10]
+           sanitationIterator: 1, // nextIndex = array[index + 10]
            automatedLabel : '',
            sanitationBtn: false,
            processRowStartArr: [],
@@ -13,7 +13,7 @@ new Vue({
            totalUnsanitizedRow: 0,
            totalSanitizedAmount: 0,
            totalRaw: 0,
-           rowsPerSanitationProcess: 100,
+           rowsPerSanitationProcess: 100000,
            currentSanitationProcess: 0,
            totalSanitationProcess:  0,
            percentageSanitationProcess: 0
@@ -100,7 +100,7 @@ new Vue({
             let rowStart = this.processRowStartArr[index];
 
             let data = {
-                rowStart: rowStart,
+                rowStart: 0,
                 rowCount: this.rowsPerSanitationProcess
             };
 
@@ -139,7 +139,7 @@ new Vue({
             let rowStart = this.processRowStartArr[index];
 
             let data = {
-                rowStart: rowStart,
+                rowStart: 100001,
                 rowCount: this.rowsPerSanitationProcess
             };
 
@@ -178,7 +178,7 @@ new Vue({
             let rowStart = this.processRowStartArr[index];
 
             let data = {
-                rowStart: rowStart,
+                rowStart: 200001,
                 rowCount: this.rowsPerSanitationProcess
             };
 
@@ -217,7 +217,7 @@ new Vue({
             let rowStart = this.processRowStartArr[index];
 
             let data = {
-                rowStart: rowStart,
+                rowStart: 300001,
                 rowCount: this.rowsPerSanitationProcess
             };
 
@@ -256,7 +256,7 @@ new Vue({
             let rowStart = this.processRowStartArr[index];
 
             let data = {
-                rowStart: rowStart,
+                rowStart: 400001,
                 rowCount: this.rowsPerSanitationProcess
             };
 
@@ -295,7 +295,7 @@ new Vue({
             let rowStart = this.processRowStartArr[index];
 
             let data = {
-                rowStart: rowStart,
+                rowStart: 500001,
                 rowCount: this.rowsPerSanitationProcess
             };
 
@@ -334,7 +334,7 @@ new Vue({
             let rowStart = this.processRowStartArr[index];
 
             let data = {
-                rowStart: rowStart,
+                rowStart: 600001,
                 rowCount: this.rowsPerSanitationProcess
             };
 
@@ -373,7 +373,7 @@ new Vue({
             let rowStart = this.processRowStartArr[index];
 
             let data = {
-                rowStart: rowStart,
+                rowStart: 700 001,
                 rowCount: this.rowsPerSanitationProcess
             };
 
@@ -412,7 +412,7 @@ new Vue({
             let rowStart = this.processRowStartArr[index];
 
             let data = {
-                rowStart: rowStart,
+                rowStart: 800001,
                 rowCount: this.rowsPerSanitationProcess
             };
 
@@ -451,7 +451,7 @@ new Vue({
             let rowStart = this.processRowStartArr[index];
 
             let data = {
-                rowStart: rowStart,
+                rowStart: 900001,
                 rowCount: this.rowsPerSanitationProcess
             };
 
