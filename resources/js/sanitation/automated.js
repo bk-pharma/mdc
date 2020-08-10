@@ -484,6 +484,20 @@ new Vue({
             {
                 console.log(error);
             })
+        },
+        initialData:function()
+        {
+            axios.get(`automated/start-process/sanitized-total`)
+            .then((response) =>
+            {
+                let resp = response.data;
+
+                this.totalRaw = resp.totalRaw;
+            })
+            .catch((error) =>
+            {
+                console.log(error);
+            })
         }
     }
 
