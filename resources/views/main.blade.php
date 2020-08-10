@@ -72,7 +72,7 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-          @if(Request::is('sanitation/*'))
+<!--           @if(Request::is('sanitation/*'))
             <li class="nav-item has-treeview menu-open">
           @else
             <li class="nav-item has-treeview">
@@ -127,9 +127,9 @@
               </li>
 
             </ul>
-          </li>
+          </li> -->
 
-          <li class="nav-item">
+<!--           <li class="nav-item">
 
           @if(Request::is('rules'))
             <a href="#" class="nav-link active">
@@ -141,7 +141,7 @@
                 Rules
               </p>
             </a>
-          </li>
+          </li> -->
 
           <li class="nav-item">
 
@@ -159,7 +159,7 @@
 
           <li class="nav-item">
 
-          @if(Request::is('name-formatter'))
+<!--           @if(Request::is('name-formatter'))
             <a href="#" class="nav-link active">
           @else
             <a href="{{ url('/name-formatter') }}" class="nav-link">
@@ -170,7 +170,7 @@
               </p>
             </a>
           </li>
-
+ -->
           @if (!Auth::check())
           <li class="nav-item">
             <a href="{{ route('login') }}" class="nav-link">
@@ -202,12 +202,12 @@
   </aside>
 
   <div class="content-wrapper">
-    @yield('sanitationPhaseOne')
+<!--     @yield('sanitationPhaseOne')
     @yield('sanitationPhaseTwo')
     @yield('sanitationPhaseThree')
     @yield('sanitationPhaseFour')
     @yield('rules')
-    @yield('nameFormatter')
+    @yield('nameFormatter') -->
     @yield('automatedPhases')
   </div>
 
@@ -244,12 +244,12 @@
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   {{-- <script src="{{asset('dist/js/pages/dashboard.js')}}"></script> --}}
 
-  @stack('sanitationPhaseOne-scripts')
+<!--   @stack('sanitationPhaseOne-scripts')
   @stack('sanitationPhaseTwo-scripts')
   @stack('sanitationPhaseThree-scripts')
   @stack('sanitationPhaseFour-scripts')
   @stack('rules-scripts')
-  @stack('nameFormatter-scripts')
+  @stack('nameFormatter-scripts') -->
   @stack('automatedPhases-scripts')
 </body>
 </html>
