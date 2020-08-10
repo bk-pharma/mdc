@@ -125,12 +125,6 @@ new Vue({
 
                 let nextIndex = this.currentIndex + 1;
 
-                if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
-                {
-                    this.currentIndex += 1;
-                    this.sanitationProcess1(nextIndex);
-                }
-
                 this.currentSanitationProcess += 1;
                 this.totalRaw = resp.totalRaw;
                 this.totalSanitizedRow = resp.totalSanitized;
@@ -139,6 +133,12 @@ new Vue({
 
                 this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
                 this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
+
+                if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
+                {
+                    this.currentIndex += 1;
+                    this.sanitationProcess1(nextIndex);
+                }
             })
             .catch((error) =>
             {
@@ -164,12 +164,6 @@ new Vue({
 
                 let nextIndex = this.currentIndex + 1;
 
-                if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
-                {
-                    this.currentIndex += 1;
-                    this.sanitationProcess2(nextIndex);
-                }
-
                 this.currentSanitationProcess += 1;
                 this.totalRaw = resp.totalRaw;
                 this.totalSanitizedRow = resp.totalSanitized;
@@ -178,6 +172,12 @@ new Vue({
 
                 this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
                 this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
+
+                if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
+                {
+                    this.currentIndex += 1;
+                    this.sanitationProcess2(nextIndex);
+                }
             })
             .catch((error) =>
             {
@@ -203,12 +203,6 @@ new Vue({
 
                 let nextIndex = this.currentIndex + 1;
 
-                if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
-                {
-                    this.currentIndex += 1;
-                    this.sanitationProcess3(nextIndex);
-                }
-
                 this.currentSanitationProcess += 1;
                 this.totalRaw = resp.totalRaw;
                 this.totalSanitizedRow = resp.totalSanitized;
@@ -217,6 +211,12 @@ new Vue({
 
                 this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
                 this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
+
+                if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
+                {
+                    this.currentIndex += 1;
+                    this.sanitationProcess3(nextIndex);
+                }
             })
             .catch((error) =>
             {
@@ -242,12 +242,6 @@ new Vue({
 
                 let nextIndex = this.currentIndex + 1;
 
-                if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
-                {
-                    this.currentIndex += 1;
-                    this.sanitationProcess4(nextIndex);
-                }
-
                 this.currentSanitationProcess += 1;
                 this.totalRaw = resp.totalRaw;
                 this.totalSanitizedRow = resp.totalSanitized;
@@ -256,6 +250,12 @@ new Vue({
 
                 this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
                 this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
+
+                if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
+                {
+                    this.currentIndex += 1;
+                    this.sanitationProcess4(nextIndex);
+                }
             })
             .catch((error) =>
             {
@@ -281,12 +281,6 @@ new Vue({
 
                 let nextIndex = this.currentIndex + 1;
 
-                if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
-                {
-                    this.currentIndex += 1;
-                    this.sanitationProcess5(nextIndex);
-                }
-
                 this.currentSanitationProcess += 1;
                 this.totalRaw = resp.totalRaw;
                 this.totalSanitizedRow = resp.totalSanitized;
@@ -295,6 +289,12 @@ new Vue({
 
                 this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
                 this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
+
+                if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
+                {
+                    this.currentIndex += 1;
+                    this.sanitationProcess5(nextIndex);
+                }
             })
             .catch((error) =>
             {
