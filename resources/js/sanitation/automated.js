@@ -70,8 +70,9 @@ new Vue({
                 }else
                 {
                     processRowStart = (i * this.rowsPerSanitationProcess) + 1;
-                     this.processRowStartArr.push(processRowStart);
                 }
+
+                this.processRowStartArr.push(processRowStart);
             }
 
             console.table(this.processRowStartArr);
