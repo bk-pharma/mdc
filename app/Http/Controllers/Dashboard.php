@@ -11,6 +11,7 @@ use App\Services\Contracts\SanitationThreeInterface;
 use App\Services\Contracts\SanitationFourInterface;
 use App\Services\Contracts\RulesInterface;
 use App\Services\Contracts\NameFormatInterface;
+use App\Services\Contracts\ManualSanitationInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
@@ -25,6 +26,7 @@ class Dashboard extends Controller
     private $sanitation_four;
     private $rules;
     private $name_format;
+    private $unsanitized_data;
 
     function __construct(
     	RawDataInterface $raw_data,
@@ -34,7 +36,8 @@ class Dashboard extends Controller
     	SanitationThreeInterface $sanitation_three,
     	SanitationFourInterface $sanitation_four,
     	RulesInterface $rules,
-    	NameFormatInterface $name_format
+    	NameFormatInterface $name_format,
+    	ManualSanitationInterface $unsanitized_data
     )
     {
     	$this->raw_data = $raw_data;
@@ -44,7 +47,8 @@ class Dashboard extends Controller
     	$this->sanitation_three = $sanitation_three;
     	$this->sanitation_four = $sanitation_four;
     	$this->rules = $rules;
-    	$this->name_format = $name_format;
+		$this->name_format = $name_format;
+		$this->unsanitized_data = $unsanitized_data;
     }
 
 	public function index()
@@ -468,4 +472,25 @@ class Dashboard extends Controller
         }
     }
 
+
+	public function manual()
+	{
+		return view('manual.manual');
+	}
+
+	public function getUnsanitizedData(){
+		
+		$limit = 200;
+		$offset = 0;
+		
+		return response()->json($this->unsanitized_data->getUnsanitizedData($limit, $offset));
+	}
+
+
+	public function getCorrectedName(Request $req)
+	{
+		$corrected_name = $req->input('corrected_name');
+		return response()->json($this->unsanitized_data->getCorrectedName($corrected_name));
+	}
 }
+

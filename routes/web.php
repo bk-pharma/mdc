@@ -68,6 +68,12 @@ Route::prefix('/automated')->group(function() {
 	Route::get('/sanitized-total', 'Dashboard@getSanitizedCount');
 });
 
+
+Route::prefix('/manual')->group(function() {
+	Route::get('/', 'Dashboard@manual');
+	Route::get('/unsanitizedData', 'Dashboard@getUnsanitizedData');
+	Route::get('/correctedName', 'Dashboard@getCorrectedName');
+});
 // Route::get('/sanitize', 'Dashboard@sanitation');
 
 Auth::routes();

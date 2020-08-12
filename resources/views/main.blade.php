@@ -26,8 +26,16 @@
   <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker.css')}}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{asset('plugins/summernote/summernote-bs4.css')}}">
-  <!-- Google Font: Source Sans Pro -->
-  <!-- <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"> -->
+
+  <!--dataTables CDN -->
+  <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+
+  <!--Select bootstrap css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css">
+
+
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -157,6 +165,21 @@
               </a>
             </li>
 
+
+            <li class="nav-item">
+
+              @if(Request::is('manual'))
+                <a href="#" class="nav-link active">
+              @else
+                <a href="{{ url('/manual') }}" class="nav-link ">
+              @endif
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                  <p>
+                    Manual Sanitation
+                  </p>
+                </a>
+              </li>
+
           <li class="nav-item">
 
 <!--           @if(Request::is('name-formatter'))
@@ -209,6 +232,7 @@
     @yield('rules')
     @yield('nameFormatter') -->
     @yield('automatedPhases')
+    @yield('manualSanitation')
   </div>
 
 </div>
@@ -244,12 +268,26 @@
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   {{-- <script src="{{asset('dist/js/pages/dashboard.js')}}"></script> --}}
 
-<!--   @stack('sanitationPhaseOne-scripts')
+  <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+  <!-- select2 -->
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+  <!--Select bootstrap js -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+{{-- 
+  <script src="https://cdn.datatables.net/scroller/2.0.2/js/dataTables.scroller.min.js"></script>
+   --}}
+  {{-- @stack('sanitationPhaseOne-scripts')
   @stack('sanitationPhaseTwo-scripts')
   @stack('sanitationPhaseThree-scripts')
   @stack('sanitationPhaseFour-scripts')
   @stack('rules-scripts')
-  @stack('nameFormatter-scripts') -->
+  @stack('nameFormatter-scripts') --}}
   @stack('automatedPhases-scripts')
+  @stack('manualSanitation-scripts')
 </body>
 </html>

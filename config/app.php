@@ -181,7 +181,8 @@ return [
         App\Providers\SanitationThreeProvider::class,
         App\Providers\SanitationFourProvider::class,
         App\Providers\RulesProvider::class,
-        App\Providers\NameFormatProvider::class
+        App\Providers\NameFormatProvider::class,
+        App\Providers\ManualSanitationProvider::class
     ],
 
     /*
