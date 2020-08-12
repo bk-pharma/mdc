@@ -70,7 +70,7 @@ new Vue({
                 this.sanitationWorker4 +
                 this.sanitationWorker5 +
                 this.sanitationWorker6
-            ) / 6;
+            ) / 8;
     },
     methods : {
         startConsole: function()
