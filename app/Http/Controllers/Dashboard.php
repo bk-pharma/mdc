@@ -72,11 +72,14 @@ class Dashboard extends Controller
 
 		$process = Process::fromShellCommandline('php artisan sanitize --row_start='.$rowStart.' --row_count='.$rowCount);
 		$process->setWorkingDirectory(base_path());
-		$process->run();
+		$process->setTimeout(3600);
+		$process->start();
 
-		if (!$process->isSuccessful()) {
-		    throw new ProcessFailedException($process);
-		}
+		$process->wait();
+
+		// if (!$process->isSuccessful()) {
+		//     throw new ProcessFailedException($process);
+		// }
 
 		$data = [
 			'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
