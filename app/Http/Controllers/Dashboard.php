@@ -77,10 +77,6 @@ class Dashboard extends Controller
 
 		$process->wait();
 
-		// if (!$process->isSuccessful()) {
-		//     throw new ProcessFailedException($process);
-		// }
-
 		$data = [
 			'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
 			'totalSanitized' => $this->raw_data->getSanitizedCount()[0]->totalSanitized,

@@ -291,23 +291,122 @@ new Vue({
             if(typeof this.processRowStartArr[1200] !== 'undefined')
             {
                 this.sanitationProcess7(seventhSanitationIndexes[0], seventhSanitationIndexes[1]);
+
+                setTimeout(() => {
+                    console.log('process 7 1st sub function started');
+                    this.sanitationProcess7(seventhSanitationIndexes[0], seventhSanitationIndexes[1]);
+                },180000);
+
+                setTimeout(() => {
+                    console.log('process 7 2nd sub function started');
+                    this.sanitationProcess7(seventhSanitationIndexes[0], seventhSanitationIndexes[1]);
+                },360000);
+
+                setTimeout(() => {
+                    console.log('process 7 3rd sub function started');
+                    this.sanitationProcess7(seventhSanitationIndexes[0], seventhSanitationIndexes[1]);
+                },540000);
+
+                setTimeout(() => {
+                    console.log('process 7 4th sub function started');
+                    this.sanitationProcess7(seventhSanitationIndexes[0], seventhSanitationIndexes[1]);
+                },720000);
+
+                setTimeout(() => {
+                    console.log('process 7 5th sub function started');
+                    this.sanitationProcess7(seventhSanitationIndexes[0], seventhSanitationIndexes[1]);
+                },900000);
             }
 
             if(typeof this.processRowStartArr[1400] !== 'undefined')
             {
                 this.sanitationProcess8(eightSanitationIndexes[0], eightSanitationIndexes[1]);
+
+                setTimeout(() => {
+                    console.log('process 8 1st sub function started');
+                    this.sanitationProcess8(eightSanitationIndexes[0], eightSanitationIndexes[1]);
+                },180000);
+
+                setTimeout(() => {
+                    console.log('process 8 2nd sub function started');
+                    this.sanitationProcess8(eightSanitationIndexes[0], eightSanitationIndexes[1]);
+                },360000);
+
+                setTimeout(() => {
+                    console.log('process 8 3rd sub function started');
+                    this.sanitationProcess8(eightSanitationIndexes[0], eightSanitationIndexes[1]);
+                },540000);
+
+                setTimeout(() => {
+                    console.log('process 8 4th sub function started');
+                    this.sanitationProcess8(eightSanitationIndexes[0], eightSanitationIndexes[1]);
+                },720000);
+
+                setTimeout(() => {
+                    console.log('process 8 5th sub function started');
+                    this.sanitationProcess8(eightSanitationIndexes[0], eightSanitationIndexes[1]);
+                },900000);
             }
 
             if(typeof this.processRowStartArr[1600] !== 'undefined')
             {
                 this.sanitationProcess9(nineSanitationIndexes[0], nineSanitationIndexes[1]);
+
+                setTimeout(() => {
+                    console.log('process 9 1st sub function started');
+                    this.sanitationProcess9(nineSanitationIndexes[0], nineSanitationIndexes[1]);
+                },180000);
+
+                setTimeout(() => {
+                    console.log('process 9 2nd sub function started');
+                    this.sanitationProcess9(nineSanitationIndexes[0], nineSanitationIndexes[1]);
+                },360000);
+
+                setTimeout(() => {
+                    console.log('process 9 3rd sub function started');
+                    this.sanitationProcess9(nineSanitationIndexes[0], nineSanitationIndexes[1]);
+                },540000);
+
+                setTimeout(() => {
+                    console.log('process 9 4th sub function started');
+                    this.sanitationProcess9(nineSanitationIndexes[0], nineSanitationIndexes[1]);
+                },720000);
+
+                setTimeout(() => {
+                    console.log('process 9 5th sub function started');
+                    this.sanitationProcess9(nineSanitationIndexes[0], nineSanitationIndexes[1]);
+                },900000);
             }
 
             if(typeof this.processRowStartArr[1800] !== 'undefined')
             {
                 this.sanitationProcess10(tenthSanitationIndexes[0], tenthSanitationIndexes[1]);
-            }
 
+                setTimeout(() => {
+                    console.log('process 10 1st sub function started');
+                    this.sanitationProcess10(tenthSanitationIndexes[0], tenthSanitationIndexes[1]);
+                },180000);
+
+                setTimeout(() => {
+                    console.log('process 10 2nd sub function started');
+                    this.sanitationProcess10(tenthSanitationIndexes[0], tenthSanitationIndexes[1]);
+                },360000);
+
+                setTimeout(() => {
+                    console.log('process 10 3rd sub function started');
+                    this.sanitationProcess10(tenthSanitationIndexes[0], tenthSanitationIndexes[1]);
+                },540000);
+
+                setTimeout(() => {
+                    console.log('process 10 4th sub function started');
+                    this.sanitationProcess10(tenthSanitationIndexes[0], tenthSanitationIndexes[1]);
+                },720000);
+
+                setTimeout(() => {
+                    console.log('process 10 5th sub function started');
+                    this.sanitationProcess10(tenthSanitationIndexes[0], tenthSanitationIndexes[1]);
+                },900000);
+            }
 
         },
         sanitationProcess1: function(indexStart, indexStop)
@@ -351,7 +450,7 @@ new Vue({
                     }
                 }else
                 {
-                    console.log('Sanitation Worker 1 '+this.sanitationWorker1);
+                    console.log('Sanitation Worker 1: '+this.sanitationWorker1);
                 }
             })
             .catch((error) =>
@@ -400,7 +499,7 @@ new Vue({
                     }
                 }else
                 {
-                    console.log('Sanitation Worker 2'+this.sanitationWorker2);
+                    console.log('Sanitation Worker 2: '+this.sanitationWorker2);
                 }
             })
             .catch((error) =>
@@ -449,7 +548,7 @@ new Vue({
                     }
                 }else
                 {
-                     console.log('Sanitation Worker 3'+this.sanitationWorker3);
+                     console.log('Sanitation Worker 3: '+this.sanitationWorker3);
                 }
             })
             .catch((error) =>
@@ -498,7 +597,7 @@ new Vue({
                     }
                 }else
                 {
-                     console.log('Sanitation Worker 4'+this.sanitationWorker4);
+                     console.log('Sanitation Worker 4: '+this.sanitationWorker4);
                 }
             })
             .catch((error) =>
@@ -547,7 +646,7 @@ new Vue({
                     }
                 }else
                 {
-                     console.log('Sanitation Worker 5'+this.sanitationWorker5);
+                     console.log('Sanitation Worker 5: '+this.sanitationWorker5);
                 }
             })
             .catch((error) =>
@@ -590,7 +689,8 @@ new Vue({
                 {
                     let nextIndex = indexStart + 1;
 
-                    if(typeof this.processRowStartArr[nextIndex] !== 'undefined') {
+                    if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
+                    {
                             this.sanitationProcess6(nextIndex, indexStop);
                     }else
                     {
@@ -617,7 +717,9 @@ new Vue({
             let data = {
                 rowStart: rowStart,
                 rowCount: this.rowsPerSanitationProcess,
-                sanitation: 7
+                sanitation: 7,
+                index: indexStart,
+                sanitationWorker7: this.sanitationWorker7
             };
 
             axios.post(`automated/start-process`, data)
@@ -635,11 +737,21 @@ new Vue({
                 this.sanitationWorker7 += this.rowsPerSanitationProcess;
                 this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
 
-                let nextIndex = indexStart + 1;
 
                 if(indexStart !== indexStop)
                 {
-                    this.sanitationProcess7(indexStart, indexStop);
+                    let nextIndex = indexStart + 1;
+
+                    if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
+                    {
+                            this.sanitationProcess7(nextIndex, indexStop);
+                    }else
+                    {
+                        console.log('Sanitation Worker 7 '+this.sanitationWorker7);
+                    }
+                }else
+                {
+                    console.log('Sanitation Worker 7 '+this.sanitationWorker7);
                 }
             })
             .catch((error) =>
@@ -676,11 +788,21 @@ new Vue({
                 this.sanitationWorker8 += this.rowsPerSanitationProcess;
                 this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
 
-                let nextIndex = indexStart + 1;
 
                 if(indexStart !== indexStop)
                 {
-                    this.sanitationProcess8(nextIndex, indexStop);
+                    let nextIndex = indexStart + 1;
+
+                    if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
+                    {
+                        this.sanitationProcess8(nextIndex, indexStop);
+                    }else
+                    {
+                        console.log('Sanitation Worker 8 '+this.sanitationWorker8);
+                    }
+                }else
+                {
+                    console.log('Sanitation Worker 8 '+this.sanitationWorker8);
                 }
             })
             .catch((error) =>
@@ -717,11 +839,20 @@ new Vue({
                 this.sanitationWorker9 += this.rowsPerSanitationProcess;
                 this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
 
-                let nextIndex = indexStart + 1;
-
                 if(indexStart !== indexStop)
                 {
-                    this.sanitationProcess9(nextIndex, indexStop);
+                    let nextIndex = indexStart + 1;
+
+                    if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
+                    {
+                        this.sanitationProcess9(nextIndex, indexStop);
+                    }else
+                    {
+                        console.log('Sanitation Worker 9 '+this.sanitationWorker9);
+                    }
+                }else
+                {
+                    console.log('Sanitation Worker 9 '+this.sanitationWorker9);
                 }
             })
             .catch((error) =>
@@ -758,14 +889,20 @@ new Vue({
                 this.sanitationWorker10 += this.rowsPerSanitationProcess;
                 this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
 
-                let nextIndex = indexStart + 1;
-
                 if(indexStart !== indexStop)
                 {
-                    this.sanitationProcess10(nextIndex, indexStop);
+                    let nextIndex = indexStart + 1;
+
+                    if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
+                    {
+                        this.sanitationProcess10(nextIndex, indexStop);
+                    }else
+                    {
+                        console.log('Sanitation Worker 10 '+this.sanitationWorker10);
+                    }
                 }else
                 {
-
+                    console.log('Sanitation Worker 10 '+this.sanitationWorker10);
                 }
             })
             .catch((error) =>
