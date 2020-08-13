@@ -96,9 +96,9 @@ class Dashboard extends Controller
         return view('manual.manual');
     }
 
-    public function manualv2()
+    public function uncleanedData()
     {
-        return view('manual.unsanitizedData');
+        return view('manual.uncleanedData');
     }
 
     public function getUnsanitizedData(){

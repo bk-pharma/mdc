@@ -43,9 +43,9 @@ class ManualSanitation implements ManualSanitationInterface
             ->select('raw_id', 'raw_doctor', 'raw_status', 'raw_lbucode', 'raw_corrected_name','raw_license', 'raw_address', 'raw_amount');
         
         return DataTables::of($unsanitize)
-            ->addColumn('raw_check', function($unsanitize){
+            /* ->addColumn('raw_check', function($unsanitize){
                 return '<input type="checkbox" class="text-center" name="isSanitized">';
-            })
+            }) */
             ->addColumn('raw_id', function($unsanitize){
                 return $unsanitize->raw_id;
             })
@@ -68,7 +68,7 @@ class ManualSanitation implements ManualSanitationInterface
                 return $unsanitize->raw_amount;
             })
             ->rawColumns([
-                'raw_check',
+                /* 'raw_check', */
                 'raw_id', 
                 'raw_doctor', 
                 'raw_status', 

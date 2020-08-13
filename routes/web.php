@@ -39,8 +39,8 @@ Route::prefix('/manual')->group(function() {
 
 
 
-Route::prefix('/manualv2')->group(function() {
-	Route::get('/', 'Dashboard@manualv2')->middleware('auth');
+Route::prefix('/unclean')->group(function() {
+	Route::get('/', 'Dashboard@uncleanedData')->middleware('auth');
 	Route::get('/unsanitizedData', 'Dashboard@getUnsanitizedData');
 	
 });

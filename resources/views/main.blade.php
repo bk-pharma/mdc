@@ -85,7 +85,7 @@
             @if(Request::is('sanitation'))
               <a href="#" class="nav-link active">
             @else
-              <a href="{{ url('/automated') }}" class="nav-link ">
+              <a href="{{ url('/sanitation') }}" class="nav-link ">
             @endif
               <i class="nav-icon fas fa-cogs"></i>
                 <p>
@@ -112,10 +112,10 @@
 
               <li class="nav-item">
 
-                @if(Request::is('manualv2'))
+                @if(Request::is('unclean'))
                   <a href="#" class="nav-link active">
                 @else
-                  <a href="{{ url('/manualv2') }}" class="nav-link ">
+                  <a href="{{ url('/unclean') }}" class="nav-link ">
                 @endif
                   <i class="nav-icon fas fa-chalkboard-teacher"></i>
                     <p>
@@ -158,7 +158,7 @@
 
   <div class="content-wrapper">
     @yield('sanitation')
-    @yield('unsanitizedData')
+    @yield('uncleanedData')
     @yield('manualSanitation')
 
   </div>
@@ -207,7 +207,8 @@
   <script src="https://cdn.datatables.net/fixedheader/3.1.7/js/dataTables.fixedHeader.min.js"></script>
   <script src="https://cdn.datatables.net/scroller/2.0.2/js/dataTables.scroller.min.js"></script>
 
+  @stack('sanitation-scripts')
   @stack('manualSanitation-scripts') 
-  @stack('unsanitizedData-scripts') 
+  @stack('uncleanedData-scripts') 
 </body>
 </html>

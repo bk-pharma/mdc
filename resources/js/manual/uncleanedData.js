@@ -22,10 +22,10 @@ $(document).ready(function() {
         processing: false,
         searching: false,
         ajax: {
-            url: 'manual/unsanitizedData',
+            url: 'unclean/unsanitizedData',
         },
         columns: [
-            {data : 'raw_check', className: 'raw_check' },
+            /* {data : 'raw_check', className: 'raw_check' }, */
             {data : 'raw_id', className: 'raw_id' },
             {data : 'raw_doctor', className: 'raw_doctor' }, 
             {data : 'raw_corrected_name', className: 'raw_corrected_name' }, 
@@ -47,7 +47,7 @@ $(document).ready(function() {
     //sanitized all
     $("#sanitizedAll").click(function(){
         alert("Button was clicked!");
-      });
+      });/* 
       //check all
         $('#example-select-all').on('click', function(){
             // Check/uncheck all checkboxes in the table
@@ -68,5 +68,5 @@ $(document).ready(function() {
                 el.indeterminate = true;
             }
             }
-        });
+        }); */
     });

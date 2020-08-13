@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('unsanitizedData')
+@section('uncleanedData')
     
   
 <div class="container-fluid">
@@ -21,7 +21,7 @@
             <table class=" table table-striped table-hover table-bordered display nowrap" id="unsanitizedTable" style="width:100%;" >
                 <thead>
                     <tr>
-                        <th><input name="select_all" value="1" id="example-select-all" type="checkbox" />Check All</th>
+                        {{-- <th><input name="select_all" value="1" id="example-select-all" type="checkbox" />Check All</th> --}}
                         <th>ID</th>
                         <th>Doctor</th>
                         <th>Correct Name</th>
@@ -38,10 +38,10 @@
     </div>
 </div>
 
-@push('unsanitizedData-scripts')
+@push('uncleanedData-scripts')
 	<script src="{{ url('../resources/js/vue.js') }}"></script>
 	<script src="{{ url('../resources/js/axios.min.js') }}"></script>
-    <script type="module" src="{{ url('../resources/js/manual/unsanitizedData.js') }}"></script>
+    <script type="module" src="{{ url('../resources/js/manual/uncleanedData.js') }}"></script>
 @endpush
 
 
