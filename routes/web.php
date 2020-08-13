@@ -74,6 +74,17 @@ Route::prefix('/manual')->group(function() {
 	Route::get('/unsanitizedData', 'Dashboard@getUnsanitizedData');
 	Route::get('/correctedName', 'Dashboard@getCorrectedName');
 });
+
+
+
+Route::prefix('/manualv2')->group(function() {
+	Route::get('/', 'Dashboard@manualv2');
+	Route::get('/unsanitizedData', 'Dashboard@getUnsanitizedData');
+	
+});
+
+
+
 // Route::get('/sanitize', 'Dashboard@sanitation');
 
 Auth::routes();

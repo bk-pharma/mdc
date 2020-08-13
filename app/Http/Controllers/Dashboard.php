@@ -478,12 +478,15 @@ class Dashboard extends Controller
 		return view('manual.manual');
 	}
 
+	public function manualv2()
+	{
+		return view('manual.unsanitizedData');
+	}
+
 	public function getUnsanitizedData(){
 		
-		$limit = 200;
-		$offset = 0;
+		return $this->unsanitized_data->getUnsanitizedData();
 		
-		return response()->json($this->unsanitized_data->getUnsanitizedData($limit, $offset));
 	}
 
 
@@ -492,5 +495,6 @@ class Dashboard extends Controller
 		$corrected_name = $req->input('corrected_name');
 		return response()->json($this->unsanitized_data->getCorrectedName($corrected_name));
 	}
+	
 }
 

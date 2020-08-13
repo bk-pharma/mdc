@@ -4,7 +4,7 @@ $(document).ready(function() {
     $('#unsanitizedTable thead tr').clone(true).appendTo( '#unsanitizedTable thead' );
     $('#unsanitizedTable thead tr:eq(1) th').each( function (i) {
         var title = $(this).text();
-        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+        $(this).html( '<input type="text" class="form-control" placeholder="Search '+title+'" />' );
  
         $( 'input', this ).on( 'keyup change', function () {
             if ( unsanitizedTable.column(i).search() !== this.value ) {
@@ -15,11 +15,12 @@ $(document).ready(function() {
             }
         } );
     } );
-     var unsanitizedTable = $('#unsanitizedTable').DataTable({
+
+    var unsanitizedTable = $('#unsanitizedTable').DataTable({
         orderCellsTop: true,
         fixedHeader: true,
         responsive:true,
-    	processing:true,
+    	  processing:true,
         serverside:true,
         scrollY: '45vh',
         scrollX: true,
@@ -32,7 +33,7 @@ $(document).ready(function() {
     		type: 'GET',
     		url: 'manual/unsanitizedData',
     		dataType: 'json',
-            dataSrc: '',
+        dataSrc: '',
               /*   data: {
                     limit: 200,
                     offset: 0,
@@ -111,6 +112,39 @@ $("#unidentifiedBtn").click(function (e){
   }
 
  })
+
+/* 
+
+ $('.js-example-basic-single').select2({
+  ajax : {
+    type: 'GET',
+    url: 'manual/correctedName',
+    dataType: 'json',
+    dataSrc: '',
+    delay : 250,
+      data: function (params) {
+        var queryParameters = {
+            q: params.term
+        }
+        return queryParameters;
+    },
+  }
+}); */
+
+/* 
+$('.js-example-basic-single').select2({
+  ajax: {
+      url: 'manual/correctedName',
+      delay: 250,
+      dataType: 'json',
+      data: function (params) {
+              var queryParameters = {
+                  q: params.term
+              }
+              return queryParameters;
+          }
+  }
+});  */
 
 });
 

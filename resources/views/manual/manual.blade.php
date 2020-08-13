@@ -31,7 +31,6 @@
                     <option value="5">Amount</option>
                     <option value="6">Address</option>
                     <option value="7">LBU Code</option>
-                   
                 </select>
             </div>
        
@@ -39,7 +38,7 @@
     <div class="row ">
         <div class="col-md-12">
             <table class=" table table-striped table-hover table-bordered display nowrap" id="unsanitizedTable" style="width:100%;" >
-                <thead class="">
+                <thead>
                     <tr>
                         <th> ID </th>
                         <th> Doctor </th>
@@ -129,7 +128,7 @@
                                     <input id="doctor_list_other" name="doctor_list_other" placeholder="Lastname, firstname"  class="form-control">
                                     <input  type="hidden" id="md_code_other" name="md_code_other" class="form-control">
 
-                                  
+                                   {{--  <select name="unsanitized_name" class="js-example-basic-single form-control" id=""></select> --}}
                              </div>
                     </div>
 
