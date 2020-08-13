@@ -64,7 +64,7 @@ Route::prefix('/name-formatter')->group(function() {
 Route::prefix('/automated')->group(function() {
 	Route::get('/', 'Dashboard@automated');
 
-	Route::get('/start-process/{rowStart}/{rowCount}', 'Dashboard@sanitationProcess');
+	Route::post('/start-process', 'Dashboard@sanitationProcess');
 	Route::get('/sanitized-total', 'Dashboard@getSanitizedCount');
 });
 

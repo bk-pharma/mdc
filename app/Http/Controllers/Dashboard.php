@@ -29,6 +29,7 @@ class Dashboard extends Controller
     private $unsanitized_data;
 
     function __construct(
+<<<<<<< HEAD
     	RawDataInterface $raw_data,
     	MiscInterface $misc,
     	SanitationOneInterface $sanitation_one,
@@ -49,353 +50,328 @@ class Dashboard extends Controller
     	$this->rules = $rules;
 		$this->name_format = $name_format;
 		$this->unsanitized_data = $unsanitized_data;
+=======
+        RawDataInterface $raw_data,
+        MiscInterface $misc,
+        SanitationOneInterface $sanitation_one,
+        SanitationTwoInterface $sanitation_two,
+        SanitationThreeInterface $sanitation_three,
+        SanitationFourInterface $sanitation_four,
+        RulesInterface $rules,
+        NameFormatInterface $name_format
+    ) {
+        $this->raw_data = $raw_data;
+        $this->misc = $misc;
+        $this->sanitation_one = $sanitation_one;
+        $this->sanitation_two = $sanitation_two;
+        $this->sanitation_three = $sanitation_three;
+        $this->sanitation_four = $sanitation_four;
+        $this->rules = $rules;
+        $this->name_format = $name_format;
+>>>>>>> d10530639c5e73d1bff8acd13fdd934075c33d0d
     }
 
-	public function index()
-	{
-		echo 'Unauthorized';
-	}
+    public function index()
+    {
+        echo 'Unauthorized';
+    }
 
-	public function getRawData()
-	{
-		$rowStart = 0;
-		$rowCount = 200;
+    public function getRawData()
+    {
+        $rowStart = 0;
+        $rowCount = 200;
 
-		return response()->json($this->raw_data->getRawData($rowStart, $rowCount));
-	}
+        return response()->json($this->raw_data->getRawData($rowStart, $rowCount));
+    }
 
-	public function automated()
-	{
-		return view('sanitation.automated');
-	}
+    public function automated()
+    {
+        return view('sanitation.automated');
+    }
 
-	public function sanitationProcess($rowStart, $rowCount)
-	{
-		$process = Process::fromShellCommandline('php artisan sanitize --row_start='.$rowStart.' --row_count='.$rowCount);
-		$process->setWorkingDirectory(base_path());
-		$process->start();
+    public function sanitationProcess(Request $req)
+    {
+        $rowStart = $req->input('rowStart');
+        $rowCount = $req->input('rowCount');
 
-		while ($process->isRunning())
-		{
+        $process = Process::fromShellCommandline('php artisan sanitize --row_start=' . $rowStart . ' --row_count=' . $rowCount);
+        $process->setWorkingDirectory(base_path());
+        $process->setTimeout(3600);
+        $process->start();
 
-		}
+        $process->wait();
 
-		if (!$process->isSuccessful()) {
-		    throw new ProcessFailedException($process);
-		}
+        $data = [
+        'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
+        'totalSanitized' => $this->raw_data->getSanitizedCount()[0]->totalSanitized,
+        'totalAmount' => $this->raw_data->getSanitizedCount()[0]->totalAmount,
+        ];
 
-		$data = [
-			'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
-			'totalSanitized' => $this->raw_data->getSanitizedCount()[0]->totalSanitized,
-			'totalAmount' => $this->raw_data->getSanitizedCount()[0]->totalAmount,
-		];
+        return response()->json($data);
+    }
 
-		return response()->json($data);
-	}
+    private function isSanitationProcessRunning()
+    {
+        $process = Process::fromShellCommandline('ps aux --no-heading | grep artisan | wc -l');
+        $process->setWorkingDirectory(base_path());
 
-	private function isSanitationProcessRunning()
-	{
-		$process = Process::fromShellCommandline('ps aux --no-heading | grep artisan | wc -l');
-		$process->setWorkingDirectory(base_path());
+        try {
+            $process->mustRun();
+            return $process->getOutput();
+        } catch (ProcessFailedException $exception) {
+            echo $exception->getMessage();
+        }
+    }
 
-		try {
+    public function getSanitizedCount()
+    {
 
-		    $process->mustRun();
-		    return $process->getOutput();
+        $process = trim($this->isSanitationProcessRunning());
+        $processTotal = 0;
 
-		} catch (ProcessFailedException $exception) {
-		    echo $exception->getMessage();
-		}
-	}
+        if (is_numeric($process)) {
+            $processTotal = ((int)$process - 2);
+        }
 
-	public function getSanitizedCount()
-	{
+        $data = [
+        'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
+        'totalSanitized' => $this->raw_data->getSanitizedCount()[0]->totalSanitized,
+        'totalAmount' => $this->raw_data->getSanitizedCount()[0]->totalAmount,
+        'sanitationProcess' => $processTotal
+        ];
 
-		$process = trim($this->isSanitationProcessRunning());
-		$processTotal = 0;
+        return response()->json($data);
+    }
 
-		if(is_numeric($process))
-		{
-			$processTotal = ((int)$process - 2);
-		}
+    public function phaseOne()
+    {
+        return view('sanitation.phaseOne');
+    }
 
-		$data = [
-			'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
-			'totalSanitized' => $this->raw_data->getSanitizedCount()[0]->totalSanitized,
-			'totalAmount' => $this->raw_data->getSanitizedCount()[0]->totalAmount,
-			'sanitationProcess' => $processTotal
-		];
+    public function getDoctorPhaseOne(Request $req)
+    {
+        $mdName = $req->input('mdName');
 
-		return response()->json($data);
-	}
+        return response()->json($this->sanitation_one->getDoctorByName($mdName));
+    }
 
-	public function phaseOne()
-	{
-		return view('sanitation.phaseOne');
-	}
-
-	public function getDoctorPhaseOne(Request $req)
-	{
-		$mdName = $req->input('mdName');
-
-		return response()->json($this->sanitation_one->getDoctorByName($mdName));
-	}
-
-	public function sanitizePhaseOne(Request $req)
-	{
+    public function sanitizePhaseOne(Request $req)
+    {
         $id = $req->input('rawId');
         $group = $req->input('group');
         $mdName = $req->input('mdName');
         $universe = $req->input('universe');
         $mdCode = $req->input('mdCode');
 
-		return response()->json($this->sanitation_one->update($id, $group, $mdName, $mdName, $universe, $mdCode));
-	}
+        return response()->json($this->sanitation_one->update($id, $group, $mdName, $mdName, $universe, $mdCode));
+    }
 
-	public function phaseTwo()
-	{
-		return view('sanitation.phaseTwo');
-	}
+    public function phaseTwo()
+    {
+        return view('sanitation.phaseTwo');
+    }
 
-	private function phaseTwoGetLicense($rawId, $md, $rawLicense)
-	{
+    private function phaseTwoGetLicense($rawId, $md, $rawLicense)
+    {
 
-		$licenseArr = explode(",", $md->sanit_license);
+        $licenseArr = explode(",", $md->sanit_license);
 
-		if($this->misc->isExist($rawLicense, $licenseArr))
-		{
-			$this->sanitation_two->update(
-				$rawId,
-				$md->sanit_group,
-				$md->sanit_mdname,
-				$md->sanit_mdname,
-				$md->sanit_universe,
-				$md->sanit_mdcode
-			);
+        if ($this->misc->isExist($rawLicense, $licenseArr)) {
+            $this->sanitation_two->update(
+                $rawId,
+                $md->sanit_group,
+                $md->sanit_mdname,
+                $md->sanit_mdname,
+                $md->sanit_universe,
+                $md->sanit_mdcode
+            );
 
-			return array(
-				'sanit_id' => $md->sanit_id,
-				'sanit_mdname' => $md->sanit_mdname,
-				'sanit_group' => $md->sanit_group,
-				'sanit_universe' => $md->sanit_universe,
-				'sanit_mdcode' => $md->sanit_mdcode
-			);
-		}
-	}
+            return array(
+            'sanit_id' => $md->sanit_id,
+            'sanit_mdname' => $md->sanit_mdname,
+            'sanit_group' => $md->sanit_group,
+            'sanit_universe' => $md->sanit_universe,
+            'sanit_mdcode' => $md->sanit_mdcode
+            );
+        }
+    }
 
-	public function getDoctorPhaseTwo(Request $req)
-	{
-		$rawId = $req->input('rawId');
-		$mdName = $this->misc->stripPrefix($this->misc->stripSuffix($req->input('mdName')));
-		$licenseNo = $req->input('licenseNo');
+    public function getDoctorPhaseTwo(Request $req)
+    {
+        $rawId = $req->input('rawId');
+        $mdName = $this->misc->stripPrefix($this->misc->stripSuffix($req->input('mdName')));
+        $licenseNo = $req->input('licenseNo');
 
-		$result = [];
+        $result = [];
 
-		if($this->misc->isSingleWord($mdName)) {
+        if ($this->misc->isSingleWord($mdName)) {
+            $findSurname = $this->sanitation_two->getDoctorByName($mdName, 'sanit_surname');
 
-			$findSurname = $this->sanitation_two->getDoctorByName($mdName, 'sanit_surname');
+            if (count($findSurname) > 0) {
+                foreach ($findSurname as $md) {
+                    $data = $this->phaseTwoGetLicense($rawId, $md, $licenseNo);
 
-			if(count($findSurname) > 0)
-			{
-				foreach($findSurname as $md)
-				{
-					$data = $this->phaseTwoGetLicense($rawId, $md, $licenseNo);
+                    if ($data != null) {
+                        $result[] = $data;
+                    }
+                }
+            } else {
+                $findFirstName = $this->sanitation_two->getDoctorByName($mdName, 'sanit_firstname');
 
-					if($data != null)
-					{
-						$result[] = $data;
-					}
-				}
-			}else
-			{
-				$findFirstName = $this->sanitation_two->getDoctorByName($mdName, 'sanit_firstname');
+                if (count($findFirstName) > 0) {
+                    foreach ($findFirstName as $md) {
+                        $data = $this->phaseTwoGetLicense($rawId, $md, $licenseNo);
 
-				if(count($findFirstName) > 0)
-				{
-					foreach($findFirstName as $md)
-					{
-						$data = $this->phaseTwoGetLicense($rawId, $md, $licenseNo);
+                        if ($data !== null) {
+                            $result[] = $data;
+                        }
+                    }
+                } else {
+                    $findMiddleName = $this->sanitation_two->getDoctorByName($mdName, 'sanit_middlename');
 
-						if($data !== null)
-						{
-							$result[] = $data;
-						}
-					}
-				}else
-				{
+                    if (count($findMiddleName) > 0) {
+                        foreach ($findMiddleName as $md) {
+                            $data = $this->phaseTwoGetLicense($rawId, $md, $licenseNo);
 
-					$findMiddleName = $this->sanitation_two->getDoctorByName($mdName, 'sanit_middlename');
+                            if ($data !== null) {
+                                   $result[] = $data;
+                            }
+                        }
+                    } else {
+                        $result[] = array('message' => 'not existing.');
+                    }
+                }
+            }
+        }
 
-					if(count($findMiddleName) > 0)
-					{
-						foreach($findMiddleName as $md)
-						{
-							$data = $this->phaseTwoGetLicense($rawId, $md, $licenseNo);
+        return response()->json($result);
+    }
 
-							if($data !== null)
-							{
-								$result[] = $data;
-							}
-						}
+    public function phaseThree()
+    {
+        return view('sanitation.phaseThree');
+    }
 
-					}else
-					{
-						$result[] = array('message' => 'not existing.');
-					}
+    public function getDoctorPhaseThree(Request $req)
+    {
+        $rawId = $req->input('rawId');
+        $mdName = $this->misc->stripPrefix($this->misc->stripSuffix($req->input('mdName')));
+        $licenseNo = $req->input('licenseNo');
 
-				}
-			}
-		}
+        $hasMD = $this->sanitation_three->getDoctorByName($mdName, $licenseNo);
 
-		return response()->json($result);
-	}
+        if (count($hasMD) > 0) {
+            foreach ($hasMD as $md) {
+                $sanitGroup = $md->sanit_group;
+                $sanitName = $md->sanit_mdname;
+                $sanitUniverse = $md->sanit_universe;
+                $sanitMdcode = $md->sanit_mdcode;
 
-	public function phaseThree()
-	{
-		return view('sanitation.phaseThree');
-	}
+                $this->sanitation_three->update($rawId, $sanitGroup, $sanitName, $sanitName, $sanitUniverse, $sanitMdcode);
+            }
+        }
 
-	public function getDoctorPhaseThree(Request $req)
-	{
-		$rawId = $req->input('rawId');
-		$mdName = $this->misc->stripPrefix($this->misc->stripSuffix($req->input('mdName')));
-		$licenseNo = $req->input('licenseNo');
+        return response()->json($hasMD);
+    }
 
-		$hasMD = $this->sanitation_three->getDoctorByName($mdName, $licenseNo);
+    public function phaseFour()
+    {
+        return view('sanitation.phaseFour');
+    }
 
-		if(count($hasMD) > 0)
-		{
-			foreach($hasMD as $md)
-			{
-				$sanitGroup = $md->sanit_group;
-				$sanitName = $md->sanit_mdname;
-				$sanitUniverse = $md->sanit_universe;
-				$sanitMdcode = $md->sanit_mdcode;
+    private function phaseFourGetBranch($rawId, $md, $rawBranch)
+    {
 
-				$this->sanitation_three->update($rawId, $sanitGroup, $sanitName, $sanitName, $sanitUniverse, $sanitMdcode);
-			}
-		}
+        $branchArr = explode(",", $md->sanit_branch);
 
-		return response()->json($hasMD);
-	}
+        if ($this->misc->isExist($rawBranch, $branchArr)) {
+            $this->sanitation_four->update(
+                $rawId,
+                $md->sanit_group,
+                $md->sanit_mdname,
+                $md->sanit_mdname,
+                $md->sanit_universe,
+                $md->sanit_mdcode
+            );
 
-	public function phaseFour()
-	{
-		return view('sanitation.phaseFour');
-	}
+            return array(
+            'sanit_id' => $md->sanit_id,
+            'sanit_mdname' => $md->sanit_mdname,
+            'sanit_group' => $md->sanit_group,
+            'sanit_universe' => $md->sanit_universe,
+            'sanit_mdcode' => $md->sanit_mdcode
+            );
+        }
+    }
 
-	private function phaseFourGetBranch($rawId, $md, $rawBranch)
-	{
+    public function getDoctorPhaseFour(Request $req)
+    {
+        $rawId = $req->input('rawId');
+        $mdName = $this->misc->stripPrefix($this->misc->stripSuffix($req->input('mdName')));
+        $rawBranch = $req->input('rawBranch');
 
-		$branchArr = explode(",", $md->sanit_branch);
+        $result = [];
 
-		if($this->misc->isExist($rawBranch, $branchArr))
-		{
-			$this->sanitation_four->update(
-				$rawId,
-				$md->sanit_group,
-				$md->sanit_mdname,
-				$md->sanit_mdname,
-				$md->sanit_universe,
-				$md->sanit_mdcode
-			);
+        if ($this->misc->isSingleWord($mdName)) {
+            $findSurname = $this->sanitation_four->getDoctorByName($mdName, 'sanit_surname');
 
-			return array(
-				'sanit_id' => $md->sanit_id,
-				'sanit_mdname' => $md->sanit_mdname,
-				'sanit_group' => $md->sanit_group,
-				'sanit_universe' => $md->sanit_universe,
-				'sanit_mdcode' => $md->sanit_mdcode
-			);
-		}
-	}
+            if (count($findSurname) > 0) {
+                foreach ($findSurname as $md) {
+                    $data = $this->phaseFourGetBranch($rawId, $md, $rawBranch);
 
-	public function getDoctorPhaseFour(Request $req)
-	{
-		$rawId = $req->input('rawId');
-		$mdName = $this->misc->stripPrefix($this->misc->stripSuffix($req->input('mdName')));
-		$rawBranch = $req->input('rawBranch');
+                    if ($data != null) {
+                        $result[] = $data;
+                    }
+                }
+            } else {
+                $findFirstName = $this->sanitation_four->getDoctorByName($mdName, 'sanit_firstname');
 
-		$result = [];
+                if (count($findFirstName) > 0) {
+                    foreach ($findFirstName as $md) {
+                        $data = $this->phaseFourGetBranch($rawId, $md, $rawBranch);
 
-		if($this->misc->isSingleWord($mdName)) {
+                        if ($data !== null) {
+                            $result[] = $data;
+                        }
+                    }
+                } else {
+                    $findMiddleName = $this->sanitation_four->getDoctorByName($mdName, 'sanit_middlename');
 
-			$findSurname = $this->sanitation_four->getDoctorByName($mdName, 'sanit_surname');
+                    if (count($findMiddleName) > 0) {
+                        foreach ($findMiddleName as $md) {
+                            $data = $this->phaseFourGetBranch($rawId, $md, $rawBranch);
 
-			if(count($findSurname) > 0)
-			{
-				foreach($findSurname as $md)
-				{
-					$data = $this->phaseFourGetBranch($rawId, $md, $rawBranch);
+                            if ($data !== null) {
+                                   $result[] = $data;
+                            }
+                        }
+                    } else {
+                        $result[] = array('message' => 'not existing.');
+                    }
+                }
+            }
+        }
 
-					if($data != null)
-					{
-						$result[] = $data;
-					}
-				}
-			}else
-			{
-				$findFirstName = $this->sanitation_four->getDoctorByName($mdName, 'sanit_firstname');
+        return response()->json($result);
+    }
 
-				if(count($findFirstName) > 0)
-				{
-					foreach($findFirstName as $md)
-					{
-						$data = $this->phaseFourGetBranch($rawId, $md, $rawBranch);
-
-						if($data !== null)
-						{
-							$result[] = $data;
-						}
-					}
-				}else
-				{
-
-					$findMiddleName = $this->sanitation_four->getDoctorByName($mdName, 'sanit_middlename');
-
-					if(count($findMiddleName) > 0)
-					{
-						foreach($findMiddleName as $md)
-						{
-							$data = $this->phaseFourGetBranch($rawId, $md, $rawBranch);
-
-							if($data !== null)
-							{
-								$result[] = $data;
-							}
-						}
-
-					}else
-					{
-						$result[] = array('message' => 'not existing.');
-					}
-
-				}
-			}
-		}
-
-		return response()->json($result);
-	}
-
-	public function rules()
-	{
-		return view('rules.rules');
-	}
+    public function rules()
+    {
+        return view('rules.rules');
+    }
 
     public function getDoctorByRules(Request $req)
     {
-    	$rawId = $req->input('raw_id');
-    	$sanitizedName = $this->misc->stripPrefix($this->misc->stripSuffix($req->input('mdName')));
-    	$rawLicense = $req->input('raw_license');
+        $rawId = $req->input('raw_id');
+        $sanitizedName = $this->misc->stripPrefix($this->misc->stripSuffix($req->input('mdName')));
+        $rawLicense = $req->input('raw_license');
 
         $rulesArr = [];
 
         $rawDoctors = $this->rules->getRuleDetails('details_column_name', 'raw_doctor', 'details_value', $sanitizedName);
 
-        if(count($rawDoctors) > 0)
-        {
-            foreach($rawDoctors as $rawDoctor)
-            {
+        if (count($rawDoctors) > 0) {
+            foreach ($rawDoctors as $rawDoctor) {
                 $rawLicenses = $this->rules->getRuleDetails(
                     'rule_code',
                     $rawDoctor->rule_code,
@@ -404,12 +380,9 @@ class Dashboard extends Controller
                 );
 
 
-                if(count($rawLicenses) > 0)
-                {
-                    if($rawLicenses[0]->details_value === $rawLicense)
-                    {
-                        if(count($this->rules->getRules($rawLicenses[0]->rule_code)) > 0)
-                        {
+                if (count($rawLicenses) > 0) {
+                    if ($rawLicenses[0]->details_value === $rawLicense) {
+                        if (count($this->rules->getRules($rawLicenses[0]->rule_code)) > 0) {
                             $mdName = $this->rules->getRules($rawLicenses[0]->rule_code)[0]->rule_assign_to;
                             $sanitation = $this->rules->getRulesSanitation($mdName);
 
@@ -438,29 +411,26 @@ class Dashboard extends Controller
         }
     }
 
-	public function nameFormatter()
-	{
-		return view('nameFormatter.nameFormatter');
-	}
+    public function nameFormatter()
+    {
+        return view('nameFormatter.nameFormatter');
+    }
 
     public function formatName(Request $req)
     {
-    	$rawId = $req->input('raw_id');
-    	$sanitizedName = $this->misc->stripPrefix($this->misc->stripSuffix($req->input('mdName')));
+        $rawId = $req->input('raw_id');
+        $sanitizedName = $this->misc->stripPrefix($this->misc->stripSuffix($req->input('mdName')));
 
         $mdName1 = explode(' ', $sanitizedName);
 
-        if(!$this->name_format->isUnclassified($sanitizedName))
-        {
-            if(count($mdName1) > 1)
-            {
+        if (!$this->name_format->isUnclassified($sanitizedName)) {
+            if (count($mdName1) > 1) {
                 $lastElement = $this->misc->getLastElement($mdName1);
-                $nameArr = $this->misc->setAsFirstElement($lastElement.',', $mdName1);
+                $nameArr = $this->misc->setAsFirstElement($lastElement . ',', $mdName1);
 
                 $updatedLastElement = $this->misc->getLastElement($nameArr);
 
-                if($this->name_format->isLastNameMultiple($updatedLastElement))
-                {
+                if ($this->name_format->isLastNameMultiple($updatedLastElement)) {
                     $nameArr = $this->misc->setAsFirstElement($updatedLastElement, $nameArr);
                 }
 
@@ -468,9 +438,9 @@ class Dashboard extends Controller
 
                 return response()->json($this->name_format->formatName($rawId, $sanitizedName, $finalName));
             }
-
         }
     }
+<<<<<<< HEAD
 
 
 	public function manual()
@@ -498,3 +468,6 @@ class Dashboard extends Controller
 	
 }
 
+=======
+}
+>>>>>>> d10530639c5e73d1bff8acd13fdd934075c33d0d

@@ -640,9 +640,6 @@ class SanitationConsole extends Command
             $this->info('');
             $this->info('Duration: '.date("H:i:s",$endSanitation-$startSanitation));
             $this->info('Completed: '.date('M d Y g:i A'));
-        }else
-        {
-            $this->line('done');
         }
     }
 }
