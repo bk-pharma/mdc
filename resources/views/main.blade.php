@@ -80,87 +80,16 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-<!--           @if(Request::is('sanitation/*'))
-            <li class="nav-item has-treeview menu-open">
-          @else
-            <li class="nav-item has-treeview">
-          @endif
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-cogs"></i>
-              <p>
-                Sanitation
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                @if(Request::is('sanitation/phase-one')):
-                  <a href="#" class="nav-link active">
-                @else
-                  <a href="{{ url('/sanitation/phase-one') }}" class="nav-link">
-                @endif
-                  <i class="far fas fa-angle-right nav-icon"></i>
-                  <p>Phase 1</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                @if(Request::is('sanitation/phase-two'))
-                  <a href="#" class="nav-link active">
-                @else
-                  <a href="{{ url('/sanitation/phase-two') }}" class="nav-link">
-                @endif
-                  <i class="far fas fa-angle-right nav-icon"></i>
-                  <p>Phase 2</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                @if(Request::is('sanitation/phase-three'))
-                  <a href="#" class="nav-link active">
-                @else
-                  <a href="{{ url('/sanitation/phase-three') }}" class="nav-link">
-                @endif
-                  <i class="far fas fa-angle-right nav-icon"></i>
-                  <p>Phase 3</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                @if(Request::is('sanitation/phase-four'))
-                  <a href="#" class="nav-link active">
-                @else
-                  <a href="{{ url('/sanitation/phase-four') }}" class="nav-link">
-                @endif
-                  <i class="far fas fa-angle-right nav-icon"></i>
-                  <p>Phase 4</p>
-                </a>
-              </li>
-
-            </ul>
-          </li> -->
-
-<!--           <li class="nav-item">
-
-          @if(Request::is('rules'))
-            <a href="#" class="nav-link active">
-          @else
-            <a href="{{ url('/rules') }}" class="nav-link">
-          @endif
-            <i class="nav-icon fab fa-rev"></i>
-              <p>
-                Rules
-              </p>
-            </a>
-          </li> -->
-
           <li class="nav-item">
 
-            @if(Request::is('automated'))
+            @if(Request::is('sanitation'))
               <a href="#" class="nav-link active">
             @else
               <a href="{{ url('/automated') }}" class="nav-link ">
             @endif
               <i class="nav-icon fas fa-cogs"></i>
                 <p>
-                  Automated
+                  Sanitation
                 </p>
               </a>
             </li>
@@ -190,25 +119,13 @@
                 @endif
                   <i class="nav-icon fas fa-chalkboard-teacher"></i>
                     <p>
-                      Unsanitized Data
+                      Uncleaned Data
                     </p>
                   </a>
                 </li>
 
           <li class="nav-item">
 
-<!--           @if(Request::is('name-formatter'))
-            <a href="#" class="nav-link active">
-          @else
-            <a href="{{ url('/name-formatter') }}" class="nav-link">
-          @endif
-            <i class="nav-icon far fa-keyboard"></i>
-              <p>
-                Name Formatter
-              </p>
-            </a>
-          </li>
- -->
           @if (!Auth::check())
           <li class="nav-item">
             <a href="{{ route('login') }}" class="nav-link">
@@ -240,15 +157,10 @@
   </aside>
 
   <div class="content-wrapper">
-<!--     @yield('sanitationPhaseOne')
-    @yield('sanitationPhaseTwo')
-    @yield('sanitationPhaseThree')
-    @yield('sanitationPhaseFour')
-    @yield('rules')
-    @yield('nameFormatter') -->
-    @yield('automatedPhases')
-    @yield('manualSanitation')
+    @yield('sanitation')
     @yield('unsanitizedData')
+    @yield('manualSanitation')
+
   </div>
 
 </div>
@@ -294,14 +206,7 @@
 
   <script src="https://cdn.datatables.net/fixedheader/3.1.7/js/dataTables.fixedHeader.min.js"></script>
   <script src="https://cdn.datatables.net/scroller/2.0.2/js/dataTables.scroller.min.js"></script>
-  
-  {{-- @stack('sanitationPhaseOne-scripts')
-  @stack('sanitationPhaseTwo-scripts')
-  @stack('sanitationPhaseThree-scripts')
-  @stack('sanitationPhaseFour-scripts')
-  @stack('rules-scripts')
-  @stack('nameFormatter-scripts') --}}
-  @stack('automatedPhases-scripts')
+
   @stack('manualSanitation-scripts') 
   @stack('unsanitizedData-scripts') 
 </body>
