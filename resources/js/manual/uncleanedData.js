@@ -15,11 +15,13 @@ $(document).ready(function() {
     } );
 
    var table = $("#unsanitizedTable").DataTable({
+        orderCellsTop: true,
         stateSave: true,
-        pageLength: 50,
+        fixedHeader: true,
+        responsive:true,
+    	processing:true,
+        pageLength: 200,
         serverSide: true,
-        ordering: false,
-        processing: false,
         searching: false,
         ajax: {
             url: 'unclean/unsanitizedData',
@@ -38,7 +40,6 @@ $(document).ready(function() {
         scrollY:        "500px",
         scrollX:        "50%",
         scrollCollapse: true,
-        paging:         true,
         scroller: {
             loadingIndicator: true
         },
