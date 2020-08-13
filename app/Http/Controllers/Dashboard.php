@@ -22,6 +22,11 @@ class Dashboard extends Controller
         echo 'Unauthorized';
     }
 
+    public function import()
+    {
+        return view('import.index');
+    }
+
     public function sanitation()
     {
         return view('sanitation.index');
@@ -37,7 +42,9 @@ class Dashboard extends Controller
         $process->setTimeout(3600);
         $process->start();
 
-        $process->wait();
+        while ($process->isRunning()) {
+           // waiting for process to finish
+        }
 
         $data = [
         'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
@@ -63,7 +70,6 @@ class Dashboard extends Controller
 
     public function getSanitizedCount()
     {
-
         $process = trim($this->isSanitationProcessRunning());
         $processTotal = 0;
 
