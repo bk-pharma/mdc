@@ -60,9 +60,8 @@ Route::prefix('/name-formatter')->group(function() {
 	Route::post('/get-single-md', 'Dashboard@formatName');
 });
 
-
 Route::prefix('/automated')->group(function() {
-	Route::get('/', 'Dashboard@automated');
+	Route::get('/', 'Dashboard@automated')->middleware('auth');
 
 	Route::post('/start-process', 'Dashboard@sanitationProcess');
 	Route::get('/sanitized-total', 'Dashboard@getSanitizedCount');
@@ -70,7 +69,7 @@ Route::prefix('/automated')->group(function() {
 
 
 Route::prefix('/manual')->group(function() {
-	Route::get('/', 'Dashboard@manual');
+	Route::get('/', 'Dashboard@manual')->middleware('auth');
 	Route::get('/unsanitizedData', 'Dashboard@getUnsanitizedData');
 	Route::get('/correctedName', 'Dashboard@getCorrectedName');
 });
@@ -78,11 +77,13 @@ Route::prefix('/manual')->group(function() {
 
 
 Route::prefix('/manualv2')->group(function() {
-	Route::get('/', 'Dashboard@manualv2');
+	Route::get('/', 'Dashboard@manualv2')->middleware('auth');
 	Route::get('/unsanitizedData', 'Dashboard@getUnsanitizedData');
 	
 });
-
+Route::get('admin/profile', function () {
+    //
+})->middleware('auth');
 
 
 // Route::get('/sanitize', 'Dashboard@sanitation');
