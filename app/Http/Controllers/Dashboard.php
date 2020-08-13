@@ -29,7 +29,6 @@ class Dashboard extends Controller
     private $unsanitized_data;
 
     function __construct(
-<<<<<<< HEAD
     	RawDataInterface $raw_data,
     	MiscInterface $misc,
     	SanitationOneInterface $sanitation_one,
@@ -50,25 +49,6 @@ class Dashboard extends Controller
     	$this->rules = $rules;
 		$this->name_format = $name_format;
 		$this->unsanitized_data = $unsanitized_data;
-=======
-        RawDataInterface $raw_data,
-        MiscInterface $misc,
-        SanitationOneInterface $sanitation_one,
-        SanitationTwoInterface $sanitation_two,
-        SanitationThreeInterface $sanitation_three,
-        SanitationFourInterface $sanitation_four,
-        RulesInterface $rules,
-        NameFormatInterface $name_format
-    ) {
-        $this->raw_data = $raw_data;
-        $this->misc = $misc;
-        $this->sanitation_one = $sanitation_one;
-        $this->sanitation_two = $sanitation_two;
-        $this->sanitation_three = $sanitation_three;
-        $this->sanitation_four = $sanitation_four;
-        $this->rules = $rules;
-        $this->name_format = $name_format;
->>>>>>> d10530639c5e73d1bff8acd13fdd934075c33d0d
     }
 
     public function index()
@@ -440,7 +420,6 @@ class Dashboard extends Controller
             }
         }
     }
-<<<<<<< HEAD
 
 
 	public function manual()
@@ -468,6 +447,3 @@ class Dashboard extends Controller
 	
 }
 
-=======
-}
->>>>>>> d10530639c5e73d1bff8acd13fdd934075c33d0d
