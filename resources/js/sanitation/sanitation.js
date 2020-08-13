@@ -1,5 +1,5 @@
 new Vue({
-    el: '#automatedPhases-container',
+    el: '#sanitation-container',
     data() {
         return {
            automatedLabel : '',
@@ -523,7 +523,7 @@ new Vue({
                 sanitationWorker1: this.sanitationWorker1
             };
 
-            axios.post(`automated/start-process`, data)
+            axios.post(`sanitation/start-process`, data)
             .then((response) =>
             {
                 let resp = response.data;
@@ -573,7 +573,7 @@ new Vue({
                 sanitationWorker2: this.sanitationWorker2
             };
 
-            axios.post(`automated/start-process`, data)
+            axios.post(`sanitation/start-process`, data)
             .then((response) =>
             {
                 let resp = response.data;
@@ -622,7 +622,7 @@ new Vue({
                 sanitationWorker3: this.sanitationWorker3
             };
 
-            axios.post(`automated/start-process`, data)
+            axios.post(`sanitation/start-process`, data)
             .then((response) =>
             {
                 let resp = response.data;
@@ -671,7 +671,7 @@ new Vue({
                 sanitationWorker4: this.sanitationWorker4
             };
 
-            axios.post(`automated/start-process`, data)
+            axios.post(`sanitation/start-process`, data)
             .then((response) =>
             {
                 let resp = response.data;
@@ -720,7 +720,7 @@ new Vue({
                 sanitationWorker5: this.sanitationWorker5
             };
 
-            axios.post(`automated/start-process`, data)
+            axios.post(`sanitation/start-process`, data)
             .then((response) =>
             {
                 let resp = response.data;
@@ -769,7 +769,7 @@ new Vue({
                 sanitationWorker6: this.sanitationWorker6
             };
 
-            axios.post(`automated/start-process`, data)
+            axios.post(`sanitation/start-process`, data)
             .then((response) =>
             {
                 let resp = response.data;
@@ -821,7 +821,7 @@ new Vue({
                 sanitationWorker7: this.sanitationWorker7
             };
 
-            axios.post(`automated/start-process`, data)
+            axios.post(`sanitation/start-process`, data)
             .then((response) =>
             {
                 let resp = response.data;
@@ -872,7 +872,7 @@ new Vue({
                 sanitation: 8
             };
 
-            axios.post(`automated/start-process`, data)
+            axios.post(`sanitation/start-process`, data)
             .then((response) =>
             {
                 let resp = response.data;
@@ -923,7 +923,7 @@ new Vue({
                 sanitation: 9
             };
 
-            axios.post(`automated/start-process`, data)
+            axios.post(`sanitation/start-process`, data)
             .then((response) =>
             {
                 let resp = response.data;
@@ -973,7 +973,7 @@ new Vue({
                 sanitation: 10
             };
 
-            axios.post(`automated/start-process`, data)
+            axios.post(`sanitation/start-process`, data)
             .then((response) =>
             {
                 let resp = response.data;
@@ -1012,7 +1012,7 @@ new Vue({
         },
         initialData:function()
         {
-            axios.get(`automated/sanitized-total`)
+            axios.get(`sanitation/sanitized-total`)
             .then((response) =>
             {
                 let resp = response.data;
