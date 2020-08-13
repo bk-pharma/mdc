@@ -40,10 +40,11 @@ class Dashboard extends Controller
         $process = Process::fromShellCommandline('php artisan sanitize --row_start=' . $rowStart . ' --row_count=' . $rowCount);
         $process->setWorkingDirectory(base_path());
         $process->setTimeout(3600);
-        $process->start();
+        $process->run();
 
-        while ($process->isRunning()) {
-           // waiting for process to finish
+        // executes after the command finishes
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
         }
 
         $data = [
