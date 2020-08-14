@@ -38,13 +38,6 @@
     <ul class="navbar-nav ">
       <li class="nav-item ml-auto">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-<!--       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
-      </li> -->
     </ul>
   </nav>
   <!-- Main Sidebar Container -->
@@ -74,6 +67,17 @@
 
           <li class="nav-item">
 
+            @if(Request::is('import'))
+              <a href="#" class="nav-link active">
+            @else
+              <a href="{{ url('/import') }}" class="nav-link ">
+            @endif
+              <i class="nav-icon fas fa-file-upload"></i>
+                <p>
+                  Import
+                </p>
+              </a>
+
             @if(Request::is('sanitation'))
               <a href="#" class="nav-link active">
             @else
@@ -84,7 +88,8 @@
                   Sanitation
                 </p>
               </a>
-            </li>
+
+          </li>
 
           <li class="nav-item">
 
@@ -119,6 +124,7 @@
   </aside>
 
   <div class="content-wrapper">
+    @yield('import')
     @yield('sanitation')
   </div>
 
@@ -155,6 +161,7 @@
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   {{-- <script src="{{asset('dist/js/pages/dashboard.js')}}"></script> --}}
 
+  @stack('import-scripts')
   @stack('sanitation-scripts')
 </body>
 </html>

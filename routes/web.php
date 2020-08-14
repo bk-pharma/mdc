@@ -23,6 +23,10 @@ Route::get('/admin', function () {
     return view('layouts.admin');
 });
 
+Route::prefix('/import')->group(function () {
+    Route::get('/', 'Dashboard@import');
+});
+
 Route::prefix('/sanitation')->group(function () {
     Route::get('/', 'Dashboard@sanitation');
 
