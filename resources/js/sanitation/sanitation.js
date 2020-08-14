@@ -109,406 +109,376 @@ new Vue({
 
             if(typeof this.processRowStartArr[0] !== 'undefined')
             {
-                this.sanitationProcess1(firstSanitationIndexes[0], firstSanitationIndexes[1]);
+                this.sanitationProcessOneParent(firstSanitationIndexes[0], firstSanitationIndexes[1]);
 
                 setTimeout(() => {
-                    console.log('process 1 1st sub function started');
-                    this.sanitationProcess1(firstSanitationIndexes[0], firstSanitationIndexes[1]);
-                 }, 180000);
-
-                setTimeout(() => {
-                    console.log('process 1 2nd sub function started');
-                    this.sanitationProcess1(firstSanitationIndexes[0], firstSanitationIndexes[1]);
-                 }, 360000);
-
-                setTimeout(() => {
-                    console.log('process 1 3rd sub function started');
-                    this.sanitationProcess1(firstSanitationIndexes[0], firstSanitationIndexes[1]);
-                 }, 540000);
-
-                setTimeout(() => {
-                    console.log('process 1 4th sub function started');
-                    this.sanitationProcess1(firstSanitationIndexes[0], firstSanitationIndexes[1]);
-                 }, 720000);
-
-                setTimeout(() => {
-                    console.log('process 1 5th sub function started');
-                    this.sanitationProcess1(firstSanitationIndexes[0], firstSanitationIndexes[1]);
-                 }, 900000);
-
-                setTimeout(() => {
-                    console.log('process 1 6th sub function started');
-                    this.sanitationProcess1(firstSanitationIndexes[0], firstSanitationIndexes[1]);
-                 }, 1080000);
-
-                setTimeout(() => {
-                    console.log('process 1 7th sub function started');
-                    this.sanitationProcess1(firstSanitationIndexes[0], firstSanitationIndexes[1]);
-                 }, 1260000);
+                    console.log('process one child started');
+                    this.sanitationProcessOneChild(firstSanitationIndexes[0], firstSanitationIndexes[1]);
+                 }, 300000);
             }
 
-            if(typeof this.processRowStartArr[200] !== 'undefined')
-            {
-                this.sanitationProcess2(secondSanitationIndexes[0], secondSanitationIndexes[1]);
-
-                setTimeout(() => {
-                    console.log('process 2 1st sub function started');
-                    this.sanitationProcess2(secondSanitationIndexes[0], secondSanitationIndexes[1]);
-                },180000);
-
-                setTimeout(() => {
-                    console.log('process 2 2nd sub function started');
-                    this.sanitationProcess2(secondSanitationIndexes[0], secondSanitationIndexes[1]);
-                },360000);
-
-                setTimeout(() => {
-                    console.log('process 2 3rd sub function started');
-                    this.sanitationProcess2(secondSanitationIndexes[0], secondSanitationIndexes[1]);
-                },540000);
-
-                setTimeout(() => {
-                    console.log('process 2 4th sub function started');
-                    this.sanitationProcess2(secondSanitationIndexes[0], secondSanitationIndexes[1]);
-                },720000);
-
-                setTimeout(() => {
-                    console.log('process 2 5th sub function started');
-                    this.sanitationProcess2(secondSanitationIndexes[0], secondSanitationIndexes[1]);
-                },900000);
-
-                setTimeout(() => {
-                    console.log('process 2 6th sub function started');
-                    this.sanitationProcess2(secondSanitationIndexes[0], secondSanitationIndexes[1]);
-                 }, 1080000);
-
-                setTimeout(() => {
-                    console.log('process 2 7th sub function started');
-                    this.sanitationProcess2(secondSanitationIndexes[0], secondSanitationIndexes[1]);
-                 }, 1260000);
-            }
-
-            if(typeof this.processRowStartArr[400] !== 'undefined')
-            {
-                this.sanitationProcess3(thirdSanitationIndexes[0], thirdSanitationIndexes[1]);
-
-                setTimeout(() => {
-                    console.log('process 3 1st sub function started');
-                    this.sanitationProcess3(thirdSanitationIndexes[0], thirdSanitationIndexes[1]);
-                },180000);
-
-                setTimeout(() => {
-                    console.log('process 3 2nd sub function started');
-                    this.sanitationProcess3(thirdSanitationIndexes[0], thirdSanitationIndexes[1]);
-                },360000);
-
-                setTimeout(() => {
-                    console.log('process 3 3rd sub function started');
-                    this.sanitationProcess3(thirdSanitationIndexes[0], thirdSanitationIndexes[1]);
-                },540000);
-
-                setTimeout(() => {
-                    console.log('process 3 4th sub function started');
-                    this.sanitationProcess3(thirdSanitationIndexes[0], thirdSanitationIndexes[1]);
-                },720000);
-
-                setTimeout(() => {
-                    console.log('process 3 5th sub function started');
-                    this.sanitationProcess3(thirdSanitationIndexes[0], thirdSanitationIndexes[1]);
-                },900000);
-
-                setTimeout(() => {
-                    console.log('process 3 6th sub function started');
-                    this.sanitationProcess3(thirdSanitationIndexes[0], thirdSanitationIndexes[1]);
-                 }, 1080000);
-
-                setTimeout(() => {
-                    console.log('process 3 7th sub function started');
-                    this.sanitationProcess3(thirdSanitationIndexes[0], thirdSanitationIndexes[1]);
-                 }, 1260000);
-            }
-
-            if(typeof this.processRowStartArr[600] !== 'undefined')
-            {
-                this.sanitationProcess4(fourthSanitationIndexes[0], fourthSanitationIndexes[1]);
-
-                setTimeout(() => {
-                    console.log('process 4 1st sub function started');
-                    this.sanitationProcess4(fourthSanitationIndexes[0], fourthSanitationIndexes[1]);
-                },180000);
-
-                setTimeout(() => {
-                    console.log('process 4 2nd sub function started');
-                    this.sanitationProcess4(fourthSanitationIndexes[0], fourthSanitationIndexes[1]);
-                },360000);
-
-                setTimeout(() => {
-                    console.log('process 4 3rd sub function started');
-                    this.sanitationProcess4(fourthSanitationIndexes[0], fourthSanitationIndexes[1]);
-                },540000);
-
-                setTimeout(() => {
-                    console.log('process 4 4th sub function started');
-                    this.sanitationProcess4(fourthSanitationIndexes[0], fourthSanitationIndexes[1]);
-                },720000);
-
-                setTimeout(() => {
-                    console.log('process 4 5th sub function started');
-                    this.sanitationProcess4(fourthSanitationIndexes[0], fourthSanitationIndexes[1]);
-                },900000);
-
-                setTimeout(() => {
-                    console.log('process 4 6th sub function started');
-                    this.sanitationProcess4(fourthSanitationIndexes[0], fourthSanitationIndexes[1]);
-                 }, 1080000);
-
-                setTimeout(() => {
-                    console.log('process 4 7th sub function started');
-                    this.sanitationProcess4(fourthSanitationIndexes[0], fourthSanitationIndexes[1]);
-                 }, 1260000);
-            }
-
-            if(typeof this.processRowStartArr[800] !== 'undefined')
-            {
-                this.sanitationProcess5(fifthSanitationIndexes[0], fifthSanitationIndexes[1]);
-
-                setTimeout(() => {
-                    console.log('process 5 1st sub function started');
-                    this.sanitationProcess5(fifthSanitationIndexes[0], fifthSanitationIndexes[1]);
-                },180000);
-
-                setTimeout(() => {
-                    console.log('process 5 2nd sub function started');
-                    this.sanitationProcess5(fifthSanitationIndexes[0], fifthSanitationIndexes[1]);
-                },360000);
-
-                setTimeout(() => {
-                    console.log('process 5 3rd sub function started');
-                    this.sanitationProcess5(fifthSanitationIndexes[0], fifthSanitationIndexes[1]);
-                },540000);
-
-                setTimeout(() => {
-                    console.log('process 5 4th sub function started');
-                    this.sanitationProcess5(fifthSanitationIndexes[0], fifthSanitationIndexes[1]);
-                },720000);
-
-                setTimeout(() => {
-                    console.log('process 5 5th sub function started');
-                    this.sanitationProcess5(fifthSanitationIndexes[0], fifthSanitationIndexes[1]);
-                },900000);
-
-                setTimeout(() => {
-                    console.log('process 5 6th sub function started');
-                    this.sanitationProcess5(fifthSanitationIndexes[0], fifthSanitationIndexes[1]);
-                 }, 1080000);
-
-                setTimeout(() => {
-                    console.log('process 5 7th sub function started');
-                    this.sanitationProcess5(fifthSanitationIndexes[0], fifthSanitationIndexes[1]);
-                 }, 1260000);
-            }
-
-            if(typeof this.processRowStartArr[1000] !== 'undefined')
-            {
-                this.sanitationProcess6(sixthSanitationIndexes[0], sixthSanitationIndexes[1]);
-
-                setTimeout(() => {
-                    console.log('process 6 1st sub function started');
-                    this.sanitationProcess6(sixthSanitationIndexes[0], sixthSanitationIndexes[1]);
-                },180000);
-
-                setTimeout(() => {
-                    console.log('process 6 2nd sub function started');
-                    this.sanitationProcess6(sixthSanitationIndexes[0], sixthSanitationIndexes[1]);
-                },360000);
-
-                setTimeout(() => {
-                    console.log('process 6 3rd sub function started');
-                    this.sanitationProcess6(sixthSanitationIndexes[0], sixthSanitationIndexes[1]);
-                },540000);
-
-                setTimeout(() => {
-                    console.log('process 6 4th sub function started');
-                    this.sanitationProcess6(sixthSanitationIndexes[0], sixthSanitationIndexes[1]);
-                },720000);
-
-                setTimeout(() => {
-                    console.log('process 6 5th sub function started');
-                    this.sanitationProcess6(sixthSanitationIndexes[0], sixthSanitationIndexes[1]);
-                },900000);
-
-                setTimeout(() => {
-                    console.log('process 6 6th sub function started');
-                    this.sanitationProcess6(sixthSanitationIndexes[0], sixthSanitationIndexes[1]);
-                 }, 1080000);
-
-                setTimeout(() => {
-                    console.log('process 6 7th sub function started');
-                    this.sanitationProcess6(sixthSanitationIndexes[0], sixthSanitationIndexes[1]);
-                 }, 1260000);
-            }
-
-            if(typeof this.processRowStartArr[1200] !== 'undefined')
-            {
-                this.sanitationProcess7(seventhSanitationIndexes[0], seventhSanitationIndexes[1]);
-
-                setTimeout(() => {
-                    console.log('process 7 1st sub function started');
-                    this.sanitationProcess7(seventhSanitationIndexes[0], seventhSanitationIndexes[1]);
-                },180000);
-
-                setTimeout(() => {
-                    console.log('process 7 2nd sub function started');
-                    this.sanitationProcess7(seventhSanitationIndexes[0], seventhSanitationIndexes[1]);
-                },360000);
-
-                setTimeout(() => {
-                    console.log('process 7 3rd sub function started');
-                    this.sanitationProcess7(seventhSanitationIndexes[0], seventhSanitationIndexes[1]);
-                },540000);
-
-                setTimeout(() => {
-                    console.log('process 7 4th sub function started');
-                    this.sanitationProcess7(seventhSanitationIndexes[0], seventhSanitationIndexes[1]);
-                },720000);
-
-                setTimeout(() => {
-                    console.log('process 7 5th sub function started');
-                    this.sanitationProcess7(seventhSanitationIndexes[0], seventhSanitationIndexes[1]);
-                },900000);
-
-                setTimeout(() => {
-                    console.log('process 7 6th sub function started');
-                    this.sanitationProcess7(seventhSanitationIndexes[0], seventhSanitationIndexes[1]);
-                 }, 1080000);
-
-                setTimeout(() => {
-                    console.log('process 7 7th sub function started');
-                    this.sanitationProcess7(seventhSanitationIndexes[0], seventhSanitationIndexes[1]);
-                 }, 1260000);
-            }
-
-            if(typeof this.processRowStartArr[1400] !== 'undefined')
-            {
-                this.sanitationProcess8(eightSanitationIndexes[0], eightSanitationIndexes[1]);
-
-                setTimeout(() => {
-                    console.log('process 8 1st sub function started');
-                    this.sanitationProcess8(eightSanitationIndexes[0], eightSanitationIndexes[1]);
-                },180000);
-
-                setTimeout(() => {
-                    console.log('process 8 2nd sub function started');
-                    this.sanitationProcess8(eightSanitationIndexes[0], eightSanitationIndexes[1]);
-                },360000);
-
-                setTimeout(() => {
-                    console.log('process 8 3rd sub function started');
-                    this.sanitationProcess8(eightSanitationIndexes[0], eightSanitationIndexes[1]);
-                },540000);
-
-                setTimeout(() => {
-                    console.log('process 8 4th sub function started');
-                    this.sanitationProcess8(eightSanitationIndexes[0], eightSanitationIndexes[1]);
-                },720000);
-
-                setTimeout(() => {
-                    console.log('process 8 5th sub function started');
-                    this.sanitationProcess8(eightSanitationIndexes[0], eightSanitationIndexes[1]);
-                },900000);
-
-                setTimeout(() => {
-                    console.log('process 8 6th sub function started');
-                    this.sanitationProcess8(eightSanitationIndexes[0], eightSanitationIndexes[1]);
-                 }, 1080000);
-
-                setTimeout(() => {
-                    console.log('process 8 7th sub function started');
-                    this.sanitationProcess8(eightSanitationIndexes[0], eightSanitationIndexes[1]);
-                 }, 1260000);
-            }
-
-            if(typeof this.processRowStartArr[1600] !== 'undefined')
-            {
-                this.sanitationProcess9(nineSanitationIndexes[0], nineSanitationIndexes[1]);
-
-                setTimeout(() => {
-                    console.log('process 9 1st sub function started');
-                    this.sanitationProcess9(nineSanitationIndexes[0], nineSanitationIndexes[1]);
-                },180000);
-
-                setTimeout(() => {
-                    console.log('process 9 2nd sub function started');
-                    this.sanitationProcess9(nineSanitationIndexes[0], nineSanitationIndexes[1]);
-                },360000);
-
-                setTimeout(() => {
-                    console.log('process 9 3rd sub function started');
-                    this.sanitationProcess9(nineSanitationIndexes[0], nineSanitationIndexes[1]);
-                },540000);
-
-                setTimeout(() => {
-                    console.log('process 9 4th sub function started');
-                    this.sanitationProcess9(nineSanitationIndexes[0], nineSanitationIndexes[1]);
-                },720000);
-
-                setTimeout(() => {
-                    console.log('process 9 5th sub function started');
-                    this.sanitationProcess9(nineSanitationIndexes[0], nineSanitationIndexes[1]);
-                },900000);
-
-                setTimeout(() => {
-                    console.log('process 9 6th sub function started');
-                    this.sanitationProcess9(nineSanitationIndexes[0], nineSanitationIndexes[1]);
-                 }, 1080000);
-
-                setTimeout(() => {
-                    console.log('process 9 7th sub function started');
-                    this.sanitationProcess9(nineSanitationIndexes[0], nineSanitationIndexes[1]);
-                 }, 1260000);
-            }
-
-            if(typeof this.processRowStartArr[1800] !== 'undefined')
-            {
-                this.sanitationProcess10(tenthSanitationIndexes[0], tenthSanitationIndexes[1]);
-
-                setTimeout(() => {
-                    console.log('process 10 1st sub function started');
-                    this.sanitationProcess10(tenthSanitationIndexes[0], tenthSanitationIndexes[1]);
-                },180000);
-
-                setTimeout(() => {
-                    console.log('process 10 2nd sub function started');
-                    this.sanitationProcess10(tenthSanitationIndexes[0], tenthSanitationIndexes[1]);
-                },360000);
-
-                setTimeout(() => {
-                    console.log('process 10 3rd sub function started');
-                    this.sanitationProcess10(tenthSanitationIndexes[0], tenthSanitationIndexes[1]);
-                },540000);
-
-                setTimeout(() => {
-                    console.log('process 10 4th sub function started');
-                    this.sanitationProcess10(tenthSanitationIndexes[0], tenthSanitationIndexes[1]);
-                },720000);
-
-                setTimeout(() => {
-                    console.log('process 10 5th sub function started');
-                    this.sanitationProcess10(tenthSanitationIndexes[0], tenthSanitationIndexes[1]);
-                },900000);
-
-                setTimeout(() => {
-                    console.log('process 10 6th sub function started');
-                    this.sanitationProcess10(tenthSanitationIndexes[0], tenthSanitationIndexes[1]);
-                 }, 1080000);
-
-                setTimeout(() => {
-                    console.log('process 10 7th sub function started');
-                    this.sanitationProcess10(tenthSanitationIndexes[0], tenthSanitationIndexes[1]);
-                 }, 1260000);
-            }
+            // if(typeof this.processRowStartArr[200] !== 'undefined')
+            // {
+            //     this.sanitationProcess2(secondSanitationIndexes[0], secondSanitationIndexes[1]);
+
+            //     setTimeout(() => {
+            //         console.log('process 2 1st sub function started');
+            //         this.sanitationProcess2(secondSanitationIndexes[0], secondSanitationIndexes[1]);
+            //     },180000);
+
+            //     setTimeout(() => {
+            //         console.log('process 2 2nd sub function started');
+            //         this.sanitationProcess2(secondSanitationIndexes[0], secondSanitationIndexes[1]);
+            //     },360000);
+
+            //     setTimeout(() => {
+            //         console.log('process 2 3rd sub function started');
+            //         this.sanitationProcess2(secondSanitationIndexes[0], secondSanitationIndexes[1]);
+            //     },540000);
+
+            //     setTimeout(() => {
+            //         console.log('process 2 4th sub function started');
+            //         this.sanitationProcess2(secondSanitationIndexes[0], secondSanitationIndexes[1]);
+            //     },720000);
+
+            //     setTimeout(() => {
+            //         console.log('process 2 5th sub function started');
+            //         this.sanitationProcess2(secondSanitationIndexes[0], secondSanitationIndexes[1]);
+            //     },900000);
+
+            //     setTimeout(() => {
+            //         console.log('process 2 6th sub function started');
+            //         this.sanitationProcess2(secondSanitationIndexes[0], secondSanitationIndexes[1]);
+            //      }, 1080000);
+
+            //     setTimeout(() => {
+            //         console.log('process 2 7th sub function started');
+            //         this.sanitationProcess2(secondSanitationIndexes[0], secondSanitationIndexes[1]);
+            //      }, 1260000);
+            // }
+
+            // if(typeof this.processRowStartArr[400] !== 'undefined')
+            // {
+            //     this.sanitationProcess3(thirdSanitationIndexes[0], thirdSanitationIndexes[1]);
+
+            //     setTimeout(() => {
+            //         console.log('process 3 1st sub function started');
+            //         this.sanitationProcess3(thirdSanitationIndexes[0], thirdSanitationIndexes[1]);
+            //     },180000);
+
+            //     setTimeout(() => {
+            //         console.log('process 3 2nd sub function started');
+            //         this.sanitationProcess3(thirdSanitationIndexes[0], thirdSanitationIndexes[1]);
+            //     },360000);
+
+            //     setTimeout(() => {
+            //         console.log('process 3 3rd sub function started');
+            //         this.sanitationProcess3(thirdSanitationIndexes[0], thirdSanitationIndexes[1]);
+            //     },540000);
+
+            //     setTimeout(() => {
+            //         console.log('process 3 4th sub function started');
+            //         this.sanitationProcess3(thirdSanitationIndexes[0], thirdSanitationIndexes[1]);
+            //     },720000);
+
+            //     setTimeout(() => {
+            //         console.log('process 3 5th sub function started');
+            //         this.sanitationProcess3(thirdSanitationIndexes[0], thirdSanitationIndexes[1]);
+            //     },900000);
+
+            //     setTimeout(() => {
+            //         console.log('process 3 6th sub function started');
+            //         this.sanitationProcess3(thirdSanitationIndexes[0], thirdSanitationIndexes[1]);
+            //      }, 1080000);
+
+            //     setTimeout(() => {
+            //         console.log('process 3 7th sub function started');
+            //         this.sanitationProcess3(thirdSanitationIndexes[0], thirdSanitationIndexes[1]);
+            //      }, 1260000);
+            // }
+
+            // if(typeof this.processRowStartArr[600] !== 'undefined')
+            // {
+            //     this.sanitationProcess4(fourthSanitationIndexes[0], fourthSanitationIndexes[1]);
+
+            //     setTimeout(() => {
+            //         console.log('process 4 1st sub function started');
+            //         this.sanitationProcess4(fourthSanitationIndexes[0], fourthSanitationIndexes[1]);
+            //     },180000);
+
+            //     setTimeout(() => {
+            //         console.log('process 4 2nd sub function started');
+            //         this.sanitationProcess4(fourthSanitationIndexes[0], fourthSanitationIndexes[1]);
+            //     },360000);
+
+            //     setTimeout(() => {
+            //         console.log('process 4 3rd sub function started');
+            //         this.sanitationProcess4(fourthSanitationIndexes[0], fourthSanitationIndexes[1]);
+            //     },540000);
+
+            //     setTimeout(() => {
+            //         console.log('process 4 4th sub function started');
+            //         this.sanitationProcess4(fourthSanitationIndexes[0], fourthSanitationIndexes[1]);
+            //     },720000);
+
+            //     setTimeout(() => {
+            //         console.log('process 4 5th sub function started');
+            //         this.sanitationProcess4(fourthSanitationIndexes[0], fourthSanitationIndexes[1]);
+            //     },900000);
+
+            //     setTimeout(() => {
+            //         console.log('process 4 6th sub function started');
+            //         this.sanitationProcess4(fourthSanitationIndexes[0], fourthSanitationIndexes[1]);
+            //      }, 1080000);
+
+            //     setTimeout(() => {
+            //         console.log('process 4 7th sub function started');
+            //         this.sanitationProcess4(fourthSanitationIndexes[0], fourthSanitationIndexes[1]);
+            //      }, 1260000);
+            // }
+
+            // if(typeof this.processRowStartArr[800] !== 'undefined')
+            // {
+            //     this.sanitationProcess5(fifthSanitationIndexes[0], fifthSanitationIndexes[1]);
+
+            //     setTimeout(() => {
+            //         console.log('process 5 1st sub function started');
+            //         this.sanitationProcess5(fifthSanitationIndexes[0], fifthSanitationIndexes[1]);
+            //     },180000);
+
+            //     setTimeout(() => {
+            //         console.log('process 5 2nd sub function started');
+            //         this.sanitationProcess5(fifthSanitationIndexes[0], fifthSanitationIndexes[1]);
+            //     },360000);
+
+            //     setTimeout(() => {
+            //         console.log('process 5 3rd sub function started');
+            //         this.sanitationProcess5(fifthSanitationIndexes[0], fifthSanitationIndexes[1]);
+            //     },540000);
+
+            //     setTimeout(() => {
+            //         console.log('process 5 4th sub function started');
+            //         this.sanitationProcess5(fifthSanitationIndexes[0], fifthSanitationIndexes[1]);
+            //     },720000);
+
+            //     setTimeout(() => {
+            //         console.log('process 5 5th sub function started');
+            //         this.sanitationProcess5(fifthSanitationIndexes[0], fifthSanitationIndexes[1]);
+            //     },900000);
+
+            //     setTimeout(() => {
+            //         console.log('process 5 6th sub function started');
+            //         this.sanitationProcess5(fifthSanitationIndexes[0], fifthSanitationIndexes[1]);
+            //      }, 1080000);
+
+            //     setTimeout(() => {
+            //         console.log('process 5 7th sub function started');
+            //         this.sanitationProcess5(fifthSanitationIndexes[0], fifthSanitationIndexes[1]);
+            //      }, 1260000);
+            // }
+
+            // if(typeof this.processRowStartArr[1000] !== 'undefined')
+            // {
+            //     this.sanitationProcess6(sixthSanitationIndexes[0], sixthSanitationIndexes[1]);
+
+            //     setTimeout(() => {
+            //         console.log('process 6 1st sub function started');
+            //         this.sanitationProcess6(sixthSanitationIndexes[0], sixthSanitationIndexes[1]);
+            //     },180000);
+
+            //     setTimeout(() => {
+            //         console.log('process 6 2nd sub function started');
+            //         this.sanitationProcess6(sixthSanitationIndexes[0], sixthSanitationIndexes[1]);
+            //     },360000);
+
+            //     setTimeout(() => {
+            //         console.log('process 6 3rd sub function started');
+            //         this.sanitationProcess6(sixthSanitationIndexes[0], sixthSanitationIndexes[1]);
+            //     },540000);
+
+            //     setTimeout(() => {
+            //         console.log('process 6 4th sub function started');
+            //         this.sanitationProcess6(sixthSanitationIndexes[0], sixthSanitationIndexes[1]);
+            //     },720000);
+
+            //     setTimeout(() => {
+            //         console.log('process 6 5th sub function started');
+            //         this.sanitationProcess6(sixthSanitationIndexes[0], sixthSanitationIndexes[1]);
+            //     },900000);
+
+            //     setTimeout(() => {
+            //         console.log('process 6 6th sub function started');
+            //         this.sanitationProcess6(sixthSanitationIndexes[0], sixthSanitationIndexes[1]);
+            //      }, 1080000);
+
+            //     setTimeout(() => {
+            //         console.log('process 6 7th sub function started');
+            //         this.sanitationProcess6(sixthSanitationIndexes[0], sixthSanitationIndexes[1]);
+            //      }, 1260000);
+            // }
+
+            // if(typeof this.processRowStartArr[1200] !== 'undefined')
+            // {
+            //     this.sanitationProcess7(seventhSanitationIndexes[0], seventhSanitationIndexes[1]);
+
+            //     setTimeout(() => {
+            //         console.log('process 7 1st sub function started');
+            //         this.sanitationProcess7(seventhSanitationIndexes[0], seventhSanitationIndexes[1]);
+            //     },180000);
+
+            //     setTimeout(() => {
+            //         console.log('process 7 2nd sub function started');
+            //         this.sanitationProcess7(seventhSanitationIndexes[0], seventhSanitationIndexes[1]);
+            //     },360000);
+
+            //     setTimeout(() => {
+            //         console.log('process 7 3rd sub function started');
+            //         this.sanitationProcess7(seventhSanitationIndexes[0], seventhSanitationIndexes[1]);
+            //     },540000);
+
+            //     setTimeout(() => {
+            //         console.log('process 7 4th sub function started');
+            //         this.sanitationProcess7(seventhSanitationIndexes[0], seventhSanitationIndexes[1]);
+            //     },720000);
+
+            //     setTimeout(() => {
+            //         console.log('process 7 5th sub function started');
+            //         this.sanitationProcess7(seventhSanitationIndexes[0], seventhSanitationIndexes[1]);
+            //     },900000);
+
+            //     setTimeout(() => {
+            //         console.log('process 7 6th sub function started');
+            //         this.sanitationProcess7(seventhSanitationIndexes[0], seventhSanitationIndexes[1]);
+            //      }, 1080000);
+
+            //     setTimeout(() => {
+            //         console.log('process 7 7th sub function started');
+            //         this.sanitationProcess7(seventhSanitationIndexes[0], seventhSanitationIndexes[1]);
+            //      }, 1260000);
+            // }
+
+            // if(typeof this.processRowStartArr[1400] !== 'undefined')
+            // {
+            //     this.sanitationProcess8(eightSanitationIndexes[0], eightSanitationIndexes[1]);
+
+            //     setTimeout(() => {
+            //         console.log('process 8 1st sub function started');
+            //         this.sanitationProcess8(eightSanitationIndexes[0], eightSanitationIndexes[1]);
+            //     },180000);
+
+            //     setTimeout(() => {
+            //         console.log('process 8 2nd sub function started');
+            //         this.sanitationProcess8(eightSanitationIndexes[0], eightSanitationIndexes[1]);
+            //     },360000);
+
+            //     setTimeout(() => {
+            //         console.log('process 8 3rd sub function started');
+            //         this.sanitationProcess8(eightSanitationIndexes[0], eightSanitationIndexes[1]);
+            //     },540000);
+
+            //     setTimeout(() => {
+            //         console.log('process 8 4th sub function started');
+            //         this.sanitationProcess8(eightSanitationIndexes[0], eightSanitationIndexes[1]);
+            //     },720000);
+
+            //     setTimeout(() => {
+            //         console.log('process 8 5th sub function started');
+            //         this.sanitationProcess8(eightSanitationIndexes[0], eightSanitationIndexes[1]);
+            //     },900000);
+
+            //     setTimeout(() => {
+            //         console.log('process 8 6th sub function started');
+            //         this.sanitationProcess8(eightSanitationIndexes[0], eightSanitationIndexes[1]);
+            //      }, 1080000);
+
+            //     setTimeout(() => {
+            //         console.log('process 8 7th sub function started');
+            //         this.sanitationProcess8(eightSanitationIndexes[0], eightSanitationIndexes[1]);
+            //      }, 1260000);
+            // }
+
+            // if(typeof this.processRowStartArr[1600] !== 'undefined')
+            // {
+            //     this.sanitationProcess9(nineSanitationIndexes[0], nineSanitationIndexes[1]);
+
+            //     setTimeout(() => {
+            //         console.log('process 9 1st sub function started');
+            //         this.sanitationProcess9(nineSanitationIndexes[0], nineSanitationIndexes[1]);
+            //     },180000);
+
+            //     setTimeout(() => {
+            //         console.log('process 9 2nd sub function started');
+            //         this.sanitationProcess9(nineSanitationIndexes[0], nineSanitationIndexes[1]);
+            //     },360000);
+
+            //     setTimeout(() => {
+            //         console.log('process 9 3rd sub function started');
+            //         this.sanitationProcess9(nineSanitationIndexes[0], nineSanitationIndexes[1]);
+            //     },540000);
+
+            //     setTimeout(() => {
+            //         console.log('process 9 4th sub function started');
+            //         this.sanitationProcess9(nineSanitationIndexes[0], nineSanitationIndexes[1]);
+            //     },720000);
+
+            //     setTimeout(() => {
+            //         console.log('process 9 5th sub function started');
+            //         this.sanitationProcess9(nineSanitationIndexes[0], nineSanitationIndexes[1]);
+            //     },900000);
+
+            //     setTimeout(() => {
+            //         console.log('process 9 6th sub function started');
+            //         this.sanitationProcess9(nineSanitationIndexes[0], nineSanitationIndexes[1]);
+            //      }, 1080000);
+
+            //     setTimeout(() => {
+            //         console.log('process 9 7th sub function started');
+            //         this.sanitationProcess9(nineSanitationIndexes[0], nineSanitationIndexes[1]);
+            //      }, 1260000);
+            // }
+
+            // if(typeof this.processRowStartArr[1800] !== 'undefined')
+            // {
+            //     this.sanitationProcess10(tenthSanitationIndexes[0], tenthSanitationIndexes[1]);
+
+            //     setTimeout(() => {
+            //         console.log('process 10 1st sub function started');
+            //         this.sanitationProcess10(tenthSanitationIndexes[0], tenthSanitationIndexes[1]);
+            //     },180000);
+
+            //     setTimeout(() => {
+            //         console.log('process 10 2nd sub function started');
+            //         this.sanitationProcess10(tenthSanitationIndexes[0], tenthSanitationIndexes[1]);
+            //     },360000);
+
+            //     setTimeout(() => {
+            //         console.log('process 10 3rd sub function started');
+            //         this.sanitationProcess10(tenthSanitationIndexes[0], tenthSanitationIndexes[1]);
+            //     },540000);
+
+            //     setTimeout(() => {
+            //         console.log('process 10 4th sub function started');
+            //         this.sanitationProcess10(tenthSanitationIndexes[0], tenthSanitationIndexes[1]);
+            //     },720000);
+
+            //     setTimeout(() => {
+            //         console.log('process 10 5th sub function started');
+            //         this.sanitationProcess10(tenthSanitationIndexes[0], tenthSanitationIndexes[1]);
+            //     },900000);
+
+            //     setTimeout(() => {
+            //         console.log('process 10 6th sub function started');
+            //         this.sanitationProcess10(tenthSanitationIndexes[0], tenthSanitationIndexes[1]);
+            //      }, 1080000);
+
+            //     setTimeout(() => {
+            //         console.log('process 10 7th sub function started');
+            //         this.sanitationProcess10(tenthSanitationIndexes[0], tenthSanitationIndexes[1]);
+            //      }, 1260000);
+            // }
 
         },
-        sanitationProcess1: function(indexStart, indexStop)
+        sanitationProcessOneParent: function(indexStart, indexStop)
         {
             this.rowCountField = true;
             this.sanitationBtn = true;
@@ -545,7 +515,57 @@ new Vue({
 
                     if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
                     {
-                        this.sanitationProcess1(nextIndex, indexStop);
+                        this.sanitationProcessOneParent(nextIndex, indexStop);
+                    }
+                }else
+                {
+                    console.log('Sanitation Worker 1: '+this.sanitationWorker1);
+                }
+            })
+            .catch((error) =>
+            {
+                console.log(error);
+                this.sanitationProcess1(indexStart, indexStop);
+            })
+        },
+        sanitationProcessOneChild: function(indexStart, indexStop)
+        {
+            this.rowCountField = true;
+            this.sanitationBtn = true;
+
+            let rowStart = this.processRowStartArr[indexStart];
+
+            let data = {
+                rowStart: rowStart,
+                rowCount: this.rowsPerSanitationProcess,
+                sanitation: 1,
+                index: indexStart,
+                sanitationWorker1: this.sanitationWorker1
+            };
+
+            axios.post(`sanitation/start-process`, data)
+            .then((response) =>
+            {
+                let resp = response.data;
+
+                this.totalRaw = resp.totalRaw;
+                this.totalSanitizedRow = resp.totalSanitized;
+                this.totalSanitizedAmount = resp.totalAmount;
+                this.totalUnsanitizedRow = (parseInt(resp.totalRaw) - parseInt(resp.totalSanitized));
+
+                this.percentageSanitizedRow = (resp.totalSanitized / this.totalSanitationProcess) * 100;
+
+
+                this.sanitationWorker1 += this.rowsPerSanitationProcess;
+                this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
+
+                if(indexStart !== indexStop)
+                {
+                    let nextIndex = indexStart + 1;
+
+                    if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
+                    {
+                        this.sanitationProcessOneChild(nextIndex, indexStop);
                     }
                 }else
                 {
