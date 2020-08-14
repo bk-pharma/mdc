@@ -7,11 +7,13 @@ $(document).ready(function() {
         pageLength: 200,
         serverSide: true,
         searching: false,
+        ordering: true,
+        order: [[1, 'desc']], //removing first index to orderable
         ajax: {
             url: 'unclean/unsanitizedData',
         },
         columnDefs: [
-            { "orderable": false, "targets": [0,4] }
+            { "orderable": false, "targets": [0,4,11,12] }
           ],
         columns: [
             {data : 'raw_check', className: 'raw_check dt-center' },
@@ -19,6 +21,7 @@ $(document).ready(function() {
             {data : 'raw_doctor', className: 'raw_doctor', },
             {data : 'raw_corrected_name', className: 'raw_corrected_name' }, 
             {data : 'raw_button', className: 'raw_button dt-center', id: 'assignButton'},
+            {data : 'raw_status', className: 'raw_status', },
             {data : 'raw_license', className: 'raw_license', },
             {data : 'raw_address', className: 'raw_address', },
             {data : 'raw_branchname', className: 'raw_branchname', },
@@ -28,7 +31,7 @@ $(document).ready(function() {
             {data : 'date_sanitized', className: 'date_sanitized', },
 
         ],
-        scrollY:        "75vh",
+        scrollY:        "70vh",
         scrollX:        "100%",
         scrollCollapse: true,
         scroller: {

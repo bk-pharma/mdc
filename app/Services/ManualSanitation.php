@@ -57,6 +57,7 @@ class ManualSanitation implements ManualSanitationInterface
             'raw_corrected_name',
             'raw_license',
             'raw_address',
+            'raw_status',
             'raw_branchname',
             'raw_lbucode',
             'raw_amount',
@@ -78,7 +79,10 @@ class ManualSanitation implements ManualSanitationInterface
                 return $unsanitize->raw_corrected_name;
             })
             ->addColumn('raw_button', function($unsanitize){
-                return '<button class="btn btn-primary" name="raw_button" id="assignButton">Assign</button>';
+                return '<button class="btn btn-primary" name="raw_button" id="assignButton"><i class="nav-icon fas fa-pump-soap"></i> Sanitized </button>';
+            })
+            ->addColumn('raw_status', function($unsanitize){
+                return $unsanitize->raw_status;
             })
             ->addColumn('raw_license', function($unsanitize){
                 return $unsanitize->raw_license;
@@ -107,6 +111,7 @@ class ManualSanitation implements ManualSanitationInterface
                 'raw_id',
                 'raw_doctor',
                 'raw_corrected_name',
+                'raw_status',
                 'raw_license',
                 'raw_address',
                 'raw_branchname',
