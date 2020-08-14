@@ -22,30 +22,30 @@
 	<div class="row mt-2">
 		<div class="col-md text-left">
 			<label>Raw Data</label>
-			<input type="text" v-model="rowCount" :disabled="rowCountField">
-			<button type="button" @click="startConsole()" class="btn btn-sm btn-success" :disabled="sanitationBtn">
+			<input type="text" id="inititalRowCount" v-model="rowCount" :disabled="rowCountField">
+			<button type="button" id="startBtn" @click="startConsole()" class="btn btn-sm btn-success" :disabled="sanitationBtn">
 				<i class="fa fa-play"></i> Start
 			</button>
 
 			<h6 class="mt-3">
 				Total Sanitized:
-				<span>
+				<span id="totalSanitized">
 					@{{ totalSanitizedRow | numberFormat }}
-					<span style="color:#ff0000;">@{{ percentageSanitizedRow | decimalFormat }}%</span>
+					<span id="totalSanitizedPercentage" style="color:#ff0000;">@{{ percentageSanitizedRow | decimalFormat }}%</span>
 				</span>
 			</h6>
 			<h6 class="mt-3">
-				Total Amount: <span>₱ @{{ totalSanitizedAmount | numberFormat }}</span>
+				Total Amount: <span id="totalAmount">₱ @{{ totalSanitizedAmount | numberFormat }}</span>
 			</h6>
 			<h6 class="mt-3">
 				Progress:
 				<span>
 					<!-- @{{ currentSanitationProcess | decimalFormat }} / @{{ totalSanitationProcess }} -->
-					<span style="color:#ff0000;">@{{ percentageSanitationProcess | decimalFormat }}%</span>
+					<span id="currentProgress" style="color:#ff0000;">@{{ percentageSanitationProcess | decimalFormat }}%</span>
 				</span>
 			</h6>
 			<h6 class="mt-3">
-				Total Unsanitized: <span>@{{ totalUnsanitizedRow | numberFormat }}</span>
+				Total Unsanitized: <span id="totalUnsanitized">@{{ totalUnsanitizedRow | numberFormat }}</span>
 			</h6>
 		</div>
 	</div>
