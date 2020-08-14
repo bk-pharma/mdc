@@ -119,7 +119,8 @@ class ManualSanitation implements ManualSanitationInterface
                 'raw_amount',
                 'sanitized_by',
                 'date_sanitized'
-            ])
+            ]) 
+            ->orderColumns(['raw_id', 'raw_doctor', 'raw_corrected_name', 'raw_status', 'raw_license', 'raw_address', 'raw_branchname', 'raw_lbucode', 'raw_amount'], ':column $1')
             ->make(true);
     }
 
