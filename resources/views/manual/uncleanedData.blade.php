@@ -17,19 +17,21 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-         <h1 class="text-center">Data Sanitation</h1>
             <table class=" table table-striped table-hover table-bordered display nowrap" id="unsanitizedTable" style="width:100%;" >
                 <thead>
                     <tr>
-                        {{-- <th><input name="select_all" value="1" id="example-select-all" type="checkbox" />Check All</th> --}}
-                        <th>ID</th>
-                        <th>Doctor</th>
-                        <th>Correct Name</th>
-                        <th>Status</th>
-                        <th>License</th>
-                        <th>Amount</th>
-                        <th>Address</th>
-                        <th>LBU Code</th>
+                        <th style="white-space: nowrap;">Check</th>
+                        <th style="white-space: nowrap;">ID</th>
+                        <th style="white-space: nowrap;" >Doctor</th>
+                        <th style="white-space: nowrap;" >Sanitized Name</th>
+                        <th style="white-space: nowrap;">Assign to MD</th>
+                        <th style="white-space: nowrap;">LN</th>
+                        <th style="white-space: nowrap;">Location</th>
+                        <th style="white-space: nowrap;">Branch Name</th>
+                        <th style="white-space: nowrap;">LBA</th>
+                        <th style="white-space: nowrap;">Amount</th>
+                        <th style="white-space: nowrap;">Sanitized by</th>
+                        <th style="white-space: nowrap;">Sanitized Date</th>
                     </tr>
                 </thead>
                 
