@@ -109,12 +109,11 @@ new Vue({
 
             if(typeof this.processRowStartArr[0] !== 'undefined')
             {
-                this.sanitationProcessOneParent(firstSanitationIndexes[0], firstSanitationIndexes[1]);
-
-                setTimeout(() => {
-                    console.log('process one child started');
-                    this.sanitationProcessOneChild(firstSanitationIndexes[0], firstSanitationIndexes[1]);
-                 }, 300000);
+                this.sanitationProcess1(0, 40);
+                this.sanitationProcess1(41, 80);
+                this.sanitationProcess1(81, 120);
+                this.sanitationProcess1(121, 160);
+                this.sanitationProcess1(161, 199);
             }
 
             // if(typeof this.processRowStartArr[200] !== 'undefined')
@@ -515,57 +514,7 @@ new Vue({
 
                     if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
                     {
-                        this.sanitationProcessOneParent(nextIndex, indexStop);
-                    }
-                }else
-                {
-                    console.log('Sanitation Worker 1: '+this.sanitationWorker1);
-                }
-            })
-            .catch((error) =>
-            {
-                console.log(error);
-                this.sanitationProcess1(indexStart, indexStop);
-            })
-        },
-        sanitationProcessOneChild: function(indexStart, indexStop)
-        {
-            this.rowCountField = true;
-            this.sanitationBtn = true;
-
-            let rowStart = this.processRowStartArr[indexStart];
-
-            let data = {
-                rowStart: rowStart,
-                rowCount: this.rowsPerSanitationProcess,
-                sanitation: 1,
-                index: indexStart,
-                sanitationWorker1: this.sanitationWorker1
-            };
-
-            axios.post(`sanitation/start-process`, data)
-            .then((response) =>
-            {
-                let resp = response.data;
-
-                this.totalRaw = resp.totalRaw;
-                this.totalSanitizedRow = resp.totalSanitized;
-                this.totalSanitizedAmount = resp.totalAmount;
-                this.totalUnsanitizedRow = (parseInt(resp.totalRaw) - parseInt(resp.totalSanitized));
-
-                this.percentageSanitizedRow = (resp.totalSanitized / this.totalSanitationProcess) * 100;
-
-
-                this.sanitationWorker1 += this.rowsPerSanitationProcess;
-                this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
-
-                if(indexStart !== indexStop)
-                {
-                    let nextIndex = indexStart + 1;
-
-                    if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
-                    {
-                        this.sanitationProcessOneChild(nextIndex, indexStop);
+                        this.sanitationProcess1(nextIndex, indexStop);
                     }
                 }else
                 {
