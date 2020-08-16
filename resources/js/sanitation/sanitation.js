@@ -174,10 +174,10 @@ new Vue({
                 this.totalSanitizedAmount = resp.totalAmount;
                 this.totalUnsanitizedRow = (parseInt(resp.totalRaw) - parseInt(resp.totalSanitized));
 
+                this.currentSanitationProcess += 1;
+
                 this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
                 this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
-
-                this.currentSanitationProcess += 1;
 
                 if(indexStart !== indexStop)
                 {
