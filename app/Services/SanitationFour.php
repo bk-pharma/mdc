@@ -9,13 +9,15 @@ use Illuminate\Http\Request;
 class SanitationFour implements SanitationFourInterface
 {
 
-    public function getDoctorByName($mdName, $cols)
+    public function getDoctorByName($mdName, $cols, $rawBranch)
     {
-       $data = [
+        $data = [
             'mdName' => $mdName,
-            'cols' => $cols];
+            'cols' => $cols,
+            'rawBranch' => $rawBranch
+        ];
 
-         return DB::select('CALL getDoctorByName4(:mdName, :cols);', $data);
+         return DB::select('CALL getDoctorByName4(:mdName, :cols, :rawBranch);', $data);
     }
 
     public function getDoctorByFormattedName($mdName)
@@ -39,20 +41,20 @@ class SanitationFour implements SanitationFourInterface
              'mdCode' => $mdCode
          ];
 
-        return DB::select('CALL sanitation4(
+        return DB::select(
+            'CALL sanitation4(
             :rawId,
             :group,
             :mdName,
             :correctedName,
             :universe,
             :mdCode)',
-        $data);
+            $data
+        );
     }
 
-    public function test() {
+    public function test()
+    {
         return 'phase 4 test';
     }
-
 }
-
-

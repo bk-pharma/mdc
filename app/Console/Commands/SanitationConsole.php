@@ -80,7 +80,7 @@ class SanitationConsole extends Command
 
     private function phaseOne($mdName, $sanitizedName)
     {
-        $md = $this->sanitation_one->getDoctorByName($sanitizedName);
+        $md = $this->sanitation_one->getDoctorByName($mdName->raw_doctor);
 
         if(count($md) === 1)
         {
@@ -98,64 +98,156 @@ class SanitationConsole extends Command
                     );
         }else
         {
+            $this->phaseOneRemovePeriods($mdName, $sanitizedName);
+        }
+    }
+
+    private function phaseOneRemovePeriods($mdName, $sanitizedName)
+    {
+        $removedPeriod = str_replace('.', '', $mdName->raw_doctor);
+
+        $md = $this->sanitation_one->getDoctorByName($removedPeriod);
+
+        if(count($md) === 1)
+        {
+            if($this->argument('show')) $this->comment('   Phase 1');
+
+            $this->phaseOneTotal += 1;
+
+            return $this->sanitation_one->update(
+                        $mdName->raw_id,
+                        $md[0]->sanit_group,
+                        $md[0]->sanit_mdname,
+                        $md[0]->sanit_mdname,
+                        $md[0]->sanit_universe,
+                        $md[0]->sanit_mdcode
+                    );
+        }else
+        {
+            $this->phaseOneFormattedName($mdName, $sanitizedName);
+        }
+    }
+
+    private function phaseOneFormattedName($mdName, $sanitizedName)
+    {
+
+        $md = $this->sanitation_one->getDoctorByFormattedName($this->formatName($mdName, $sanitizedName));
+
+        if(count($md) === 1)
+        {
+            if($this->argument('show')) $this->comment('   Phase 1 (Formatted Name)');
+
+            $this->phaseOneFormattedNameTotal += 1;
+
+            $this->sanitation_one->update(
+                $mdName->raw_id,
+                $md[0]->sanit_group,
+                $md[0]->sanit_mdname,
+                $md[0]->sanit_mdname,
+                $md[0]->sanit_universe,
+                $md[0]->sanit_mdcode
+            );
+        }else
+        {
+            $this->phaseOneSanitize($mdName, $sanitizedName);
+        }
+    }
+
+
+    private function phaseOneSanitize($mdName, $sanitizedName)
+    {
+        $md = $this->sanitation_one->getDoctorByName($sanitizedName);
+
+        if(count($md) === 1)
+        {
+            if($this->argument('show')) $this->comment('   Phase 1');
+
+            $this->phaseOneTotal += 1;
+
+            $this->sanitation_one->update(
+                        $mdName->raw_id,
+                        $md[0]->sanit_group,
+                        $md[0]->sanit_mdname,
+                        $md[0]->sanit_mdname,
+                        $md[0]->sanit_universe,
+                        $md[0]->sanit_mdcode
+                    );
+        }else
+        {
             $this->phaseTwo($mdName, $sanitizedName);
         }
     }
 
-    private function phaseTwoGetLicense($mdName, $sanitizedName, $md)
+    private function phaseTwoGetLicense($mdName, $md)
     {
+        if($this->argument('show')) $this->comment('   Phase 2');
 
-        $licenseArr = explode(",", $md->sanit_license);
+        $this->phaseTwoTotal += 1;
 
-        if($this->misc->isExist($mdName->raw_license, $licenseArr))
-        {
-            if($this->argument('show')) $this->comment('   Phase 2');
-
-            $this->phaseTwoTotal += 1;
-
-            return $this->sanitation_two->update(
-                        $mdName->raw_id,
-                        $md->sanit_group,
-                        $md->sanit_mdname,
-                        $md->sanit_mdname,
-                        $md->sanit_universe,
-                        $md->sanit_mdcode
-                    );
-        }
+        return $this->sanitation_two->update(
+                    $mdName->raw_id,
+                    $md->sanit_group,
+                    $md->sanit_mdname,
+                    $md->sanit_mdname,
+                    $md->sanit_universe,
+                    $md->sanit_mdcode
+                );
     }
-
 
     private function phaseTwo($mdName, $sanitizedName)
     {
-        $findSurname = $this->sanitation_two->getDoctorByName($sanitizedName, 'sanit_surname');
+        $lastName = '';
+        $firstName = '';
 
-        if(count($findSurname) > 0)
+        if ($this->misc->isSingleWord($sanitizedName))
         {
-            foreach($findSurname as $md)
-            {
-                $this->phaseTwoGetLicense($mdName, $sanitizedName, $md);
-            }
-        }else
+            $lastName = $sanitizedName;
+            $firstName = $sanitizedName;
+        } else
         {
+            $splitName = explode(" ", $sanitizedName);
 
-            $findFirstName = $this->sanitation_two->getDoctorByName($sanitizedName, 'sanit_firstname');
-
-            if(count($findFirstName) > 0)
+            if(count($splitName) === 2)
             {
-                foreach($findFirstName as $md)
-                {
-                    $this->phaseTwoGetLicense($mdName, $sanitizedName, $md);
-                }
+                $lastName = $splitName[1];
+                $firstName = $splitName[0];
             }else
             {
-                $findMiddleName = $this->sanitation_two->getDoctorByName($sanitizedName, 'sanit_middlename');
+                $lastName = end($splitName);
+                $firstName = $splitName[0];
+            }
+        }
 
-                if(count($findMiddleName) > 0)
+        $findSurname = $this->sanitation_two->getDoctorByName($lastName, 'sanit_surname', $mdName->raw_license);
+
+        if(count($findSurname) === 1)
+        {
+            $this->phaseTwoGetLicense($mdName, $findSurname[0]);
+        }else
+        {
+            $findFirstName = $this->sanitation_two->getDoctorByName($firstName, 'sanit_firstname', $mdName->raw_license);
+
+            if(count($findFirstName) === 1)
+            {
+                 $this->phaseTwoGetLicense($mdName, $findFirstName[0]);
+            }else
+            {
+                $md = $this->sanitation_two->getDoctorByFormattedName($this->formatName($mdName, $sanitizedName));
+
+                if(count($md) === 1)
                 {
-                    foreach($findMiddleName as $md)
-                    {
-                        $this->phaseTwoGetLicense($mdName, $sanitizedName, $md);
-                    }
+                    if($this->argument('show')) $this->comment('   Phase 2 (Formatted Name)');
+
+                    $this->phaseTwoFormattedNameTotal += 1;
+
+                    $this->sanitation_two->update(
+                        $mdName->raw_id,
+                        $md[0]->sanit_group,
+                        $md[0]->sanit_mdname,
+                        $md[0]->sanit_mdname,
+                        $md[0]->sanit_universe,
+                        $md[0]->sanit_mdcode
+                    );
                 }else
                 {
                     $this->phaseThree($mdName, $sanitizedName);
@@ -184,79 +276,111 @@ class SanitationConsole extends Command
                     );
         }else
         {
-            $this->phaseFour($mdName, $sanitizedName);
+            $md = $this->sanitation_three->getDoctorByFormattedName($this->formatName($mdName, $sanitizedName));
+
+            if(count($md) === 1)
+            {
+                if($this->argument('show')) $this->comment('   Phase 3 (Formatted Name)');
+
+                $this->phaseThreeFormattedNameTotal += 1;
+
+                $this->sanitation_three->update(
+                    $mdName->raw_id,
+                    $md[0]->sanit_group,
+                    $md[0]->sanit_mdname,
+                    $md[0]->sanit_mdname,
+                    $md[0]->sanit_universe,
+                    $md[0]->sanit_mdcode
+                );
+
+                return true;
+            }else
+            {
+                $this->phaseFour($mdName, $sanitizedName);
+            }
         }
     }
 
-
-    private function phaseFourGetBranch($mdName, $sanitizedName, $md)
+    private function phaseFourGetBranch($mdName, $md)
     {
+        $this->sanitation_four->update(
+            $mdName->raw_id,
+            $md->sanit_group,
+            $md->sanit_mdname,
+            $md->sanit_mdname,
+            $md->sanit_universe,
+            $md->sanit_mdcode
+        );
 
-        $branchArr = explode(",", $md->sanit_branch);
+        if($this->argument('show')) $this->comment('   Phase 4');
 
-        if($this->misc->isExist($mdName->raw_branchcode, $branchArr))
-        {
-            $this->sanitation_four->update(
-                $mdName->raw_id,
-                $md->sanit_group,
-                $md->sanit_mdname,
-                $md->sanit_mdname,
-                $md->sanit_universe,
-                $md->sanit_mdcode
-            );
+        $this->phaseFourTotal += 1;
 
-            if($this->argument('show')) $this->comment('   Phase 4');
-
-            $this->phaseFourTotal += 1;
-
-            return array(
-                'raw_id' => $mdName->raw_id,
-                'raw_md' => $sanitizedName,
-                'raw_branchcode' => $mdName->raw_branchcode,
-                'sanit_id' => $md->sanit_id,
-                'sanit_mdname' => $md->sanit_mdname,
-                'sanit_group' => $md->sanit_group,
-                'sanit_universe' => $md->sanit_universe,
-                'sanit_mdcode' => $md->sanit_mdcode,
-                'sanit_branch' => $md->sanit_branch
-            );
-        }else
-        {
-            $this->rules($mdName, $sanitizedName);
-        }
+        return array(
+            'raw_id' => $mdName->raw_id,
+            'raw_md' => $md->sanit_mdname,
+            'raw_branchcode' => $mdName->raw_branchcode,
+            'sanit_id' => $md->sanit_id,
+            'sanit_mdname' => $md->sanit_mdname,
+            'sanit_group' => $md->sanit_group,
+            'sanit_universe' => $md->sanit_universe,
+            'sanit_mdcode' => $md->sanit_mdcode,
+            'sanit_branch' => $md->sanit_branch
+        );
     }
-
 
     private function phaseFour($mdName, $sanitizedName)
     {
-        $findSurname = $this->sanitation_four->getDoctorByName($sanitizedName, 'sanit_surname');
+        $lastName = '';
+        $firstName = '';
+
+        if ($this->misc->isSingleWord($sanitizedName)) {
+            $lastName = $sanitizedName;
+            $firstName = $sanitizedName;
+        } else {
+            $splitName = explode(" ", $sanitizedName);
+
+            if(count($splitName) === 2)
+            {
+                $lastName = $splitName[1];
+                $firstName = $splitName[0];
+            }else
+            {
+                $lastName = end($splitName);
+                $firstName = $splitName[0];
+            }
+        }
+
+        $findSurname = $this->sanitation_four->getDoctorByName($lastName, 'sanit_surname', $mdName->raw_branchcode);
 
         if(count($findSurname) > 0)
         {
-            foreach($findSurname as $md)
-            {
-                $this->phaseFourGetBranch($mdName, $sanitizedName, $md);
-            }
+            $this->phaseFourGetBranch($mdName, $findSurname[0]);
         }else
         {
-            $findFirstName = $this->sanitation_four->getDoctorByName($sanitizedName, 'sanit_firstname');
+            $findFirstName = $this->sanitation_four->getDoctorByName($firstName, 'sanit_firstname', $mdName->raw_branchcode);
 
             if(count($findFirstName) > 0)
             {
-                foreach($findFirstName as $md)
-                {
-                    $this->phaseFourGetBranch($mdName, $sanitizedName, $md);
-                }
+                $this->phaseFourGetBranch($mdName, $findFirstName[0]);
             }else
             {
-                $findMiddleName = $this->sanitation_four->getDoctorByName($sanitizedName, 'sanit_middlename');
+                $md = $this->sanitation_four->getDoctorByFormattedName($this->formatName($mdName, $sanitizedName));
 
-                if(count($findMiddleName) > 0)
+                if(count($md) === 1)
                 {
-                    foreach($findMiddleName as $md)
-                    {
-                        $this->phaseFourGetBranch($mdName, $sanitizedName, $md);
-                    }
+                    if($this->argument('show')) $this->comment('   Phase 4 (Formatted Name)');
+
+                    $this->phaseFourFormattedNameTotal += 1;
+
+                    $this->sanitation_four->update(
+                        $mdName->raw_id,
+                        $md[0]->sanit_group,
+                        $md[0]->sanit_mdname,
+                        $md[0]->sanit_mdname,
+                        $md[0]->sanit_universe,
+                        $md[0]->sanit_mdcode
+                    );
                 }else
                 {
                     $this->rules($mdName, $sanitizedName);
@@ -419,7 +543,25 @@ class SanitationConsole extends Command
             }
         }else
         {
-            $this->formatName($md, $sanitizedName);
+            $this->updateFormatName($md, $sanitizedName);
+        }
+    }
+
+
+    private function updateFormatName($md, $sanitizedName)
+    {
+        $mdName1 = explode(' ', $sanitizedName);
+
+        if(!$this->name_format->isUnclassified($sanitizedName))
+        {
+            if(count($mdName1) > 1)
+            {
+                if($this->argument('show')) $this->comment('   Name Formatted');
+
+                $this->formattedNameTotal += 1;
+
+                $this->name_format->formatName($md->raw_id, $sanitizedName, $this->formatName($md, $sanitizedName));
+            }
         }
     }
 
@@ -444,119 +586,9 @@ class SanitationConsole extends Command
 
                 $finalName = implode(' ', $nameArr);
 
-                if(!$this->phaseOneFormattedName($md, $finalName))
-                {
-                    if($this->argument('show')) $this->comment('   Name Formatted');
-
-                    $this->formattedNameTotal += 1;
-
-                    $this->name_format->formatName($md->raw_id, $sanitizedName, $finalName);
-                }
+                return $finalName;
             }
         }
-    }
-
-    private function phaseOneFormattedName($mdName, $formattedName)
-    {
-        $md = $this->sanitation_one->getDoctorByFormattedName($formattedName);
-
-        if(count($md) === 1)
-        {
-            if($this->argument('show')) $this->comment('   Phase 1 (Formatted Name)');
-
-            $this->phaseOneFormattedNameTotal += 1;
-
-            $this->sanitation_one->update(
-                $mdName->raw_id,
-                $md[0]->sanit_group,
-                $md[0]->sanit_mdname,
-                $md[0]->sanit_mdname,
-                $md[0]->sanit_universe,
-                $md[0]->sanit_mdcode
-            );
-
-            return true;
-        }else
-        {
-            $this->phaseTwoFormattedName($mdName, $formattedName);
-        }
-    }
-
-    private function phaseTwoFormattedName($mdName, $formattedName)
-    {
-        $md = $this->sanitation_two->getDoctorByFormattedName($formattedName);
-
-        if(count($md) === 1)
-        {
-            if($this->argument('show')) $this->comment('   Phase 2 (Formatted Name)');
-
-            $this->phaseTwoFormattedNameTotal += 1;
-
-            $this->sanitation_two->update(
-                $mdName->raw_id,
-                $md[0]->sanit_group,
-                $md[0]->sanit_mdname,
-                $md[0]->sanit_mdname,
-                $md[0]->sanit_universe,
-                $md[0]->sanit_mdcode
-            );
-
-            return true;
-        }else
-        {
-            $this->phaseThreeFormattedName($mdName, $formattedName);
-        }
-    }
-
-    private function phaseThreeFormattedName($mdName, $formattedName)
-    {
-        $md = $this->sanitation_three->getDoctorByFormattedName($formattedName);
-
-        if(count($md) === 1)
-        {
-            if($this->argument('show')) $this->comment('   Phase 3 (Formatted Name)');
-
-            $this->phaseThreeFormattedNameTotal += 1;
-
-            $this->sanitation_three->update(
-                $mdName->raw_id,
-                $md[0]->sanit_group,
-                $md[0]->sanit_mdname,
-                $md[0]->sanit_mdname,
-                $md[0]->sanit_universe,
-                $md[0]->sanit_mdcode
-            );
-
-            return true;
-        }else
-        {
-            $this->phaseFourFormattedName($mdName, $formattedName);
-        }
-    }
-
-    private function phaseFourFormattedName($mdName, $formattedName)
-    {
-        $md = $this->sanitation_four->getDoctorByFormattedName($formattedName);
-
-        if(count($md) === 1)
-        {
-            if($this->argument('show')) $this->comment('   Phase 4 (Formatted Name)');
-
-            $this->phaseFourFormattedNameTotal += 1;
-
-            $this->sanitation_four->update(
-                $mdName->raw_id,
-                $md[0]->sanit_group,
-                $md[0]->sanit_mdname,
-                $md[0]->sanit_mdname,
-                $md[0]->sanit_universe,
-                $md[0]->sanit_mdcode
-            );
-
-            return true;
-        }
-
-        return false;
     }
 
     /**
@@ -581,7 +613,6 @@ class SanitationConsole extends Command
 
         foreach($raw_data->getRawData($rowStart, $rowCount) as $md)
         {
-
             $counter += 1;
 
              $sanitizedName = $this->misc->stripPrefix($this->misc->stripSuffix($md->raw_doctor));

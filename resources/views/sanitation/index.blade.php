@@ -31,17 +31,31 @@
 				Total Sanitized:
 				<span>
 					@{{ totalSanitizedRow | numberFormat }}
-					<span style="color:#ff0000;">@{{ percentageSanitizedRow | decimalFormat }}%</span>
+					<span style="color:	#0000ff;">@{{ percentageSanitizedRow | decimalFormat }}%</span>
 				</span>
 			</h6>
-			<h6 class="mt-3">
+			<h6 class="mt-1">
 				Total Amount: <span>₱ @{{ totalSanitizedAmount | numberFormat }}</span>
 			</h6>
+
 			<h6 class="mt-3">
 				Progress:
 				<span>
-					<!-- @{{ currentSanitationProcess | decimalFormat }} / @{{ totalSanitationProcess }} -->
-					<span style="color:#ff0000;">@{{ percentageSanitationProcess | decimalFormat }}%</span>
+					@{{ currentSanitationProcess | numberFormat }} / @{{ totalSanitationProcess }}
+					<span style="color:	#0000ff;">@{{ percentageSanitationProcess | decimalFormat }}%</span>
+				</span>
+			</h6>
+			<h6 class="mt-1">
+				 Previous sanitized:
+				<span>
+					@{{ previousSanitized | numberFormat }}
+					<span style="color:#ff0000;">@{{ previousSanitizedPercentage| decimalFormat }}%</span>
+				</span>
+			</h6>
+			<h6 class="mt-1">
+				 Run:
+				<span>
+					@{{ totalRun }} / 3
 				</span>
 			</h6>
 			<h6 class="mt-3">

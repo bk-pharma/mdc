@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 Interface SanitationFourInterface
 {
-	public function getDoctorByName($mdName, $cols);
+	public function getDoctorByName($mdName, $cols, $rawBranch);
 
 	public function getDoctorByFormattedName($mdName);
 

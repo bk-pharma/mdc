@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 Interface SanitationTwoInterface
 {
-	public function getDoctorByName($mdName, $clauseCols);
+	public function getDoctorByName($mdName, $clauseCols, $rawLicense);
 
 	public function getDoctorByFormattedName($mdName);
 
