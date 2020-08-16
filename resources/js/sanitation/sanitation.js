@@ -127,7 +127,13 @@ new Vue({
                 this.processRowStartArr.push(processRowStart);
             }
 
-            this.totalSanitationProcess = 600;
+            if(this.processRowStartArr.length < 600)
+            {
+                this.totalSanitationProcess = this.processRowStartArr.length;
+            }else
+            {
+                this.totalSanitationProcess = 600;
+            }
 
             let firstSanitationIndexes = [0, 199]; // 0 - 100k;
             let secondSanitationIndexes = [200, 399]; // 101k - 200k
