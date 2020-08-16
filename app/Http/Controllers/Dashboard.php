@@ -5,15 +5,20 @@ namespace App\Http\Controllers;
 use App\Services\Contracts\RawDataInterface;
 use Illuminate\Http\Request;
 use Symfony\Component\Process\Exception\ProcessFailedException;
+use App\Services\Contracts\ManualSanitationInterface;
 use Symfony\Component\Process\Process;
 
 class Dashboard extends Controller
 {
     private $raw_data;
+    private $unsanitized_data;
 
-    public function __construct(RawDataInterface $raw_data)
+
+    function __construct(RawDataInterface $raw_data, ManualSanitationInterface $unsanitized_data)
     {
         $this->raw_data = $raw_data;
+        $this->unsanitized_data = $unsanitized_data;
+
     }
 
     public function index()
@@ -100,4 +105,26 @@ class Dashboard extends Controller
 
         return response()->json($data);
     }
+    public function manual()
+    {
+        return view('manual.manual');
+    }
+
+    public function uncleanedData()
+    {
+        return view('manual.uncleanedData');
+    }
+
+    public function getUnsanitizedData(){
+
+        return $this->unsanitized_data->getUnsanitizedData();
+
+    }
+
+    public function getCorrectedName(Request $req)
+    {
+        $corrected_name = $req->input('corrected_name');
+        return response()->json($this->unsanitized_data->getCorrectedName($corrected_name));
+    }
 }
+

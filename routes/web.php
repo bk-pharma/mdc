@@ -28,11 +28,26 @@ Route::prefix('/import')->group(function () {
 });
 
 Route::prefix('/sanitation')->group(function () {
-    Route::get('/', 'Dashboard@sanitation');
+    Route::get('/', 'Dashboard@sanitation')->middleware('auth');
 
     Route::post('/start-process', 'Dashboard@sanitationProcess');
     Route::get('/sanitized-total', 'Dashboard@getSanitizedCount');
     Route::get('/reset', 'Dashboard@resetData');
+});
+
+
+Route::prefix('/manual')->group(function() {
+	Route::get('/', 'Dashboard@manual')->middleware('auth');
+	Route::get('/unsanitizedData', 'Dashboard@getUnsanitizedData');
+	Route::get('/correctedName', 'Dashboard@getCorrectedName');
+});
+
+
+
+Route::prefix('/unclean')->group(function() {
+	Route::get('/', 'Dashboard@uncleanedData')->middleware('auth');
+	Route::get('/unsanitizedData', 'Dashboard@getUnsanitizedData');
+	
 });
 
 // Route::get('/sanitize', 'Dashboard@sanitation');
