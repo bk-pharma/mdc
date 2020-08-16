@@ -11,4 +11,6 @@ Interface RawDataInterface
 	public function getAllRawData();
 
 	public function getSanitizedCount();
+
+	public function resetData();
 }

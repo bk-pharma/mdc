@@ -32,6 +32,7 @@ Route::prefix('/sanitation')->group(function () {
 
     Route::post('/start-process', 'Dashboard@sanitationProcess');
     Route::get('/sanitized-total', 'Dashboard@getSanitizedCount');
+    Route::get('/reset', 'Dashboard@resetData');
 });
 
 // Route::get('/sanitize', 'Dashboard@sanitation');

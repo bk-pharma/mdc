@@ -34,4 +34,13 @@ class RawData implements RawDataInterface
             WHERE raw_status != ''
         ");
     }
+
+    public function resetData()
+    {
+        return DB::update("
+            UPDATE sanitation_result_new
+            SET raw_doctor = orig_mdname, raw_status = '', raw_corrected_name = '',raw_universe = '', raw_mdcode = ''
+            WHERE raw_status != ''"
+        );
+    }
 }

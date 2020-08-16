@@ -174,6 +174,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        MattAllan\LaravelCodeStyle\ServiceProvider::class,
         App\Providers\RawDataProvider::class,
         App\Providers\MiscProvider::class,
         App\Providers\SanitationOneProvider::class,
