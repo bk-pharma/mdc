@@ -41,7 +41,9 @@ Route::prefix('/manual')->group(function() {
 
 Route::prefix('/unclean')->group(function() {
 	Route::get('/', 'Dashboard@uncleanedData')->middleware('auth');
-	Route::get('/unsanitizedData', 'Dashboard@getUnsanitizedData');
+    Route::get('/unsanitizedData', 'Dashboard@getUnsanitizedData');
+    Route::get('/countSanitized', 'Dashboard@getSanitizedCount1');
+    Route::get('/sanitizedTotalCount', 'Dashboard@sanitizedTotalCount');
 	
 });
 

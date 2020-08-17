@@ -7,7 +7,7 @@ use App\Services\Contracts\RawDataInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use App\Services\Contracts\ManualSanitationInterface;
 use Symfony\Component\Process\Process;
-
+use DB;
 class Dashboard extends Controller
 {
 
@@ -98,7 +98,11 @@ class Dashboard extends Controller
 
     public function uncleanedData()
     {
-        return view('manual.uncleanedData');
+        $count = $this->getSanitizedCount1();
+        $sanitizedTotalCount = $this->sanitizedTotalCount();
+        return view('manual.uncleanedData')
+                ->with('count', $count)
+                ->with('sanitizedTotalCount', $sanitizedTotalCount);
     }
 
     public function getUnsanitizedData(){
@@ -111,6 +115,33 @@ class Dashboard extends Controller
     {
         $corrected_name = $req->input('corrected_name');
         return response()->json($this->unsanitized_data->getCorrectedName($corrected_name));
+    }
+
+    public function getSanitizedCount1(){
+        $count =  DB::select("
+            SELECT 
+                 COUNT(raw_status) as Total
+            FROM 
+                sanitation_result1 
+            WHERE 
+                raw_status != ''
+        ");
+        return $count;
+     
+
+    }
+
+    public function sanitizedTotalCount(){
+        $sanitizedTotalCount =  DB::select("
+        SELECT
+            COUNT(raw_status) as TotalCount
+         FROM
+             sanitation_result1
+         WHERE 
+                raw_status = ''            
+        ");
+        return $sanitizedTotalCount;
+
     }
 }
 

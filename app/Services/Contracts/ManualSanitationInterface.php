@@ -12,4 +12,7 @@ Interface ManualSanitationInterface
 
 	public function getUnsanitizedData();
 
+	/* public function getSanitizedCount1();
+	
+	public function sanitizedTotalCount(); */
 }

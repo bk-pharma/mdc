@@ -31,7 +31,7 @@ $(document).ready(function() {
             {data : 'date_sanitized', className: 'date_sanitized', },
 
         ],
-        scrollY:        "70vh",
+        scrollY:        "53vh",
         scrollX:        "100%",
         scrollCollapse: true,
         scroller: {

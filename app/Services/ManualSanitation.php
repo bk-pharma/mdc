@@ -79,7 +79,7 @@ class ManualSanitation implements ManualSanitationInterface
                 return $unsanitize->raw_corrected_name;
             })
             ->addColumn('raw_button', function($unsanitize){
-                return '<button class="btn btn-primary" name="raw_button" id="assignButton"><i class="nav-icon fas fa-pump-soap"></i> Sanitized </button>';
+                return '<button class="btn btn-primary" name="raw_button" id="assignButton"><i class="nav-icon fas fa-pump-soap"></i> Sanitize </button>';
             })
             ->addColumn('raw_status', function($unsanitize){
                 return $unsanitize->raw_status;
@@ -120,9 +120,47 @@ class ManualSanitation implements ManualSanitationInterface
                 'sanitized_by',
                 'date_sanitized'
             ]) 
-            ->orderColumns(['raw_id', 'raw_doctor', 'raw_corrected_name', 'raw_status', 'raw_license', 'raw_address', 'raw_branchname', 'raw_lbucode', 'raw_amount'], ':column $1')
+            ->orderColumns(
+                [
+                    'raw_id',
+                    'raw_doctor',
+                    'raw_corrected_name',
+                    'raw_status', 
+                    'raw_license', 
+                    'raw_address', 
+                    'raw_branchname', 
+                    'raw_lbucode', 
+                    'raw_amount'
+                ], 
+                    ':column $1'
+                    )
             ->make(true);
     }
+
+
+    /* 
+    public function getSanitizedCount1(){
+        $count =  DB::select("
+            SELECT 
+                 COUNT(raw_status) as Total
+            FROM 
+                sanitation_result1 
+            WHERE 
+                raw_status != ''
+        ");
+        return $count;
+
+    }
+
+    public function sanitizedTotalCount(){
+        $sanitizedTotalCount =  DB::select("
+        SELECT
+            COUNT(raw_status) as TotalCount
+         FROM
+             sanitation_result1            
+        ");
+        return $sanitizedTotalCount;
+    } */
 
     public function getCorrectedName($corrected_name){
         
