@@ -47,9 +47,11 @@
 			</h6>
 			<h6 class="mt-1">
 				 Previous sanitized:
-				<span>
+				<span id="previousSanitation">
 					@{{ previousSanitized | numberFormat }}
-					<span id="previousSanitation" style="color:#ff0000;">@{{ previousSanitizedPercentage| decimalFormat }}%</span>
+					<span id="previousSanitationPercentage" style="color:#ff0000;">
+						@{{ previousSanitizedPercentage| decimalFormat }}%
+					</span>
 				</span>
 			</h6>
 			<h6 class="mt-1">
