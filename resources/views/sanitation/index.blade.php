@@ -52,7 +52,7 @@
 				</span>
 			</h6>
 			<h6 class="mt-1">
-				 Run: @{{ totalRun }} / 3
+				 <span id="totalRun">Run: @{{ totalRun }}</span> / 10
 			</h6>
 			<h6 class="mt-3">
 				Total Unsanitized: <span id="totalUnsanitized">@{{ totalUnsanitizedRow | numberFormat }}</span>

@@ -49,41 +49,8 @@ new Vue({
     },
     updated()
     {
-        if(this.currentSanitationProcess === this.totalSanitationProcess)
-        {
-            this.automatedLabel = '';
-            this.sanitationBtn = false;
-            this.rowCountField = false;
-        }
-
         if(this.currentSanitationProcess === 200) this.sanitationTwo();
         if(this.currentSanitationProcess === 400) this.sanitationThree();
-
-        if(this.currentSanitationProcess === 600)
-        {
-            if(this.totalRun === 2)
-            {
-                this.totalRun += 1;
-            }
-
-            if(this.totalRun !== 3)
-            {
-                this.currentSanitationProcess = 0;
-                this.sanitationOne();
-                this.totalRun += 1;
-                this.previousSanitized = this.totalSanitizedRow
-                this.previousSanitizedPercentage = this.percentageSanitizedRow;
-            }
-        }
-
-        // if(this.currentSanitationProcess === 600) this.sanitationFour();
-        // if(this.currentSanitationProcess === 800) this.sanitationFive();
-        // if(this.currentSanitationProcess === 1000) this.sanitationSix();
-        // if(this.currentSanitationProcess === 1200) this.sanitationSeven();
-        // if(this.currentSanitationProcess === 1400) this.sanitationEight();
-        // if(this.currentSanitationProcess === 1600) this.sanitationNine();
-        // if(this.currentSanitationProcess === 1800) this.sanitationTen();
-
     },
     methods : {
         initialData:function()
@@ -174,10 +141,11 @@ new Vue({
                 this.totalSanitizedAmount = resp.totalAmount;
                 this.totalUnsanitizedRow = (parseInt(resp.totalRaw) - parseInt(resp.totalSanitized));
 
+                this.currentSanitationProcess += 1;
+
                 this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
                 this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
 
-                this.currentSanitationProcess += 1;
 
                 if(indexStart !== indexStop)
                 {
@@ -188,6 +156,25 @@ new Vue({
                         this.sanitationProcess1(nextIndex, indexStop);
                     }
                 }
+
+                if(this.currentSanitationProcess === this.totalSanitationProcess)
+                {
+                    this.totalRun += 1;
+
+                    if(this.totalRun <= 9)
+                    {
+                        this.currentSanitationProcess = 0;
+                        this.previousSanitized = this.totalSanitizedRow
+                        this.previousSanitizedPercentage = this.percentageSanitizedRow;
+                        this.sanitationOne();
+                    }else
+                    {
+                        this.automatedLabel = '';
+                        this.sanitationBtn = false;
+                        this.rowCountField = false;
+                    }
+                }
+
             })
             .catch((error) =>
             {
@@ -202,6 +189,7 @@ new Vue({
             if(typeof this.processRowStartArr[50] !== 'undefined') this.sanitationProcess1(50, 99);
             if(typeof this.processRowStartArr[100] !== 'undefined') this.sanitationProcess1(100, 149);
             if(typeof this.processRowStartArr[100] !== 'undefined') this.sanitationProcess1(150, 199);
+
         },
         sanitationTwo: function()
         {
