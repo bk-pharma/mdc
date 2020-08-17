@@ -31,7 +31,9 @@
 				Total Sanitized:
 				<span id="totalSanitized">
 					@{{ totalSanitizedRow | numberFormat }}
-					<span style="color:	#0000ff;">@{{ percentageSanitizedRow | decimalFormat }}%</span>
+					<span id="totalSanitizedPercentage" style="color:#0000ff;">
+						@{{ percentageSanitizedRow | decimalFormat }}%
+					</span>
 				</span>
 			</h6>
 			<h6 class="mt-1">
@@ -41,7 +43,9 @@
 				Progress:
 				<span>
 					@{{ currentSanitationProcess | numberFormat }} / @{{ totalSanitationProcess }}
-					<span style="color:	#0000ff;">@{{ percentageSanitationProcess | decimalFormat }}%</span>
+					<span id="currentProgress" style="color:	#0000ff;">
+						@{{ percentageSanitationProcess | decimalFormat }}%
+					</span>
 				</span>
 			</h6>
 			<h6 class="mt-1">
