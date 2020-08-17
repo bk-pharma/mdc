@@ -61,6 +61,8 @@ new Vue({
 
         if(this.currentSanitationProcess === 600)
         {
+            this.initialData();
+
             if(this.totalRun === 2)
             {
                 this.totalRun += 1;
@@ -92,7 +94,7 @@ new Vue({
             .then((response) =>
             {
                 let resp = response.data;
-                this.rowCount = (resp.totalRaw - resp.totalSanitized);
+                this.rowCount = parseInt(resp.totalRaw - resp.totalSanitized);
                 this.totalSanitizedRow = resp.totalSanitized;
                 this.totalSanitizedAmount = resp.totalAmount;
                 this.totalUnsanitizedRow = (resp.totalRaw - resp.totalSanitized);

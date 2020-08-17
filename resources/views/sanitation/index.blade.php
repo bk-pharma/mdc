@@ -22,7 +22,7 @@
 	<div class="row mt-2">
 		<div class="col-md text-left">
 			<label>Raw Data</label>
-			<input type="text" id="inititalRowCount" v-model="rowCount" :disabled="rowCountField">
+			<input type="text" id="inititalRowCount" v-model="rowCount" :disabled="rowCountField" autocomplete="off">
 			<button type="button" id="startBtn" @click="startConsole()" class="btn btn-sm btn-success" :disabled="sanitationBtn">
 				<i class="fa fa-play"></i> Start
 			</button>
@@ -31,7 +31,9 @@
 				Total Sanitized:
 				<span id="totalSanitized">
 					@{{ totalSanitizedRow | numberFormat }}
-					<span style="color:	#0000ff;">@{{ percentageSanitizedRow | decimalFormat }}%</span>
+					<span id="totalSanitizedPercentage" style="color:#0000ff;">
+							@{{ percentageSanitizedRow | decimalFormat }}%
+					</span>
 				</span>
 			</h6>
 			<h6 class="mt-1">
@@ -39,20 +41,22 @@
 			</h6>
 			<h6 class="mt-3">
 				Progress:
-				<span>
+				<span id="totalProgress">
 					@{{ currentSanitationProcess | numberFormat }} / @{{ totalSanitationProcess }}
-					<span style="color:	#0000ff;">@{{ percentageSanitationProcess | decimalFormat }}%</span>
+						<span id="currentProgress" style="color:#0000ff;">
+								@{{ percentageSanitationProcess | decimalFormat }}%
+						</span>
 				</span>
 			</h6>
 			<h6 class="mt-1">
 				 Previous sanitized:
 				<span>
 					@{{ previousSanitized | numberFormat }}
-					<span style="color:#ff0000;">@{{ previousSanitizedPercentage| decimalFormat }}%</span>
+					<span id="totalPrevious" style="color:#ff0000;">@{{ previousSanitizedPercentage| decimalFormat }}%</span>
 				</span>
 			</h6>
 			<h6 class="mt-1">
-				 Run: @{{ totalRun }} / 3
+				 Run: <span id="run">@{{ totalRun }}</span> / 3
 			</h6>
 			<h6 class="mt-3">
 				Total Unsanitized: <span id="totalUnsanitized">@{{ totalUnsanitizedRow | numberFormat }}</span>
