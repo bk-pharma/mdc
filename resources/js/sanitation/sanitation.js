@@ -146,7 +146,6 @@ new Vue({
                 this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
                 this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
 
-
                 if(indexStart !== indexStop)
                 {
                     let nextIndex = indexStart + 1;
@@ -161,7 +160,7 @@ new Vue({
                 {
                     this.totalRun += 1;
 
-                    if(this.totalRun <= 9)
+                    if(this.totalRun <= 5)
                     {
                         this.currentSanitationProcess = 0;
                         this.previousSanitized = this.totalSanitizedRow
