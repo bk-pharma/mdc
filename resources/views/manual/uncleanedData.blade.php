@@ -25,25 +25,10 @@
                    
                     <thead>
                         <tr>
-                            <th style="white-space: nowrap;"></th>
-                            <th style="white-space: nowrap;">ID</th>
-                            <th style="white-space: nowrap;" >Doctor</th>
-                            <th style="white-space: nowrap;" >Sanitized Name</th>
-                            <th style="white-space: nowrap;">Assign to MD</th>
-                            <th style="white-space: nowrap;">Class</th>
-                            <th style="white-space: nowrap;">LN</th>
-                            <th style="white-space: nowrap;">Location</th>
-                            <th style="white-space: nowrap;">Branch Name</th>
-                            <th style="white-space: nowrap;">LBA</th>
-                            <th style="white-space: nowrap;">Amount</th>
-                            <th style="white-space: nowrap;">Sanitized by</th>
-                            <th style="white-space: nowrap;">Sanitized Date</th>
-                        </tr>
-                       <tr>
                             <th style="white-space: nowrap;">
                                 
                             </th>
-                            <th style="white-space: nowrap; width:4.5%;">
+                            <th style="white-space: nowrap;">
                                 <select name="" id="" class="form-control">
                                     <option value="">ID</option>
                                 </select>
@@ -103,8 +88,23 @@
                                     <option value="">Sanitized Date</option>
                                 </select>
                             </th>
-                          
                         </tr>
+                        <tr>
+                            <th style="white-space: nowrap;"></th>
+                            <th style="white-space: nowrap;">ID</th>
+                            <th style="white-space: nowrap;" >Doctor</th>
+                            <th style="white-space: nowrap;" >Sanitized Name</th>
+                            <th style="white-space: nowrap;">Assign to MD</th>
+                            <th style="white-space: nowrap;">Class</th>
+                            <th style="white-space: nowrap;">LN</th>
+                            <th style="white-space: nowrap;">Location</th>
+                            <th style="white-space: nowrap;">Branch Name</th>
+                            <th style="white-space: nowrap;">LBA</th>
+                            <th style="white-space: nowrap;">Amount</th>
+                            <th style="white-space: nowrap;">Sanitized by</th>
+                            <th style="white-space: nowrap;">Sanitized Date</th>
+                        </tr>
+                      
                         
                     </thead>
                     

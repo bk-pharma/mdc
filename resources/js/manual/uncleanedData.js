@@ -2,7 +2,6 @@ $(document).ready(function() {
      $("#unsanitizedTable").DataTable({
         responsive:true,
         processing:true,
-        orderCellsTop: true,
         fixedHeader: true,
         pageLength: 200,
         serverSide: true,
