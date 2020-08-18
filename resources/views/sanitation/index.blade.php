@@ -12,7 +12,7 @@
 
 	<div class="row mt-3">
 		<div class="col-md-6">
-			<h5>@{{automatedLabel}}</h5>
+			<h5 id="sanitationStatus">@{{automatedLabel}}</h5>
 		</div>
 	</div>
 	<div class="row mt-2">
