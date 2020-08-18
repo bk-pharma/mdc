@@ -168,7 +168,7 @@ new Vue({
                         this.sanitationOne();
                     }else
                     {
-                        this.automatedLabel = '';
+                        this.automatedLabel = 'Sanitation done.';
                         this.sanitationBtn = false;
                         this.rowCountField = false;
                     }
