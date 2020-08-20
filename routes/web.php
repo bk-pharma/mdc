@@ -25,6 +25,7 @@ Route::get('/admin', function () {
 
 Route::prefix('/import')->group(function () {
     Route::get('/', 'Dashboard@import');
+    Route::post('/start', 'Dashboard@importNow');
 });
 
 Route::prefix('/sanitation')->group(function () {
@@ -47,7 +48,7 @@ Route::prefix('/manual')->group(function() {
 Route::prefix('/unclean')->group(function() {
 	Route::get('/', 'Dashboard@uncleanedData')->middleware('auth');
 	Route::get('/unsanitizedData', 'Dashboard@getUnsanitizedData');
-	
+
 });
 
 // Route::get('/sanitize', 'Dashboard@sanitation');
