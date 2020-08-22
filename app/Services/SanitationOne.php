@@ -9,22 +9,14 @@ use Illuminate\Http\Request;
 class SanitationOne implements SanitationOneInterface
 {
 
-    public function getDoctorByName($mdName)
+    public function getDoctorByName($mdName, $formattedName)
     {
         $data = [
-            'mdName' => $mdName
+            'mdName' => $mdName,
+            'formattedName' => $formattedName
         ];
 
-        return DB::select('CALL getDoctorByName(:mdName);', $data);
-    }
-
-    public function getDoctorByFormattedName($mdName)
-    {
-        $data = [
-            'mdName' => $mdName
-        ];
-
-        return DB::select('CALL getDoctorByFormattedName(:mdName);', $data);
+        return DB::select('CALL getDoctorByName(:mdName, :formattedName);', $data);
     }
 
     public function update($rawId, $group, $mdName, $correctedName, $universe, $mdCode)

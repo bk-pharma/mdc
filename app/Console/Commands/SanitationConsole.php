@@ -77,86 +77,14 @@ class SanitationConsole extends Command
         $this->name_format = $name_format;
     }
 
-
     private function phaseOne($mdName, $sanitizedName)
     {
-        $md = $this->sanitation_one->getDoctorByName($mdName->raw_doctor);
+        $removedPeriod = str_replace('.', '', $sanitizedName);
 
-        if(count($md) === 1)
-        {
-            if($this->argument('show')) $this->comment('   Phase 1');
-
-            $this->phaseOneTotal += 1;
-
-            return $this->sanitation_one->update(
-                        $mdName->raw_id,
-                        $md[0]->sanit_group,
-                        $md[0]->sanit_mdname,
-                        $md[0]->sanit_mdname,
-                        $md[0]->sanit_universe,
-                        $md[0]->sanit_mdcode
-                    );
-        }else
-        {
-            $this->phaseOneRemovePeriods($mdName, $sanitizedName);
-        }
-    }
-
-    private function phaseOneRemovePeriods($mdName, $sanitizedName)
-    {
-        $removedPeriod = str_replace('.', '', $mdName->raw_doctor);
-
-        $md = $this->sanitation_one->getDoctorByName($removedPeriod);
-
-        if(count($md) === 1)
-        {
-            if($this->argument('show')) $this->comment('   Phase 1');
-
-            $this->phaseOneTotal += 1;
-
-            return $this->sanitation_one->update(
-                        $mdName->raw_id,
-                        $md[0]->sanit_group,
-                        $md[0]->sanit_mdname,
-                        $md[0]->sanit_mdname,
-                        $md[0]->sanit_universe,
-                        $md[0]->sanit_mdcode
-                    );
-        }else
-        {
-            $this->phaseOneFormattedName($mdName, $sanitizedName);
-        }
-    }
-
-    private function phaseOneFormattedName($mdName, $sanitizedName)
-    {
-
-        $md = $this->sanitation_one->getDoctorByFormattedName($this->formatName($mdName, $sanitizedName));
-
-        if(count($md) === 1)
-        {
-            if($this->argument('show')) $this->comment('   Phase 1 (Formatted Name)');
-
-            $this->phaseOneFormattedNameTotal += 1;
-
-            $this->sanitation_one->update(
-                $mdName->raw_id,
-                $md[0]->sanit_group,
-                $md[0]->sanit_mdname,
-                $md[0]->sanit_mdname,
-                $md[0]->sanit_universe,
-                $md[0]->sanit_mdcode
-            );
-        }else
-        {
-            $this->phaseOneSanitize($mdName, $sanitizedName);
-        }
-    }
-
-
-    private function phaseOneSanitize($mdName, $sanitizedName)
-    {
-        $md = $this->sanitation_one->getDoctorByName($sanitizedName);
+        $md = $this->sanitation_one->getDoctorByName(
+            $removedPeriod,
+            $this->formatName($mdName, $sanitizedName)
+        );
 
         if(count($md) === 1)
         {
@@ -276,28 +204,7 @@ class SanitationConsole extends Command
                     );
         }else
         {
-            $md = $this->sanitation_three->getDoctorByFormattedName($this->formatName($mdName, $sanitizedName));
-
-            if(count($md) === 1)
-            {
-                if($this->argument('show')) $this->comment('   Phase 3 (Formatted Name)');
-
-                $this->phaseThreeFormattedNameTotal += 1;
-
-                $this->sanitation_three->update(
-                    $mdName->raw_id,
-                    $md[0]->sanit_group,
-                    $md[0]->sanit_mdname,
-                    $md[0]->sanit_mdname,
-                    $md[0]->sanit_universe,
-                    $md[0]->sanit_mdcode
-                );
-
-                return true;
-            }else
-            {
-                $this->phaseFour($mdName, $sanitizedName);
-            }
+            $this->phaseFour($mdName, $sanitizedName);
         }
     }
 
@@ -389,7 +296,7 @@ class SanitationConsole extends Command
         }
     }
 
-    private function applyRules($md, $rawDoctor, $mdNameFromRules, $ruleCode, $ruleApply)
+    private function applyRules($md, $rawDoctor, $sanitizedName, $mdNameFromRules, $ruleCode, $ruleApply)
     {
         $sanitation = $this->rules->getRulesSanitation($mdNameFromRules);
 
@@ -418,6 +325,9 @@ class SanitationConsole extends Command
                         'sanit_group' => $group,
                         'sanit_mdcode' => $mdCode
                     ];
+        }else
+        {
+            $this->updateFormatName($md, $sanitizedName);
         }
     }
 
@@ -452,7 +362,7 @@ class SanitationConsole extends Command
                             $mdNameFromRules = $this->rules->getRules($rawLicenses[0]->rule_code)[0]->rule_assign_to;
                             $ruleCode = $rawLicenses[0]->rule_code;
 
-                            $this->applyRules($md, $rawDoctor, $mdNameFromRules, $ruleCode, 'License');
+                            $this->applyRules($md, $rawDoctor, $sanitizedName, $mdNameFromRules, $ruleCode, 'License');
                             break;
                         }
                     }
@@ -478,7 +388,7 @@ class SanitationConsole extends Command
                                 $mdNameFromRules = $this->rules->getRules($rawLBU[0]->rule_code)[0]->rule_assign_to;
                                 $ruleCode = $rawLBU[0]->rule_code;
 
-                                $this->applyRules($md, $rawDoctor, $mdNameFromRules, $ruleCode, 'LBU');
+                                $this->applyRules($md, $rawDoctor, $sanitizedName, $mdNameFromRules, $ruleCode, 'LBU');
                                 break;
                             }
                         }
@@ -504,7 +414,7 @@ class SanitationConsole extends Command
                                     $mdNameFromRules = $this->rules->getRules($rawBranchName[0]->rule_code)[0]->rule_assign_to;
                                     $ruleCode = $rawBranchName[0]->rule_code;
 
-                                    $this->applyRules($md, $rawDoctor, $mdNameFromRules, $ruleCode, 'Branch Name');
+                                    $this->applyRules($md, $rawDoctor, $sanitizedName, $mdNameFromRules, $ruleCode, 'Branch Name');
                                     break;
                                 }
                             }
@@ -529,11 +439,8 @@ class SanitationConsole extends Command
                                         $mdNameFromRules = $this->rules->getRules($rawAddress[0]->rule_code)[0]->rule_assign_to;
                                         $ruleCode = $rawAddress[0]->rule_code;
 
-                                        $this->applyRules($md, $rawDoctor, $mdNameFromRules, $ruleCode, 'Address');
+                                        $this->applyRules($md, $rawDoctor, $sanitizedName, $mdNameFromRules, $ruleCode, 'Address');
                                         break;
-                                    }else
-                                    {
-                                        $this->formatName($md, $sanitizedName);
                                     }
                                 }
                             }
@@ -541,9 +448,6 @@ class SanitationConsole extends Command
                     }
                 }
             }
-        }else
-        {
-            $this->updateFormatName($md, $sanitizedName);
         }
     }
 
@@ -624,6 +528,7 @@ class SanitationConsole extends Command
 
             if(!$this->name_format->isUnclassified($sanitizedName))
             {
+                $this->updateFormatName($md, $sanitizedName);
                 $this->phaseOne($md, $sanitizedName);
             }
         }
