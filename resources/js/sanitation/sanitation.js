@@ -66,25 +66,7 @@ new Vue({
             }, 20000);
         }else
         {
-<<<<<<< HEAD
-            this.initialData();
-
-            if(this.totalRun === 2)
-            {
-                this.totalRun += 1;
-            }
-
-            if(this.totalRun !== 3)
-            {
-                this.currentSanitationProcess = 0;
-                this.sanitationOne();
-                this.totalRun += 1;
-                this.previousSanitized = this.totalSanitizedRow
-                this.previousSanitizedPercentage = this.percentageSanitizedRow;
-            }
-=======
             this.initialData(false);
->>>>>>> bf0cde4a4be72bb0a9838547eac1e81d0691adb9
         }
     },
     methods : {
