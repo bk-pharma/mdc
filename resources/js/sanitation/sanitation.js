@@ -142,7 +142,7 @@ new Vue({
 
             setTimeout(() => {
                 location.replace(`${window.location.href}?running=1`);
-            },120000);
+            },80000);
         },
         sanitationProcess: function(rowStart, rowCount)
         {
