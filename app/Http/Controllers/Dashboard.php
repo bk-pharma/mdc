@@ -36,25 +36,29 @@ class Dashboard extends Controller
         return view('sanitation.index');
     }
 
-    public function sanitationProcess(Request $req)
+    public function sanitationProcess($rowStart, $rowCount)
     {
-        $rowStart = $req->input('rowStart');
-        $rowCount = $req->input('rowCount');
-
         $process = Process::fromShellCommandline('php artisan sanitize --row_start='.$rowStart.' --row_count='.$rowCount);
         $process->setWorkingDirectory(base_path());
         $process->setTimeout(3600);
-        $process->run();
+        $process->start();
 
-        // executes after the command finishes
-        if (! $process->isSuccessful()) {
-            throw new ProcessFailedException($process);
+        while ($process->isRunning()) {
+            // waiting for process to finish
+        }
+
+        $process = trim($this->isSanitationProcessRunning());
+        $processTotal = 0;
+
+        if (is_numeric($process)) {
+            $processTotal = ((int) $process - 2);
         }
 
         $data = [
-        'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
-        'totalSanitized' => $this->raw_data->getSanitizedCount()[0]->totalSanitized,
-        'totalAmount' => $this->raw_data->getSanitizedCount()[0]->totalAmount,
+            'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
+            'totalSanitized' => $this->raw_data->getSanitizedCount()[0]->totalSanitized,
+            'totalAmount' => $this->raw_data->getSanitizedCount()[0]->totalAmount,
+            'sanitationProcess' => $processTotal
         ];
 
         return response()->json($data);

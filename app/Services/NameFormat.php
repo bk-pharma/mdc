@@ -15,7 +15,8 @@ class NameFormat implements NameFormatInterface
         'CLINIC',
         'CLINICS',
         'MEDICAL',
-        'CENTER'
+        'CENTER',
+        'OSPITAL'
     ];
 
     private $lastNameMultiple = [
