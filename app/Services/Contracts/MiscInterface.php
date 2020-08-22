@@ -19,4 +19,6 @@ Interface MiscInterface
 	public function getLastElement($array);
 
 	public function setAsFirstElement($value, $array);
+
+	public function hasNumbers($str);
 }

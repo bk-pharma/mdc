@@ -7,18 +7,21 @@ use Illuminate\Http\Request;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use App\Services\Contracts\ManualSanitationInterface;
 use Symfony\Component\Process\Process;
+// use Maatwebsite\Excel\Excel;
+// use App\Imports\RawDataImport;
 
 class Dashboard extends Controller
 {
     private $raw_data;
     private $unsanitized_data;
+    // private $excel;
 
-
-    function __construct(RawDataInterface $raw_data, ManualSanitationInterface $unsanitized_data)
-    {
+    function __construct(
+        RawDataInterface $raw_data,
+        ManualSanitationInterface $unsanitized_data
+    ) {
         $this->raw_data = $raw_data;
         $this->unsanitized_data = $unsanitized_data;
-
     }
 
     public function index()
@@ -29,6 +32,12 @@ class Dashboard extends Controller
     public function import()
     {
         return view('import.index');
+    }
+
+    public function importNow(Request $req)
+    {
+        // $file = $req->file('rawExcel');
+        // $this->excel->import(new RawDataImport(), $file);
     }
 
     public function sanitation()
@@ -119,10 +128,10 @@ class Dashboard extends Controller
         return view('manual.uncleanedData');
     }
 
-    public function getUnsanitizedData(){
+    public function getUnsanitizedData()
+    {
 
         return $this->unsanitized_data->getUnsanitizedData();
-
     }
 
     public function getCorrectedName(Request $req)
@@ -131,4 +140,3 @@ class Dashboard extends Controller
         return response()->json($this->unsanitized_data->getCorrectedName($corrected_name));
     }
 }
-
