@@ -108,4 +108,15 @@ class Misc implements MiscInterface
         array_pop($array);
         return $array;
     }
+
+    /*
+        https://stackoverflow.com/questions/901708/check-if-variable-has-a-number-php
+     */
+    public function hasNumbers($str)
+    {
+        if (strcspn($str, '0123456789') != strlen($str))
+          return true
+        else
+          return false;
+    }
 }
