@@ -25,6 +25,7 @@ Route::get('/admin', function () {
 
 Route::prefix('/import')->group(function () {
     Route::get('/', 'Dashboard@import');
+    Route::post('/start', 'Dashboard@importNow');
 });
 
 Route::prefix('/sanitation')->group(function () {
