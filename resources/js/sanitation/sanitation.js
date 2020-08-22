@@ -2,25 +2,34 @@ new Vue({
     el: '#sanitation-container',
     data() {
         return {
-           automatedLabel : '',
+           sanitationStatus : '',
            sanitationBtn: false,
            totalRun: 0,
+           startTime:'',
+           endTime:'',
+           runTime:'',
            processRowStartArr: [],
            rowCount: 0,
-           previousSanitized:0,
-           previousSanitizedPercentage:0,
            rowCountField: false,
            totalSanitizedRow: 0,
            percentageSanitizedRow: 0,
            totalUnsanitizedRow: 0,
            totalSanitizedAmount: 0,
            totalRaw: 0,
-           rowsPerSanitationProcess: 500,
-           currentSanitationProcess: 0,
            totalSanitationProcess:  0,
            percentageSanitationProcess: 0
         }
     },
+      mounted() {
+
+        if (localStorage.startTime)
+        {
+          this.startTime = localStorage.startTime;
+        }else
+        {
+            this.startTime = '';
+        }
+      },
     filters: {
         numberFormat: function(num)
         {
@@ -45,15 +54,23 @@ new Vue({
     },
     created()
     {
-        this.initialData();
-    },
-    updated()
-    {
-        if(this.currentSanitationProcess === 200) this.sanitationTwo();
-        if(this.currentSanitationProcess === 400) this.sanitationThree();
+        if(parseInt(this.getUrlParameter('running')) === 1)
+        {
+            this.sanitationStatus = 'Sanitation in process...';
+            this.endTime = new Date().getTime();
+
+            this.runTime = this.convertToString(this.endTime - localStorage.startTime);
+
+            setInterval(() => {
+                this.initialData(true);
+            }, 20000);
+        }else
+        {
+            this.initialData(false);
+        }
     },
     methods : {
-        initialData:function()
+        initialData:function(isSanitationRunning)
         {
             axios.get(`sanitation/sanitized-total`)
             .then((response) =>
@@ -66,8 +83,29 @@ new Vue({
 
                 this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
 
-                this.previousSanitized = resp.totalSanitized;
-                this.previousSanitizedPercentage = (resp.totalSanitized / resp.totalRaw) * 100;
+                if(isSanitationRunning)
+                {
+                    if(resp.sanitationProcess > 0)
+                    {
+                        this.rowCountField = true;
+                        this.sanitationBtn = true;
+                        this.sanitationStatus = 'Sanitation in process...';
+                        localStorage.endTime = new Date().getTime();
+                        this.endTime = localStorage.endTime;
+                    }else
+                    {
+                        this.rowCountField = false;
+                        this.sanitationBtn = false;
+                        this.sanitationStatus = 'Sanitation done.';
+                        this.endTime = localStorage.endTime;
+                    }
+
+                    this.runTime = this.convertToString(this.endTime - this.startTime);
+                }else
+                {
+                    this.sanitationStatus = '';
+                    this.runTime = '';
+                }
             })
             .catch((error) =>
             {
@@ -76,191 +114,86 @@ new Vue({
         },
         startConsole: function()
         {
-            this.automatedLabel = 'Sanitation in process...';
+            this.sanitationStatus = 'Connecting to server...';
+            this.runTime = '';
 
-            let sanitationProcessNeeded = (this.rowCount / this.rowsPerSanitationProcess);
-            let processRowStart = 0;
+            let processNeeded = Math.round(this.rowCount / 10);
 
-            for(let i = 0; i < sanitationProcessNeeded; i++)
+            for(let i = 0; i < 10; i++)
             {
-                if(i === 0)
-                {
-                    processRowStart = 0;
-                }else
-                {
-                    processRowStart = (i * this.rowsPerSanitationProcess) + 1;
-                }
-
-                this.processRowStartArr.push(processRowStart);
+                this.sanitationProcess(processNeeded * i, processNeeded);
             }
 
-            if(this.processRowStartArr.length < 600)
-            {
-                this.totalSanitationProcess = this.processRowStartArr.length;
-            }else
-            {
-                this.totalSanitationProcess = 600;
-            }
+            // this.sanitationProcess(0, 100000);
+            // this.sanitationProcess(100001, 100000);
+            // this.sanitationProcess(200001, 100000);
+            // this.sanitationProcess(300001, 100000);
+            // this.sanitationProcess(400001, 100000);
+            // this.sanitationProcess(500001, 100000);
+            // this.sanitationProcess(600001, 100000);
+            // this.sanitationProcess(700001, 100000);
+            // this.sanitationProcess(800001, 100000);
+            // this.sanitationProcess(900001, 100000);
 
-            let firstSanitationIndexes = [0, 199]; // 0 - 100k;
-            let secondSanitationIndexes = [200, 399]; // 101k - 200k
-            let thirdSanitationIndexes = [400, 599]; // 201k - 300k
-            let fourthSanitationIndexes = [600, 799]; // 301k - 400k
-            let fifthSanitationIndexes = [800, 999]; // 401k - 500k
-            let sixthSanitationIndexes = [1000, 1199]; // 501k - 600k
-            let seventhSanitationIndexes = [1200, 1399]; // 601k - 700k
-            let eightSanitationIndexes = [1400, 1599]; // 701k - 800k
-            let nineSanitationIndexes = [1600, 1799]; // 801k - 900k
-            let tenthSanitationIndexes = [1800, 1999]; // 901k - 1M
+            localStorage.startTime = new Date().getTime();
+            this.endTime = new Date().getTime();
 
-            this.sanitationOne();
+            this.runTime = this.convertToString(this.endTime - localStorage.startTime);
 
+            setTimeout(() => {
+                location.replace(`${window.location.href}?running=1`);
+            },120000);
         },
-        sanitationProcess1: function(indexStart, indexStop)
+        sanitationProcess: function(rowStart, rowCount)
         {
             this.rowCountField = true;
             this.sanitationBtn = true;
 
-            let rowStart = this.processRowStartArr[indexStart];
-
             let data = {
                 rowStart: rowStart,
-                rowCount: this.rowsPerSanitationProcess,
-                sanitation: 1,
-                index: indexStart,
-                sanitationWorker1: this.sanitationWorker1
+                rowCount: rowCount
             };
 
-            axios.post(`sanitation/start-process`, data)
+            axios.get(`sanitation/start-process/${rowStart}/${rowCount}`)
             .then((response) =>
             {
                 let resp = response.data;
 
                 this.totalRaw = resp.totalRaw;
                 this.totalSanitizedRow = resp.totalSanitized;
+                this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
                 this.totalSanitizedAmount = resp.totalAmount;
                 this.totalUnsanitizedRow = (parseInt(resp.totalRaw) - parseInt(resp.totalSanitized));
-
-                this.currentSanitationProcess += 1;
-
-                this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
-                this.percentageSanitationProcess = (this.currentSanitationProcess / this.totalSanitationProcess) * 100;
-
-                if(indexStart !== indexStop)
-                {
-                    let nextIndex = indexStart + 1;
-
-                    if(typeof this.processRowStartArr[nextIndex] !== 'undefined')
-                    {
-                        this.sanitationProcess1(nextIndex, indexStop);
-                    }
-                }
-
-                if(this.currentSanitationProcess === this.totalSanitationProcess)
-                {
-                    this.totalRun += 1;
-
-                    if(this.totalRun <= 5)
-                    {
-                        this.currentSanitationProcess = 0;
-                        this.previousSanitized = this.totalSanitizedRow
-                        this.previousSanitizedPercentage = this.percentageSanitizedRow;
-                        this.sanitationOne();
-                    }else
-                    {
-                        this.automatedLabel = 'Sanitation done.';
-                        this.sanitationBtn = false;
-                        this.rowCountField = false;
-                    }
-                }
-
             })
             .catch((error) =>
             {
                 console.log(error);
-                this.sanitationProcess1(indexStart, indexStop);
+                this.sanitationProcess(rowStart, rowCount);
             })
         },
-        sanitationOne: function()
+        convertToString:function(millis)
         {
-            // 0 -100k
-            if(typeof this.processRowStartArr[0] !== 'undefined') this.sanitationProcess1(0, 49);
-            if(typeof this.processRowStartArr[50] !== 'undefined') this.sanitationProcess1(50, 99);
-            if(typeof this.processRowStartArr[100] !== 'undefined') this.sanitationProcess1(100, 149);
-            if(typeof this.processRowStartArr[100] !== 'undefined') this.sanitationProcess1(150, 199);
-
+            /*
+                https://gist.github.com/robertpataki/d0b40a1cbbb71764dd94e16cbc99d42f
+             */
+            let delim = " ";
+            let hours = Math.floor(millis / (1000 * 60 * 60) % 60);
+            let minutes = Math.floor(millis / (1000 * 60) % 60);
+            let seconds = Math.floor(millis / 1000 % 60);
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            return hours + 'h'+ delim + minutes + 'm' + delim + seconds + 's';
         },
-        sanitationTwo: function()
+        getUrlParameter:function (name)
         {
-            // 101k - 200k
-            if(typeof this.processRowStartArr[200] !== 'undefined') this.sanitationProcess1(200, 249);
-            if(typeof this.processRowStartArr[250] !== 'undefined') this.sanitationProcess1(250, 299);
-            if(typeof this.processRowStartArr[300] !== 'undefined') this.sanitationProcess1(300, 349);
-            if(typeof this.processRowStartArr[350] !== 'undefined') this.sanitationProcess1(350, 399);
-        },
-        sanitationThree: function()
-        {
-            // 201k - 300k
-            if(typeof this.processRowStartArr[400] !== 'undefined') this.sanitationProcess1(400, 449);
-            if(typeof this.processRowStartArr[450] !== 'undefined') this.sanitationProcess1(450, 499);
-            if(typeof this.processRowStartArr[500] !== 'undefined') this.sanitationProcess1(500, 549);
-            if(typeof this.processRowStartArr[550] !== 'undefined') this.sanitationProcess1(550, 599);
-        },
-        sanitationFour: function()
-        {
-            // 301k - 400k
-            if(typeof this.processRowStartArr[600] !== 'undefined') this.sanitationProcess1(600, 649);
-            if(typeof this.processRowStartArr[650] !== 'undefined') this.sanitationProcess1(650, 699);
-            if(typeof this.processRowStartArr[700] !== 'undefined') this.sanitationProcess1(700, 749);
-            if(typeof this.processRowStartArr[750] !== 'undefined') this.sanitationProcess1(750, 799);
-        },
-        sanitationFive: function()
-        {
-            // 401k - 500k
-            if(typeof this.processRowStartArr[800] !== 'undefined') this.sanitationProcess1(800, 849);
-            if(typeof this.processRowStartArr[850] !== 'undefined') this.sanitationProcess1(850, 899);
-            if(typeof this.processRowStartArr[900] !== 'undefined') this.sanitationProcess1(900, 949);
-            if(typeof this.processRowStartArr[950] !== 'undefined') this.sanitationProcess1(950, 999);
-        },
-        sanitationSix: function()
-        {
-            // 501k - 600k
-            if(typeof this.processRowStartArr[1000] !== 'undefined') this.sanitationProcess1(1000, 1049);
-            if(typeof this.processRowStartArr[1050] !== 'undefined') this.sanitationProcess1(1050, 1099);
-            if(typeof this.processRowStartArr[1100] !== 'undefined') this.sanitationProcess1(1100, 1149);
-            if(typeof this.processRowStartArr[1150] !== 'undefined') this.sanitationProcess1(1150, 1199);
-        },
-        sanitationSeven: function()
-        {
-            // 601k - 700k
-            if(typeof this.processRowStartArr[1200] !== 'undefined') this.sanitationProcess1(1200, 1249);
-            if(typeof this.processRowStartArr[1250] !== 'undefined') this.sanitationProcess1(1250, 1299);
-            if(typeof this.processRowStartArr[1300] !== 'undefined') this.sanitationProcess1(1300, 1349);
-            if(typeof this.processRowStartArr[1350] !== 'undefined') this.sanitationProcess1(1350, 1399);
-        },
-        sanitationEight: function()
-        {
-            // 701k - 800k
-            if(typeof this.processRowStartArr[1400] !== 'undefined') this.sanitationProcess1(1400, 1449);
-            if(typeof this.processRowStartArr[1450] !== 'undefined') this.sanitationProcess1(1450, 1499);
-            if(typeof this.processRowStartArr[1500] !== 'undefined') this.sanitationProcess1(1500, 1549);
-            if(typeof this.processRowStartArr[1550] !== 'undefined') this.sanitationProcess1(1550, 1599);
-        },
-        sanitationNine: function()
-        {
-            // 801k - 900k
-            if(typeof this.processRowStartArr[1600] !== 'undefined') this.sanitationProcess1(1600, 1649);
-            if(typeof this.processRowStartArr[1650] !== 'undefined') this.sanitationProcess1(1650, 1699);
-            if(typeof this.processRowStartArr[1700] !== 'undefined') this.sanitationProcess1(1700, 1749);
-            if(typeof this.processRowStartArr[1750] !== 'undefined') this.sanitationProcess1(1750, 1799);
-        },
-        sanitationTen: function()
-        {
-            // 901k - 1M
-            if(typeof this.processRowStartArr[1800] !== 'undefined') this.sanitationProcess1(1800, 1849);
-            if(typeof this.processRowStartArr[1850] !== 'undefined') this.sanitationProcess1(1850, 1899);
-            if(typeof this.processRowStartArr[1900] !== 'undefined') this.sanitationProcess1(1900, 1949);
-            if(typeof this.processRowStartArr[1950] !== 'undefined') this.sanitationProcess1(1950, 1999);
+            /*
+                https://davidwalsh.name/query-string-javascript
+             */
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
     }
 });
