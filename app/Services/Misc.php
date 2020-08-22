@@ -115,7 +115,7 @@ class Misc implements MiscInterface
     public function hasNumbers($str)
     {
         if (strcspn($str, '0123456789') != strlen($str))
-          return true
+          return true;
         else
           return false;
     }
