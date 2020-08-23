@@ -88,7 +88,7 @@
               </a>
 
             @if(Request::is('sanitation'))
-              <a href="#" class="nav-link active">
+              <a href="{{ url('/sanitation') }}" class="nav-link active">
             @else
               <a href="{{ url('/sanitation') }}" class="nav-link ">
             @endif
