@@ -43,4 +43,13 @@ class RawData implements RawDataInterface
             WHERE raw_status != ''"
         );
     }
+
+    public function setAsUnidentified($rawId)
+    {
+        return DB::update("
+            UPDATE sanitation_result_new
+            SET raw_status = 'UNIDENTIFIED'
+            WHERE raw_id = ".$rawId
+        );
+    }
 }

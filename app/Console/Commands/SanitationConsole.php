@@ -528,8 +528,23 @@ class SanitationConsole extends Command
 
             if(!$this->name_format->isUnclassified($sanitizedName))
             {
-                $this->updateFormatName($md, $sanitizedName);
-                $this->phaseOne($md, $sanitizedName);
+                if(strlen($sanitizedName) < 3 && strlen($md->raw_license) < 3)
+                {
+                    $raw_data->setAsUnidentified($md->raw_id);
+                }else
+                {
+                    if(is_numeric($sanitizedName) && !is_numeric($md->raw_license))
+                    {
+                        $raw_data->setAsUnidentified($md->raw_id);
+                    }else
+                    {
+                        $this->updateFormatName($md, $sanitizedName);
+                        $this->phaseOne($md, $sanitizedName);
+                    }
+                }
+            }else
+            {
+                $raw_data->setAsUnidentified($md->raw_id);
             }
         }
 
