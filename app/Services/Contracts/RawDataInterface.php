@@ -13,4 +13,6 @@ Interface RawDataInterface
 	public function getSanitizedCount();
 
 	public function resetData();
+
+	public function setAsUnidentified($rawId);
 }
