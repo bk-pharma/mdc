@@ -39,7 +39,7 @@
 				Total Unsanitized: <span id="totalUnsanitized">@{{ totalUnsanitizedRow | numberFormat }}</span>
 			</h6>
 			<h6 class="mt-1">
-				Run time: @{{ runTime }}
+				Run time: <span id="runTime">@{{ runTime }}</span>
 			</h6>
 		</div>
 	</div>
