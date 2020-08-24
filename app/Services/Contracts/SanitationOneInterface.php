@@ -8,5 +8,5 @@ Interface SanitationOneInterface
 {
 	public function getDoctorByName($mdName, $formattedName);
 
-	public function update($rawId, $group, $mdName, $correctedName, $universe, $mdCode);
+	public function update($rawId, $group, $mdName, $correctedName, $universe, $mdCode, $sanitizedBy);
 }

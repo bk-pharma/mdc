@@ -98,7 +98,8 @@ class SanitationConsole extends Command
                         $md[0]->sanit_mdname,
                         $md[0]->sanit_mdname,
                         $md[0]->sanit_universe,
-                        $md[0]->sanit_mdcode
+                        $md[0]->sanit_mdcode,
+                        'phase1 ('.$md[0]->sanit_id.')'
                     );
         }else
         {
@@ -118,7 +119,8 @@ class SanitationConsole extends Command
                     $md->sanit_mdname,
                     $md->sanit_mdname,
                     $md->sanit_universe,
-                    $md->sanit_mdcode
+                    $md->sanit_mdcode,
+                    'phase2 ('.$md->sanit_id.')'
                 );
     }
 
@@ -174,7 +176,8 @@ class SanitationConsole extends Command
                         $md[0]->sanit_mdname,
                         $md[0]->sanit_mdname,
                         $md[0]->sanit_universe,
-                        $md[0]->sanit_mdcode
+                        $md[0]->sanit_mdcode,
+                        'phase2 ('.$md[0]->sanit_id.')'
                     );
                 }else
                 {
@@ -200,7 +203,8 @@ class SanitationConsole extends Command
                         $md[0]->sanit_mdname,
                         $md[0]->sanit_mdname,
                         $md[0]->sanit_universe,
-                        $md[0]->sanit_mdcode
+                        $md[0]->sanit_mdcode,
+                        'Phase3 ('.$md[0]->sanit_id.')'
                     );
         }else
         {
@@ -216,7 +220,8 @@ class SanitationConsole extends Command
             $md->sanit_mdname,
             $md->sanit_mdname,
             $md->sanit_universe,
-            $md->sanit_mdcode
+            $md->sanit_mdcode,
+            'Phase4 ('.$md->sanit_id.')'
         );
 
         if($this->argument('show')) $this->comment('   Phase 4');
@@ -286,7 +291,8 @@ class SanitationConsole extends Command
                         $md[0]->sanit_mdname,
                         $md[0]->sanit_mdname,
                         $md[0]->sanit_universe,
-                        $md[0]->sanit_mdcode
+                        $md[0]->sanit_mdcode,
+                        'Phase4 ('.$md[0]->sanit_id.')'
                     );
                 }else
                 {
@@ -307,7 +313,15 @@ class SanitationConsole extends Command
             $group = (isset($sanitation[0]->sanit_group)) ? $sanitation[0]->sanit_group : '';
             $mdCode = (isset($sanitation[0]->sanit_mdcode)) ? $sanitation[0]->sanit_mdcode : '';
 
-            $this->rules->applyRules($md->raw_id, $group, $mdNameFromRules, $mdNameFromRules, $universe, $mdCode);
+            $this->rules->applyRules(
+                $md->raw_id,
+                $group,
+                $mdNameFromRules,
+                $mdNameFromRules,
+                $universe,
+                $mdCode,
+                'rule '.$ruleCode
+            );
 
             if($this->argument('show'))
             {
@@ -464,7 +478,7 @@ class SanitationConsole extends Command
 
                 $this->formattedNameTotal += 1;
 
-                $this->name_format->formatName($md->raw_id, $sanitizedName, $this->formatName($md, $sanitizedName));
+                $this->name_format->formatName($md->raw_id, $sanitizedName, $this->formatName($md, $sanitizedName), 'system-formatter');
             }
         }
     }
@@ -530,12 +544,12 @@ class SanitationConsole extends Command
             {
                 if(strlen($sanitizedName) < 3 && strlen($md->raw_license) < 3)
                 {
-                    $raw_data->setAsUnidentified($md->raw_id);
+                    $raw_data->setAsUnidentified($md->raw_id, 'system-unidentifier');
                 }else
                 {
                     if(is_numeric($sanitizedName) && !is_numeric($md->raw_license))
                     {
-                        $raw_data->setAsUnidentified($md->raw_id);
+                        $raw_data->setAsUnidentified($md->raw_id, 'system-unidentifier');
                     }else
                     {
                         $this->updateFormatName($md, $sanitizedName);
@@ -544,7 +558,7 @@ class SanitationConsole extends Command
                 }
             }else
             {
-                $raw_data->setAsUnidentified($md->raw_id);
+                $raw_data->setAsUnidentified($md->raw_id, 'system-unidentifier');
             }
         }
 

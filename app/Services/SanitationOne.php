@@ -19,7 +19,7 @@ class SanitationOne implements SanitationOneInterface
         return DB::select('CALL getDoctorByName(:mdName, :formattedName);', $data);
     }
 
-    public function update($rawId, $group, $mdName, $correctedName, $universe, $mdCode)
+    public function update($rawId, $group, $mdName, $correctedName, $universe, $mdCode, $sanitizedBy)
     {
         $data = [
             'rawId' => $rawId,
@@ -27,7 +27,8 @@ class SanitationOne implements SanitationOneInterface
             'mdName' => $mdName,
             'correctedName' => $correctedName,
             'universe' => $universe,
-            'mdCode' => $mdCode
+            'mdCode' => $mdCode,
+            'sanitizedBy' => $sanitizedBy
         ];
 
         return DB::select('CALL sanitation1(
@@ -36,7 +37,8 @@ class SanitationOne implements SanitationOneInterface
             :mdName,
             :correctedName,
             :universe,
-            :mdCode)',
+            :mdCode,
+            :sanitizedBy)',
             $data);
     }
 
