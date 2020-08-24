@@ -31,7 +31,7 @@ class RawData implements RawDataInterface
         return DB::select("
             SELECT DISTINCT COUNT(raw_id) as totalSanitized, ROUND(SUM(raw_amount),2) as totalAmount
             FROM sanitation_result_new
-            WHERE raw_status != ''
+            WHERE raw_status != '' OR raw_corrected_name != ''
         ");
     }
 
