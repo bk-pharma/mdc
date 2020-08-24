@@ -10,5 +10,5 @@ Interface SanitationTwoInterface
 
 	public function getDoctorByFormattedName($mdName);
 
-	public function update($id, $group, $mdName, $correctedName, $universe, $mdCode);
+	public function update($id, $group, $mdName, $correctedName, $universe, $mdCode, $sanitizedBy);
 }

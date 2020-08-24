@@ -29,7 +29,7 @@ class SanitationFour implements SanitationFourInterface
         return DB::select('CALL getDoctorByFormattedName4(:mdName);', $data);
     }
 
-    public function update($id, $group, $mdName, $correctedName, $universe, $mdCode)
+    public function update($id, $group, $mdName, $correctedName, $universe, $mdCode, $sanitizedBy)
     {
 
         $data = [
@@ -38,7 +38,8 @@ class SanitationFour implements SanitationFourInterface
              'mdName' => $mdName,
              'correctedName' => $correctedName,
              'universe' => $universe,
-             'mdCode' => $mdCode
+             'mdCode' => $mdCode,
+             'sanitizedBy' => $sanitizedBy
          ];
 
         return DB::select(
@@ -48,7 +49,8 @@ class SanitationFour implements SanitationFourInterface
             :mdName,
             :correctedName,
             :universe,
-            :mdCode)',
+            :mdCode,
+            :sanitizedBy)',
             $data
         );
     }

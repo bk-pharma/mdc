@@ -20,7 +20,7 @@ class SanitationThree implements SanitationThreeInterface
         return DB::select('CALL getDoctorByName3(:mdName, :licenseNo);', $data);
     }
 
-    public function update($id, $group, $mdName, $correctedName, $universe, $mdCode)
+    public function update($id, $group, $mdName, $correctedName, $universe, $mdCode, $sanitizedBy)
     {
         $data = [
             'rawId' => $id,
@@ -28,7 +28,8 @@ class SanitationThree implements SanitationThreeInterface
             'mdName' => $mdName,
             'correctedName' => $correctedName,
             'universe' => $universe,
-            'mdCode' => $mdCode
+            'mdCode' => $mdCode,
+            'sanitizedBy' => $sanitizedBy
         ];
 
         return DB::select('CALL sanitation3(
@@ -37,7 +38,8 @@ class SanitationThree implements SanitationThreeInterface
             :mdName,
             :correctedName,
             :universe,
-            :mdCode)',
+            :mdCode,
+            :sanitizedBy)',
             $data
         );
     }
