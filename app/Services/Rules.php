@@ -48,7 +48,7 @@ class Rules implements RulesInterface
         return DB::select('CALL getDoctorByRulesSanitation(:mdName);', $data);
     }
 
-    public function applyRules($rawId, $rawStatus, $mdName, $correctedName, $universe, $mdCode)
+    public function applyRules($rawId, $rawStatus, $mdName, $correctedName, $universe, $mdCode, $sanitizedBy)
     {
         $data = [
             'rawId' => $rawId,
@@ -57,8 +57,9 @@ class Rules implements RulesInterface
             'correctedName' => $correctedName,
             'universe' => $universe,
             'mdCode' => $mdCode,
+            'sanitizedBy' => $sanitizedBy
         ];
 
-        return DB::select('CALL applyRules(:rawId, :rawStatus, :mdName, :correctedName, :universe, :mdCode);', $data);
+        return DB::select('CALL applyRules(:rawId, :rawStatus, :mdName, :correctedName, :universe, :mdCode, :sanitizedBy);', $data);
     }
 }

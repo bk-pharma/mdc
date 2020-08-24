@@ -58,14 +58,15 @@ class NameFormat implements NameFormatInterface
 		return false;
     }
 
-    public function formatName($rawId, $mdName, $correctedName)
+    public function formatName($rawId, $mdName, $correctedName, $sanitizedBy)
     {
     	$data = [
     		'rawId' => $rawId,
     		'mdName' => $mdName,
-    		'correctedName' => $correctedName
+    		'correctedName' => $correctedName,
+            'sanitizedBy' => $sanitizedBy
     	];
 
-    	return DB::select('CALL formatName(:rawId, :mdName, :correctedName);', $data);
+    	return DB::select('CALL formatName(:rawId, :mdName, :correctedName, :sanitizedBy);', $data);
     }
 }

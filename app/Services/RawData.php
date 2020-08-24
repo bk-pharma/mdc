@@ -44,11 +44,11 @@ class RawData implements RawDataInterface
         );
     }
 
-    public function setAsUnidentified($rawId)
+    public function setAsUnidentified($rawId, $sanitizedBy)
     {
         return DB::update("
             UPDATE sanitation_result_new
-            SET raw_status = 'UNIDENTIFIED'
+            SET raw_status = 'UNIDENTIFIED', sanitized_by = '".$sanitizedBy."'
             WHERE raw_id = ".$rawId
         );
     }

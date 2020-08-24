@@ -10,5 +10,5 @@ Interface SanitationFourInterface
 
 	public function getDoctorByFormattedName($mdName);
 
-	public function update($id, $group, $mdName, $correctedName, $universe, $mdCode); //(parameters that need to update || stored proc in order)
+	public function update($id, $group, $mdName, $correctedName, $universe, $mdCode, $sanitizedBy); //(parameters that need to update || stored proc in order)
 }

@@ -14,5 +14,5 @@ Interface RawDataInterface
 
 	public function resetData();
 
-	public function setAsUnidentified($rawId);
+	public function setAsUnidentified($rawId, $sanitizedBy);
 }

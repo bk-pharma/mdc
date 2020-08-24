@@ -8,5 +8,5 @@ Interface NameFormatInterface
 {
 	public function isUnclassified($str);
 
-	public function formatName($rawId, $mdName, $correctedName);
+	public function formatName($rawId, $mdName, $correctedName, $sanitizedBy);
 }
