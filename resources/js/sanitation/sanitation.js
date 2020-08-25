@@ -103,7 +103,14 @@ new Vue({
                     this.runTime = this.convertToString(this.endTime - this.startTime);
                 }else
                 {
-                    this.sanitationStatus = '';
+                    if(resp.sanitationProcess > 0)
+                    {
+                        this.sanitationStatus = 'Sanitation in process...';
+                    }else
+                    {
+                        this.sanitationStatus = 'Sanitation done.';
+                    }
+
                     this.runTime = '';
                 }
             })
