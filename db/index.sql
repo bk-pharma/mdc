@@ -1,4 +1,4 @@
-CREATE INDEX rawData ON sanitation_result_new (raw_status, raw_corrected_name, raw_date);
+CREATE INDEX rawData ON sanitation_result_new (raw_status, raw_corrected_name, raw_date, sanitized_by);
 CREATE INDEX rawId ON sanitation_result_new (raw_id);
 CREATE INDEX mdName ON db_sanitation (sanit_mdname);
 CREATE INDEX mdName ON db_sanitation2 (sanit_surname, sanit_firstname, sanit_middlename);
