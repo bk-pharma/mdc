@@ -20,7 +20,7 @@
 			<label>Raw Data</label>
 			<input type="text" id="inititalRowCount" v-model="rowCount" :disabled="rowCountField">
 
-			<button type="button" id="startBtn" @click="startConsole()" class="btn btn-sm btn-success" :disabled="sanitationBtn">
+			<button type="button" id="startBtn" @click="sanitationProcess()" class="btn btn-sm btn-success" :disabled="sanitationBtn">
 				<i class="fa fa-play"></i> Start
 			</button>
 
@@ -41,6 +41,9 @@
 			</h6>
 			<h6 class="mt-1">
 				Run time: <span id="runTime">@{{ runTime }}</span>
+			</h6>
+			<h6 class="mt-1">
+				Run: <span id="run">@{{ totalRun }}</span>
 			</h6>
 		</div>
 	</div>

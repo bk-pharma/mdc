@@ -23,7 +23,9 @@ class NameFormat implements NameFormatInterface
     	'De',
     	'Delos',
     	'Dela',
-    	'Del'
+    	'Del',
+        'STA',
+        'STO'
     ];
 
     /*
