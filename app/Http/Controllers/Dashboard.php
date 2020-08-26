@@ -47,39 +47,57 @@ class Dashboard extends Controller
 
     public function sanitationProcess()
     {
+        $totalUnsanitize = $this->raw_data->getAllUnsanitize()[0]->totalUnsanitize;
 
-        if($this->raw_data->getAllUnsanitize()[0]->totalUnsanitize > 300000)
+
+        if($totalUnsanitize <= 10000)
         {
-            $process = Process::fromShellCommandline('./bash/sanitize-100k.sh');
+            $process = Process::fromShellCommandline('./bash/sanitize-1k.sh');
         }
 
-        if(
-            $this->raw_data->getAllUnsanitize()[0]->totalUnsanitize > 10000 &&
-            $this->raw_data->getAllUnsanitize()[0]->totalUnsanitize <= 100000
-        )
+        if( $totalUnsanitize > 10000 && $totalUnsanitize <= 100000)
         {
             $process = Process::fromShellCommandline('./bash/sanitize-10k.sh');
         }
 
-        if(
-            $this->raw_data->getAllUnsanitize()[0]->totalUnsanitize > 100000 &&
-            $this->raw_data->getAllUnsanitize()[0]->totalUnsanitize <= 200000
-        )
+        if($totalUnsanitize > 100000 && $totalUnsanitize <= 200000)
         {
             $process = Process::fromShellCommandline('./bash/sanitize-20k.sh');
         }
 
-        if(
-            $this->raw_data->getAllUnsanitize()[0]->totalUnsanitize > 200000 &&
-            $this->raw_data->getAllUnsanitize()[0]->totalUnsanitize <= 300000
-        )
+        if($totalUnsanitize > 200000 && $totalUnsanitize <= 300000)
         {
             $process = Process::fromShellCommandline('./bash/sanitize-30k.sh');
         }
 
-        if($this->raw_data->getAllUnsanitize()[0]->totalUnsanitize <= 10000)
+        if($totalUnsanitize > 300000 && $totalUnsanitize <= 400000)
         {
-            $process = Process::fromShellCommandline('./bash/sanitize-1k.sh');
+            $process = Process::fromShellCommandline('./bash/sanitize-40k.sh');
+        }
+
+        if($totalUnsanitize > 400000 && $totalUnsanitize <= 500000)
+        {
+            $process = Process::fromShellCommandline('./bash/sanitize-50k.sh');
+        }
+
+        if($totalUnsanitize > 500000 && $totalUnsanitize <= 600000)
+        {
+            $process = Process::fromShellCommandline('./bash/sanitize-60k.sh');
+        }
+
+        if($totalUnsanitize > 600000 && $totalUnsanitize <= 700000)
+        {
+            $process = Process::fromShellCommandline('./bash/sanitize-70k.sh');
+        }
+
+        if($totalUnsanitize > 800000 && $totalUnsanitize <= 900000)
+        {
+            $process = Process::fromShellCommandline('./bash/sanitize-80k.sh');
+        }
+
+        if($totalUnsanitize > 900000)
+        {
+            $process = Process::fromShellCommandline('./bash/sanitize-100k.sh');
         }
 
         $process->setWorkingDirectory(base_path());

@@ -1,12 +1,12 @@
 #!/bin/bash
 
 php artisan sanitize --row_start=0 --row_count=20000 &
-php artisan sanitize --row_start=20001 --row_count=20000 &
-php artisan sanitize --row_start=40001 --row_count=20000 &
-php artisan sanitize --row_start=60001 --row_count=20000 &
-php artisan sanitize --row_start=80001 --row_count=20000 &
-php artisan sanitize --row_start=100001 --row_count=20000 &
-php artisan sanitize --row_start=12001 --row_count=20000 &
-php artisan sanitize --row_start=14001 --row_count=20000 &
-php artisan sanitize --row_start=16001 --row_count=20000 &
-php artisan sanitize --row_start=18001 --row_count=20000 &
+php artisan sanitize --row_start=2100 --row_count=20000 &
+php artisan sanitize --row_start=41000 --row_count=20000 &
+php artisan sanitize --row_start=61000 --row_count=20000 &
+php artisan sanitize --row_start=81000 --row_count=20000 &
+php artisan sanitize --row_start=101000 --row_count=20000 &
+php artisan sanitize --row_start=121000 --row_count=20000 &
+php artisan sanitize --row_start=141000 --row_count=20000 &
+php artisan sanitize --row_start=161000 --row_count=20000 &
+php artisan sanitize --row_start=181000 --row_count=20000 &
