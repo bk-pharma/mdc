@@ -31,7 +31,7 @@ Route::prefix('/import')->group(function () {
 Route::prefix('/sanitation')->group(function () {
     Route::get('/', 'Dashboard@sanitation')->middleware('auth');
 
-    Route::get('/start-process/{rowStart}/{rowCount}', 'Dashboard@sanitationProcess');
+    Route::get('/start-process', 'Dashboard@sanitationProcess');
     Route::get('/sanitized-total', 'Dashboard@getSanitizedCount');
     Route::get('/reset', 'Dashboard@resetData');
 });
