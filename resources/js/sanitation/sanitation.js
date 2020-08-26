@@ -4,7 +4,6 @@ new Vue({
         return {
            sanitationStatus : '',
            sanitationBtn: false,
-           totalRun: 0,
            startTime:'',
            endTime:'',
            runTime:'',
@@ -17,19 +16,10 @@ new Vue({
            totalSanitizedAmount: 0,
            totalRaw: 0,
            totalSanitationProcess:  0,
-           percentageSanitationProcess: 0
+           percentageSanitationProcess: 0,
+           totalRun:0
         }
     },
-      mounted() {
-
-        if (localStorage.startTime)
-        {
-          this.startTime = localStorage.startTime;
-        }else
-        {
-            this.startTime = '';
-        }
-      },
     filters: {
         numberFormat: function(num)
         {
@@ -52,22 +42,14 @@ new Vue({
             }
         }
     },
+      mounted() {
+        if (localStorage.startTime) {
+          this.startTime = localStorage.startTime;
+        }
+      },
     created()
     {
-        if(parseInt(this.getUrlParameter('running')) === 1)
-        {
-            this.sanitationStatus = 'Sanitation in process...';
-            this.endTime = new Date().getTime();
-
-            this.runTime = this.convertToString(this.endTime - localStorage.startTime);
-
-            setInterval(() => {
-                this.initialData(true);
-            }, 20000);
-        }else
-        {
-            this.initialData(false);
-        }
+        this.initialData(false);
     },
     methods : {
         initialData:function(isSanitationRunning)
@@ -83,35 +65,37 @@ new Vue({
 
                 this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
 
-                if(isSanitationRunning)
+                if(resp.sanitationProcess > 0)
                 {
-                    if(resp.sanitationProcess > 0)
-                    {
-                        this.rowCountField = true;
-                        this.sanitationBtn = true;
-                        this.sanitationStatus = 'Sanitation in process...';
-                        localStorage.endTime = new Date().getTime();
-                        this.endTime = localStorage.endTime;
-                    }else
-                    {
-                        this.rowCountField = false;
-                        this.sanitationBtn = false;
-                        this.sanitationStatus = 'Sanitation done.';
-                        this.endTime = localStorage.endTime;
-                    }
+                    this.sanitationStatus = 'Sanitation in process...';
 
+                    /*
+                        https://stackoverflow.com/questions/313893/how-to-measure-time-taken-by-a-function-to-execute
+                     */
+                    this.endTime = new Date().getTime();
                     this.runTime = this.convertToString(this.endTime - this.startTime);
                 }else
                 {
-                    if(resp.sanitationProcess > 0)
-                    {
-                        this.sanitationStatus = 'Sanitation in process...';
+                    if(isSanitationRunning) {
+
+                        this.totalRun += 1;
+
+                        if(this.totalRun < 4)
+                        {
+                            this.sanitationProcess();
+                        }else
+                        {
+                            this.sanitationStatus = 'Sanitation done.';
+                            this.rowCountField =  false;
+                            this.sanitationBtn = false;
+                        }
+
                     }else
                     {
                         this.sanitationStatus = 'Sanitation done.';
+                        this.rowCountField =  false;
+                        this.sanitationBtn = false;
                     }
-
-                    this.runTime = '';
                 }
             })
             .catch((error) =>
@@ -119,63 +103,35 @@ new Vue({
                 console.log(error);
             })
         },
-        startConsole: function()
-        {
-            this.sanitationStatus = 'Connecting to server...';
-            this.runTime = '';
-
-            let processNeeded = Math.round(this.rowCount / 10);
-
-            for(let i = 0; i < 10; i++)
-            {
-                this.sanitationProcess(processNeeded * i, processNeeded);
-            }
-
-            // this.sanitationProcess(0, 100000);
-            // this.sanitationProcess(100001, 100000);
-            // this.sanitationProcess(200001, 100000);
-            // this.sanitationProcess(300001, 100000);
-            // this.sanitationProcess(400001, 100000);
-            // this.sanitationProcess(500001, 100000);
-            // this.sanitationProcess(600001, 100000);
-            // this.sanitationProcess(700001, 100000);
-            // this.sanitationProcess(800001, 100000);
-            // this.sanitationProcess(900001, 100000);
-
-            localStorage.startTime = new Date().getTime();
-            this.endTime = new Date().getTime();
-
-            this.runTime = this.convertToString(this.endTime - localStorage.startTime);
-
-            setTimeout(() => {
-                location.replace(`${window.location.href}?running=1`);
-            },100000);
-        },
-        sanitationProcess: function(rowStart, rowCount)
+        sanitationProcess: function()
         {
             this.rowCountField = true;
             this.sanitationBtn = true;
+            this.sanitationStatus = 'Connecting to server...'
 
-            let data = {
-                rowStart: rowStart,
-                rowCount: rowCount
-            };
-
-            axios.get(`sanitation/start-process/${rowStart}/${rowCount}`)
+            axios.get(`sanitation/start-process`)
             .then((response) =>
             {
-                let resp = response.data;
+                this.sanitationStatus = 'Sanitation in process...';
 
-                this.totalRaw = resp.totalRaw;
-                this.totalSanitizedRow = resp.totalSanitized;
-                this.percentageSanitizedRow = (resp.totalSanitized / resp.totalRaw) * 100;
-                this.totalSanitizedAmount = resp.totalAmount;
-                this.totalUnsanitizedRow = (parseInt(resp.totalRaw) - parseInt(resp.totalSanitized));
+                localStorage.startTime = new Date().getTime();
+                this.startTime = localStorage.startTime;
+
+                this.runTime = '00h 00m 00s';
+
+                setInterval(() => {
+                    if(this.totalRun < 4)
+                    {
+                        this.initialData(true);
+                    }else {
+                        this.initialData(false);
+                    }
+                }, 10000);
             })
             .catch((error) =>
             {
                 console.log(error);
-                this.sanitationProcess(rowStart, rowCount);
+                this.sanitationProcess();
             })
         },
         convertToString:function(millis)

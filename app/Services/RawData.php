@@ -35,6 +35,16 @@ class RawData implements RawDataInterface
         ");
     }
 
+    public function getAllUnsanitize()
+    {
+        return DB::select("
+            SELECT DISTINCT COUNT(raw_id) as totalUnsanitize
+            FROM sanitation_result_new
+            WHERE sanitized_by = ''
+        ");
+    }
+
+
     public function resetData()
     {
         return DB::update("
