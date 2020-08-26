@@ -45,9 +45,43 @@ class Dashboard extends Controller
         return view('sanitation.index');
     }
 
-    public function sanitationProcess($rowStart, $rowCount)
+    public function sanitationProcess()
     {
-        $process = Process::fromShellCommandline('php artisan sanitize --row_start='.$rowStart.' --row_count='.$rowCount);
+
+        if($this->raw_data->getAllUnsanitize()[0]->totalUnsanitize > 300000)
+        {
+            $process = Process::fromShellCommandline('./bash/sanitize-100k.sh');
+        }
+
+        if(
+            $this->raw_data->getAllUnsanitize()[0]->totalUnsanitize > 10000 &&
+            $this->raw_data->getAllUnsanitize()[0]->totalUnsanitize <= 100000
+        )
+        {
+            $process = Process::fromShellCommandline('./bash/sanitize-10k.sh');
+        }
+
+        if(
+            $this->raw_data->getAllUnsanitize()[0]->totalUnsanitize > 100000 &&
+            $this->raw_data->getAllUnsanitize()[0]->totalUnsanitize <= 200000
+        )
+        {
+            $process = Process::fromShellCommandline('./bash/sanitize-20k.sh');
+        }
+
+        if(
+            $this->raw_data->getAllUnsanitize()[0]->totalUnsanitize > 200000 &&
+            $this->raw_data->getAllUnsanitize()[0]->totalUnsanitize <= 300000
+        )
+        {
+            $process = Process::fromShellCommandline('./bash/sanitize-30k.sh');
+        }
+
+        if($this->raw_data->getAllUnsanitize()[0]->totalUnsanitize <= 10000)
+        {
+            $process = Process::fromShellCommandline('./bash/sanitize-1k.sh');
+        }
+
         $process->setWorkingDirectory(base_path());
         $process->setTimeout(3600);
         $process->start();

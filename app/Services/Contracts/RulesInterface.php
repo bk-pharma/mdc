@@ -14,5 +14,7 @@ Interface RulesInterface
 
 	public function getRulesSanitation($mdName);
 
+	public function getDocNameFromRuleTbl($ruleCode);
+
 	public function applyRules($rawId, $rawStatus, $mdName, $correctedName, $universe, $mdCode, $sanitizedBy);
 }

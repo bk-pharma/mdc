@@ -304,6 +304,7 @@ class SanitationConsole extends Command
 
     private function applyRules($md, $rawDoctor, $sanitizedName, $mdNameFromRules, $ruleCode, $ruleApply)
     {
+
         $sanitation = $this->rules->getRulesSanitation($mdNameFromRules);
 
         if(count($sanitation) > 0)
@@ -361,7 +362,6 @@ class SanitationConsole extends Command
                     'details_value',
                     $md->raw_license
                 );
-
 
                 if(count($rawLicenses) > 0)
                 {
@@ -457,12 +457,27 @@ class SanitationConsole extends Command
                                         break;
                                     }
                                 }
+                            }else
+                            {
+                                if(count($this->rules->getRules($rawDoctor->rule_code)) > 0)
+                                {
+                                    $mdNameFromRules = $this->rules->getRules($rawDoctor->rule_code)[0]->rule_assign_to;
+                                    $ruleCode = $rawDoctor->rule_code;
+
+                                    $this->applyRules($md, $rawDoctor, $sanitizedName, $mdNameFromRules, $ruleCode, 'Name only');
+                                    break;
+                                }else
+                                {
+                                    $this->updateFormatName($md, $sanitizedName);
+                                }
                             }
                         }
                     }
                 }
             }
         }
+
+        $this->updateFormatName($md, $sanitizedName);
     }
 
 
@@ -552,7 +567,6 @@ class SanitationConsole extends Command
                         $raw_data->setAsUnidentified($md->raw_id, 'system-unidentifier');
                     }else
                     {
-                        $this->updateFormatName($md, $sanitizedName);
                         $this->phaseOne($md, $sanitizedName);
                     }
                 }

@@ -48,6 +48,15 @@ class Rules implements RulesInterface
         return DB::select('CALL getDoctorByRulesSanitation(:mdName);', $data);
     }
 
+    public function getDocNameFromRuleTbl($ruleCode)
+    {
+        $data = array(
+            'ruleCode' => $ruleCode
+        );
+
+        return DB::select('SELECT rule_assign_to FROM rules_tbl WHERE rule_code = :ruleCode', $data);
+    }
+
     public function applyRules($rawId, $rawStatus, $mdName, $correctedName, $universe, $mdCode, $sanitizedBy)
     {
         $data = [
