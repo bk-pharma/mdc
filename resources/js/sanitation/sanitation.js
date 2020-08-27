@@ -76,12 +76,12 @@ new Vue({
                     this.runTime = this.convertToString(this.endTime - this.startTime);
                 }else
                 {
-                    if(isSanitationRunning) {
+                    if(isSanitationRunning)
+                    {
 
-                        this.totalRun += 1;
-
-                        if(this.totalRun < 4)
+                        if(this.totalRun < 4 && resp.sanitationProcess < 1)
                         {
+                            this.totalRun += 1;
                             this.sanitationProcess();
                         }else
                         {
@@ -89,7 +89,6 @@ new Vue({
                             this.rowCountField =  false;
                             this.sanitationBtn = false;
                         }
-
                     }else
                     {
                         this.sanitationStatus = 'Sanitation done.';
@@ -119,13 +118,9 @@ new Vue({
 
                 this.runTime = '00h 00m 00s';
 
-                setInterval(() => {
-                    if(this.totalRun < 4)
-                    {
-                        this.initialData(true);
-                    }else {
-                        this.initialData(false);
-                    }
+                setInterval(() =>
+                {
+                    this.initialData(true);
                 }, 10000);
             })
             .catch((error) =>
