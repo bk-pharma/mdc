@@ -38,8 +38,19 @@ class Dashboard extends Controller
 
     public function importNow(Request $req)
     {
+        $this->validate(
+            $req,
+            ['rawExcel' => 'required'],
+            ['rawExcel.required' => 'There is no file to upload.']
+        );
+
+        set_time_limit(0);
         $file = $req->file('rawExcel');
-        $this->excel->import(new RawDataImport(), $file);
+
+        $import = new RawDataImport($this->raw_data);
+        $this->excel->import($import, $file);
+
+        return response()->json(array('message' => 'done'));
     }
 
     public function sanitation()
@@ -151,27 +162,24 @@ class Dashboard extends Controller
         }
 
         $data = [
-        'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
-        'totalSanitized' => $this->raw_data->getSanitizedCount()[0]->totalSanitized,
-        'totalAmount' => $this->raw_data->getSanitizedCount()[0]->totalAmount,
-        'sanitationProcess' => $processTotal,
+            'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
+            'totalSanitized' => $this->raw_data->getSanitizedCount()[0]->totalSanitized,
+            'totalAmount' => $this->raw_data->getSanitizedCount()[0]->totalAmount,
+            'sanitationProcess' => $processTotal,
         ];
 
         return response()->json($data);
     }
 
-    public function resetData()
+    public function getAllRawData()
     {
-        $this->raw_data->resetData();
-
         $data = [
-        'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
-        'totalSanitized' => $this->raw_data->getSanitizedCount()[0]->totalSanitized,
-        'totalAmount' => $this->raw_data->getSanitizedCount()[0]->totalAmount
+            'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData
         ];
 
         return response()->json($data);
     }
+
     public function manual()
     {
         return view('manual.manual');

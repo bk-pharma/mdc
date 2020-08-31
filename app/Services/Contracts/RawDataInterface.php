@@ -14,7 +14,9 @@ Interface RawDataInterface
 
 	 public function getAllUnsanitize();
 
-	public function resetData();
-
 	public function setAsUnidentified($rawId, $sanitizedBy);
+
+	public function getImportTagging($branchCode);
+
+	public function getProductName($productCode);
 }

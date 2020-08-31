@@ -23,6 +23,10 @@ Route::get('/admin', function () {
     return view('layouts.admin');
 });
 
+Route::prefix('/raw-data')->group(function () {
+    Route::get('/all', 'Dashboard@getAllRawData');
+});
+
 Route::prefix('/import')->group(function () {
     Route::get('/', 'Dashboard@import');
     Route::post('/start', 'Dashboard@importNow');
@@ -33,9 +37,7 @@ Route::prefix('/sanitation')->group(function () {
 
     Route::get('/start-process', 'Dashboard@sanitationProcess');
     Route::get('/sanitized-total', 'Dashboard@getSanitizedCount');
-    Route::get('/reset', 'Dashboard@resetData');
 });
-
 
 Route::prefix('/manual')->group(function() {
 	Route::get('/', 'Dashboard@manual')->middleware('auth');

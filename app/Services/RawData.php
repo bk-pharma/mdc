@@ -44,16 +44,6 @@ class RawData implements RawDataInterface
         ");
     }
 
-
-    public function resetData()
-    {
-        return DB::update("
-            UPDATE sanitation_result_new
-            SET raw_doctor = orig_mdname, raw_status = '', raw_corrected_name = '',raw_universe = '', raw_mdcode = ''
-            WHERE raw_status != ''"
-        );
-    }
-
     public function setAsUnidentified($rawId, $sanitizedBy)
     {
         return DB::update("
@@ -61,5 +51,48 @@ class RawData implements RawDataInterface
             SET raw_status = 'UNIDENTIFIED', sanitized_by = '".$sanitizedBy."'
             WHERE raw_id = ".$rawId
         );
+    }
+
+    public function getImportTagging($branchCode)
+    {
+        $data = array(
+            'branchCode' => $branchCode
+        );
+
+        return DB::select("
+            SELECT
+                mst_branchcode,
+                mst_lbucode,
+                mst_lburebate,
+                mst_branchname,
+                mst_district,
+                mst_sarcode,
+                mst_sarname,
+                mst_samcode,
+                mst_samname,
+                mst_hospcode,
+                mst_hospname,
+                mst_hdmcode,
+                mst_hdmname,
+                mst_kasscode,
+                mst_kassname,
+                mst_kassmcode,
+                mst_kassmname
+            FROM mst_database
+            WHERE mst_branchcode = :branchCode
+        ", $data);
+    }
+
+    public function getProductName($productCode)
+    {
+        $data = array(
+            'productCode' => $productCode
+        );
+
+        return DB::select("
+            SELECT prod_name, prod_packsize, prod_pertab
+            FROM mst_productdb
+            WHERE prod_code = :productCode
+        ", $data);
     }
 }
