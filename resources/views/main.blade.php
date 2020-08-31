@@ -86,7 +86,9 @@
                   Import
                 </p>
               </a>
+          </li>
 
+          <li class="nav-item">
             @if(Request::is('sanitation'))
               <a href="{{ url('/sanitation') }}" class="nav-link active">
             @else
