@@ -129,12 +129,12 @@ class RawDataImport implements ToModel, WithHeadingRow, WithChunkReading, WithBa
 
   public function chunkSize(): int
   {
-      return 1000;
+      return 5000;
   }
 
   public function batchSize(): int
   {
-      return 1000;
+      return 5000;
   }
 
   private function getAmountPerTab($rawData)
