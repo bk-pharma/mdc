@@ -44,13 +44,25 @@ class Dashboard extends Controller
             ['rawExcel.required' => 'There is no file to upload.']
         );
 
-        $file = $req->file('rawExcel');
+        $fileName = $req->file('rawExcel')->getClientOriginalName();
+        $file = $req->file('rawExcel')->storeAs('rawData', $fileName);
 
-        $import = new RawDataImport($this->raw_data);
-        $this->excel->queueImport($import, storage_path($file));
+        $process = Process::fromShellCommandline('php artisan import --file_name='.$fileName);
+        $process->setWorkingDirectory(base_path());
+        $process->setTimeout(3600);
+        $process->run();
 
-        return response()->json(array('message' => 'done'));
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        $data = array(
+            'message' => 'done.'
+        );
+
+        return response()->json($data);
     }
+
 
     public function sanitation()
     {

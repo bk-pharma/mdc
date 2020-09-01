@@ -6,13 +6,12 @@ use App\models\RawDataImporter;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use App\Services\Contracts\RawDataInterface;
 use Illuminate\Support\Facades\Validator;
 
-class RawDataImport implements ToModel, WithHeadingRow, WithChunkReading, WithBatchInserts, ShouldQueue
+class RawDataImport implements ToModel, WithHeadingRow, WithChunkReading, WithBatchInserts
 {
   private $raw_data;
 
