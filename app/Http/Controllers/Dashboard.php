@@ -47,13 +47,15 @@ class Dashboard extends Controller
         $fileName = $req->file('rawExcel')->getClientOriginalName();
         $file = $req->file('rawExcel')->storeAs('rawData', $fileName);
 
-        $process = Process::fromShellCommandline('php artisan import --file_name='.$fileName);
+        // $process = Process::fromShellCommandline('php artisan import --file_name="'.$fileName.'"');
+
+        $process = Process::fromShellCommandline('./bash/import "'.$fileName.'"');
         $process->setWorkingDirectory(base_path());
         $process->setTimeout(3600);
-        $process->run();
+        $process->start();
 
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
+        while ($process->isRunning()) {
+            // waiting for process to finish
         }
 
         $data = array(
