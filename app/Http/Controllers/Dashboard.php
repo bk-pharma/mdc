@@ -47,7 +47,7 @@ class Dashboard extends Controller
         $file = $req->file('rawExcel');
 
         $import = new RawDataImport($this->raw_data);
-        $this->excel->import($import, $file);
+        $this->excel->queueImport($import, $file);
 
         return response()->json(array('message' => 'done'));
     }
