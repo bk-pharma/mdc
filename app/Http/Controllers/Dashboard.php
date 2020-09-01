@@ -44,14 +44,6 @@ class Dashboard extends Controller
             ['rawExcel.required' => 'There is no file to upload.']
         );
 
-        if(ini_get('safe_mode'))
-        {
-            die('safe mode is on.');
-        }else
-        {
-            set_time_limit(0);
-        }
-
         $file = $req->file('rawExcel');
 
         $import = new RawDataImport($this->raw_data);
