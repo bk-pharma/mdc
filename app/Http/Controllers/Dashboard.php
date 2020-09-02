@@ -7,21 +7,24 @@ use Illuminate\Http\Request;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use App\Services\Contracts\ManualSanitationInterface;
 use Symfony\Component\Process\Process;
-// use Maatwebsite\Excel\Excel;
-// use App\Imports\RawDataImport;
+use Maatwebsite\Excel\Excel;
+use App\Imports\RawDataImport;
+use Illuminate\Support\Facades\Storage;
 
 class Dashboard extends Controller
 {
     private $raw_data;
     private $unsanitized_data;
-    // private $excel;
+    private $excel;
 
     function __construct(
         RawDataInterface $raw_data,
-        ManualSanitationInterface $unsanitized_data
+        ManualSanitationInterface $unsanitized_data,
+        Excel $excel
     ) {
         $this->raw_data = $raw_data;
         $this->unsanitized_data = $unsanitized_data;
+        $this->excel = $excel;
     }
 
     public function index()
@@ -36,8 +39,65 @@ class Dashboard extends Controller
 
     public function importNow(Request $req)
     {
-        // $file = $req->file('rawExcel');
-        // $this->excel->import(new RawDataImport(), $file);
+        $this->validate(
+            $req,
+            ['rawExcel' => 'required'],
+            ['rawExcel.required' => 'There is no file to upload.']
+        );
+
+        $fileName = $req->file('rawExcel')->getClientOriginalName();
+        $file = $req->file('rawExcel')->storeAs('rawData', $fileName);
+
+        $process = Process::fromShellCommandline("./bash/import.sh '".$fileName."'");
+        $process->setWorkingDirectory(base_path());
+        $process->setTimeout(3600);
+        $process->start();
+
+        while ($process->isRunning()) {
+            // waiting for process to finish
+        }
+
+        $data = array(
+            'message' => 'done.'
+        );
+
+        return response()->json($data);
+    }
+
+    public function importProgress(Request $req)
+    {
+        if($req->has('fileName'))
+        {
+            $fileName = $req->input('fileName');
+            $file = '/rawData/'.$fileName;
+            $exists = Storage::disk('local')->exists($file);
+
+            if($exists)
+            {
+                return response()->json(
+                    array(
+                    'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
+                    'file' => 1
+                    )
+                );
+            }else
+            {
+                return response()->json(
+                    array(
+                    'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
+                    'file' => 0
+                    )
+                );
+            }
+        }else
+        {
+            return response()->json(
+                array(
+                'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
+                'file' => 0
+                )
+            );
+        }
     }
 
     public function sanitation()
@@ -149,27 +209,24 @@ class Dashboard extends Controller
         }
 
         $data = [
-        'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
-        'totalSanitized' => $this->raw_data->getSanitizedCount()[0]->totalSanitized,
-        'totalAmount' => $this->raw_data->getSanitizedCount()[0]->totalAmount,
-        'sanitationProcess' => $processTotal,
+            'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
+            'totalSanitized' => $this->raw_data->getSanitizedCount()[0]->totalSanitized,
+            'totalAmount' => $this->raw_data->getSanitizedCount()[0]->totalAmount,
+            'sanitationProcess' => $processTotal,
         ];
 
         return response()->json($data);
     }
 
-    public function resetData()
+    public function getAllRawData()
     {
-        $this->raw_data->resetData();
-
         $data = [
-        'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
-        'totalSanitized' => $this->raw_data->getSanitizedCount()[0]->totalSanitized,
-        'totalAmount' => $this->raw_data->getSanitizedCount()[0]->totalAmount
+            'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData
         ];
 
         return response()->json($data);
     }
+
     public function manual()
     {
         return view('manual.manual');
