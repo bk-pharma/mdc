@@ -77,7 +77,7 @@
           <li class="nav-item">
 
             @if(Request::is('import'))
-              <a href="#" class="nav-link active">
+              <a href="{{ url('/import') }}" class="nav-link active">
             @else
               <a href="{{ url('/import') }}" class="nav-link ">
             @endif
@@ -86,7 +86,9 @@
                   Import
                 </p>
               </a>
+          </li>
 
+          <li class="nav-item">
             @if(Request::is('sanitation'))
               <a href="{{ url('/sanitation') }}" class="nav-link active">
             @else
