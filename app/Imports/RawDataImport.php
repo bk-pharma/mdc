@@ -86,55 +86,92 @@ class RawDataImport implements ToModel, WithHeadingRow, WithChunkReading, WithBa
         $product->prod_pertab = 0;
       }
 
+      $this->raw_data->add(
+        date("Y", $transactDate),
+        "Q".ceil(date("n", $transactDate)/3),
+        date("F", $transactDate),
+        '',
+        $tagging->mst_lbucode,
+        $tagging->mst_lburebate,
+        date('Y-m-d', $transactDate),
+        $row['branch_code'],
+        $tagging->mst_branchname,
+        $row['md_name'],
+        '',
+        $row['ptr'],
+        $row['address'],
+        $row['item_code'],
+        $product->prod_name,
+        round($row['qty'], 2),
+        round($this->getAmountPerPack($this->getAmountPerTab($row), $row, $product), 2),
+        round($row['amount'], 2),
+        $tagging->mst_district,
+        $tagging->mst_sarcode,
+        $tagging->mst_sarname,
+        $tagging->mst_samcode,
+        $tagging->mst_samname,
+        $tagging->mst_hospcode,
+        $tagging->mst_hospname,
+        $tagging->mst_hdmcode,
+        $tagging->mst_hdmname,
+        $tagging->mst_kasscode,
+        $tagging->mst_kassname,
+        $tagging->mst_kassmcode,
+        $tagging->mst_kassmname,
+        '',
+        '',
+        '',
+        $row['md_name']
+      );
 
-      return new RawDataImporter([
-        'raw_year' => date("Y", $transactDate),
-        'raw_quarter' => "Q".ceil(date("n", $transactDate)/3),
-        'raw_month' => date("F", $transactDate),
-        'raw_status' => '',
-        'raw_lbucode' => $tagging->mst_lbucode,
-        'raw_lburebate' => $tagging->mst_lburebate,
-        'raw_date' => date('Y-m-d', $transactDate),
-        'raw_branchcode' => $row['branch_code'],
-        'raw_branchname' => $tagging->mst_branchname,
-        'raw_doctor' => $row['md_name'],
-        'raw_corrected_name' => '',
-        'raw_license' => $row['ptr'],
-        'raw_address' => $row['address'],
-        'raw_productcode' => $row['item_code'],
-        'raw_productname' => $product->prod_name,
-        'raw_qtytab' => round($row['qty'], 2),
-        'raw_qtypack' => round($this->getAmountPerPack($this->getAmountPerTab($row), $row, $product), 2),
-        'raw_amount' => round($row['amount'], 2),
-        'raw_district' => $tagging->mst_district,
-        'raw_sarcode' => $tagging->mst_sarcode,
-        'raw_sarname' => $tagging->mst_sarname,
-        'raw_samcode' => $tagging->mst_samcode,
-        'raw_samname' => $tagging->mst_samname,
-        'raw_hospcode' => $tagging->mst_hospcode,
-        'raw_hospname' => $tagging->mst_hospname,
-        'raw_hdmcode' => $tagging->mst_hdmcode,
-        'raw_hdmname' => $tagging->mst_hdmname,
-        'raw_kasscode' => $tagging->mst_kasscode,
-        'raw_kassname' => $tagging->mst_kassname,
-        'raw_kassmcode' => $tagging->mst_kassmcode,
-        'raw_kassmname' => $tagging->mst_kassmname,
-        'raw_universe' => '',
-        'raw_mdcode' => '',
-        'sanitized_by' => '',
-        'orig_mdname' => $row['md_name']
-      ]);
+      // return new RawDataImporter([
+      //   'raw_year' => date("Y", $transactDate),
+      //   'raw_quarter' => "Q".ceil(date("n", $transactDate)/3),
+      //   'raw_month' => date("F", $transactDate),
+      //   'raw_status' => '',
+      //   'raw_lbucode' => $tagging->mst_lbucode,
+      //   'raw_lburebate' => $tagging->mst_lburebate,
+      //   'raw_date' => date('Y-m-d', $transactDate),
+      //   'raw_branchcode' => $row['branch_code'],
+      //   'raw_branchname' => $tagging->mst_branchname,
+      //   'raw_doctor' => $row['md_name'],
+      //   'raw_corrected_name' => '',
+      //   'raw_license' => $row['ptr'],
+      //   'raw_address' => $row['address'],
+      //   'raw_productcode' => $row['item_code'],
+      //   'raw_productname' => $product->prod_name,
+      //   'raw_qtytab' => round($row['qty'], 2),
+      //   'raw_qtypack' => round($this->getAmountPerPack($this->getAmountPerTab($row), $row, $product), 2),
+      //   'raw_amount' => round($row['amount'], 2),
+      //   'raw_district' => $tagging->mst_district,
+      //   'raw_sarcode' => $tagging->mst_sarcode,
+      //   'raw_sarname' => $tagging->mst_sarname,
+      //   'raw_samcode' => $tagging->mst_samcode,
+      //   'raw_samname' => $tagging->mst_samname,
+      //   'raw_hospcode' => $tagging->mst_hospcode,
+      //   'raw_hospname' => $tagging->mst_hospname,
+      //   'raw_hdmcode' => $tagging->mst_hdmcode,
+      //   'raw_hdmname' => $tagging->mst_hdmname,
+      //   'raw_kasscode' => $tagging->mst_kasscode,
+      //   'raw_kassname' => $tagging->mst_kassname,
+      //   'raw_kassmcode' => $tagging->mst_kassmcode,
+      //   'raw_kassmname' => $tagging->mst_kassmname,
+      //   'raw_universe' => '',
+      //   'raw_mdcode' => '',
+      //   'sanitized_by' => '',
+      //   'orig_mdname' => $row['md_name']
+      // ]);
 
   }
 
   public function chunkSize(): int
   {
-      return 1850;
+      return 10000;
   }
 
   public function batchSize(): int
   {
-      return 1850;
+      return 10000;
   }
 
   private function getAmountPerTab($rawData)
