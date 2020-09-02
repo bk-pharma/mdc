@@ -98,19 +98,24 @@ new Vue({
 
       setInterval(() =>
       {
-        this.getAllRawData();
+        this.importProgress(this.file.name);
       }, 6000);
   	},
-    getAllRawData: function()
+    importProgress: function(fileName)
     {
-      axios.get('raw-data/all')
+
+      let data = {
+        fileName: fileName
+      }
+
+      axios.post('import/progress', data)
       .then((response) =>
       {
         let resp = response.data;
 
         this.totalRaw = resp.totalRaw;
 
-        if(this.isImporting)
+        if(resp.file > 0)
         {
           this.endTime = new Date().getTime();
           this.runTime = this.convertToString(this.endTime - this.startTime);
@@ -118,6 +123,10 @@ new Vue({
         {
           if(this.totalRaw)
           {
+            this.status = 'Importing done.';
+            this.browseBtn = false;
+            this.uploadBtn = false;
+            this.isImporting = false;
             this.runTime = this.convertToString(this.endTime - this.startTime);
           }else
           {

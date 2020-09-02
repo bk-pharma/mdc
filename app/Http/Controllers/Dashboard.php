@@ -9,6 +9,7 @@ use App\Services\Contracts\ManualSanitationInterface;
 use Symfony\Component\Process\Process;
 use Maatwebsite\Excel\Excel;
 use App\Imports\RawDataImport;
+use Illuminate\Support\Facades\Storage;
 
 class Dashboard extends Controller
 {
@@ -47,9 +48,7 @@ class Dashboard extends Controller
         $fileName = $req->file('rawExcel')->getClientOriginalName();
         $file = $req->file('rawExcel')->storeAs('rawData', $fileName);
 
-        // $process = Process::fromShellCommandline('php artisan import --file_name="'.$fileName.'"');
-
-        $process = Process::fromShellCommandline('./bash/import "'.$fileName.'"');
+        $process = Process::fromShellCommandline("./bash/import.sh '".$fileName."'");
         $process->setWorkingDirectory(base_path());
         $process->setTimeout(3600);
         $process->start();
@@ -65,6 +64,41 @@ class Dashboard extends Controller
         return response()->json($data);
     }
 
+    public function importProgress(Request $req)
+    {
+        if($req->has('fileName'))
+        {
+            $fileName = $req->input('fileName');
+            $file = '/rawData/'.$fileName;
+            $exists = Storage::disk('local')->exists($file);
+
+            if($exists)
+            {
+                return response()->json(
+                    array(
+                    'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
+                    'file' => 1
+                    )
+                );
+            }else
+            {
+                return response()->json(
+                    array(
+                    'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
+                    'file' => 0
+                    )
+                );
+            }
+        }else
+        {
+            return response()->json(
+                array(
+                'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
+                'file' => 0
+                )
+            );
+        }
+    }
 
     public function sanitation()
     {

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-php artisan import --file_name=$1
+php artisan import --file_name="$1"

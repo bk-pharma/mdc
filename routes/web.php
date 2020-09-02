@@ -30,6 +30,7 @@ Route::prefix('/raw-data')->group(function () {
 Route::prefix('/import')->group(function () {
     Route::get('/', 'Dashboard@import');
     Route::post('/start', 'Dashboard@importNow');
+    Route::post('/progress','Dashboard@importProgress');
 });
 
 Route::prefix('/sanitation')->group(function () {

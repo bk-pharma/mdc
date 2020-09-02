@@ -6,6 +6,7 @@ use App\Services\Contracts\RawDataInterface;
 use App\Imports\RawDataImport;
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Excel;
+use Illuminate\Support\Facades\Storage;
 
 class ImportConsole extends Command
 {
@@ -27,8 +28,11 @@ class ImportConsole extends Command
     {
     	$fileName = $this->option('file_name');
 
-        $this->output->title('Starting import');
+
+        // $this->output->title('Starting import');
        	$this->excel->import(new RawDataImport($this->raw_data), storage_path('app/uploads/rawData/'.$fileName));
-        $this->output->success('Import successful');
+        unlink(storage_path('app/uploads/rawData/'.$fileName));
+        // $this->output->success('Import successful');
+
     }
 }
