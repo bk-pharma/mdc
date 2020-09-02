@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 Interface RawDataInterface
 {
+	public function add($dataArr);
+
 	public function getRawData($rowStart, $rowCount);
 
 	public function getAllRawData();
