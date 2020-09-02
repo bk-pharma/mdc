@@ -475,9 +475,10 @@ class SanitationConsole extends Command
                     }
                 }
             }
+        }else
+        {
+            $this->updateFormatName($md, $sanitizedName);
         }
-
-        $this->updateFormatName($md, $sanitizedName);
     }
 
 
