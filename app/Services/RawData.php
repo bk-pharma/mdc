@@ -9,82 +9,8 @@ use Illuminate\Http\Request;
 class RawData implements RawDataInterface
 {
 
-    public function add(
-        $raw_year,
-        $raw_quarter,
-        $raw_month,
-        $raw_status,
-        $raw_lbucode,
-        $raw_lburebate,
-        $raw_date,
-        $raw_branchcode,
-        $raw_branchname,
-        $raw_doctor,
-        $raw_corrected_name,
-        $raw_license,
-        $raw_address,
-        $raw_productcode,
-        $raw_productname,
-        $raw_qtytab,
-        $raw_qtypack,
-        $raw_amount,
-        $raw_district,
-        $raw_sarcode,
-        $raw_sarname,
-        $raw_samcode,
-        $raw_samname,
-        $raw_hospcode,
-        $raw_hospname,
-        $raw_hdmcode,
-        $raw_hdmname,
-        $raw_kasscode,
-        $raw_kassname,
-        $raw_kassmcode,
-        $raw_kassmname,
-        $raw_universe,
-        $raw_mdcode,
-        $sanitized_by,
-        $orig_mdname
-    ) {
-
-        $data = array(
-            'raw_year' => $raw_year,
-            'raw_quarter' => $raw_quarter,
-            'raw_month' => $raw_month,
-            'raw_status' => $raw_status,
-            'raw_lbucode' => $raw_lbucode,
-            'raw_lburebate' => $raw_lburebate,
-            'raw_date' => $raw_date,
-            'raw_branchcode' => $raw_branchcode,
-            'raw_branchname' => $raw_branchname,
-            'raw_doctor' => $raw_doctor,
-            'raw_corrected_name' => $raw_corrected_name,
-            'raw_license' => $raw_license,
-            'raw_address' => $raw_address,
-            'raw_productcode' => $raw_productcode,
-            'raw_productname' => $raw_productname,
-            'raw_qtytab' => $raw_qtytab,
-            'raw_qtypack' => $raw_qtypack,
-            'raw_amount' => $raw_amount,
-            'raw_district' => $raw_district,
-            'raw_sarcode' => $raw_sarcode,
-            'raw_sarname' => $raw_sarname,
-            'raw_samcode' => $raw_samcode,
-            'raw_samname' => $raw_samname,
-            'raw_hospcode' => $raw_hospcode,
-            'raw_hospname' => $raw_hospname,
-            'raw_hdmcode' => $raw_hdmcode,
-            'raw_hdmname' => $raw_hdmname,
-            'raw_kasscode' => $raw_kasscode,
-            'raw_kassname' => $raw_kassname,
-            'raw_kassmcode' => $raw_kassmcode,
-            'raw_kassmname' => $raw_kassmname,
-            'raw_universe' => $raw_universe,
-            'raw_mdcode' => $raw_mdcode,
-            'sanitized_by' => $sanitized_by,
-            'orig_mdname' => $orig_mdname
-        );
-
+    public function add($dataArr)
+    {
         DB::insert('INSERT INTO sanitation_result_new (
             raw_year,
             raw_quarter,
@@ -157,7 +83,7 @@ class RawData implements RawDataInterface
             :raw_mdcode,
             :sanitized_by,
             :orig_mdname
-        )', $data);
+        )', $dataArr);
     }
 
     public function getRawData($rowStart, $rowCount)
