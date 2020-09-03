@@ -7,12 +7,13 @@ use App\models\RawDataImporter;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use App\Services\Contracts\RawDataInterface;
 use Illuminate\Support\Facades\Validator;
 
-class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChunkReading
+class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChunkReading, WithStartRow
 {
   private $raw_data;
 
@@ -127,12 +128,17 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
 
   public function batchSize(): int
   {
-      return 100000;
+      return 100;
   }
 
   public function chunkSize(): int
   {
-      return 100000;
+      return 100;
+  }
+
+  public function startRow(): int
+  {
+      return 101;
   }
 
   private function getAmountPerTab($rawData)
