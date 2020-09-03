@@ -54,7 +54,7 @@ class ImportConsole extends Command
 
         $filePath = storage_path("app/uploads/rawData/".$fileName);
 
-        $users = (new FastExcel)->import($filePath, function ($row) {
+        $users = (new FastExcel)->sheet(1)->import($filePath, function ($row) {
 
             $transactDate = $row['transact_date'];
 
@@ -132,10 +132,7 @@ class ImportConsole extends Command
               'orig_mdname' => trim($row['md_name'])
             ]);
         });
-
-
         unlink(storage_path('app/uploads/rawData/'.$fileName));
         $this->output->success('Import successful');
-
     }
 }
