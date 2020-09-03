@@ -13,16 +13,13 @@ class Dashboard extends Controller
 {
     private $raw_data;
     private $unsanitized_data;
-    private $excel;
 
     function __construct(
         RawDataInterface $raw_data,
-        ManualSanitationInterface $unsanitized_data,
-        Excel $excel
+        ManualSanitationInterface $unsanitized_data
     ) {
         $this->raw_data = $raw_data;
         $this->unsanitized_data = $unsanitized_data;
-        $this->excel = $excel;
     }
 
     public function index()
