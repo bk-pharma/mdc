@@ -7,24 +7,19 @@ use Illuminate\Http\Request;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use App\Services\Contracts\ManualSanitationInterface;
 use Symfony\Component\Process\Process;
-use Maatwebsite\Excel\Excel;
-use App\Imports\RawDataImport;
 use Illuminate\Support\Facades\Storage;
 
 class Dashboard extends Controller
 {
     private $raw_data;
     private $unsanitized_data;
-    private $excel;
 
     function __construct(
         RawDataInterface $raw_data,
-        ManualSanitationInterface $unsanitized_data,
-        Excel $excel
+        ManualSanitationInterface $unsanitized_data
     ) {
         $this->raw_data = $raw_data;
         $this->unsanitized_data = $unsanitized_data;
-        $this->excel = $excel;
     }
 
     public function index()
@@ -69,15 +64,26 @@ class Dashboard extends Controller
         if($req->has('fileName'))
         {
             $fileName = $req->input('fileName');
+
             $file = '/rawData/'.$fileName;
             $exists = Storage::disk('local')->exists($file);
 
             if($exists)
             {
+                $process = trim($this->raw_data->isProcessRunning('import'));
+                $processTotal = 0;
+
+                if (is_numeric($process)) {
+                    $processTotal = ((int) $process - 2);
+                }
+
+                if($processTotal === 0) unlink(storage_path('app/uploads/rawData/'.$fileName));
+
                 return response()->json(
                     array(
                     'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
-                    'file' => 1
+                    'file' => 1,
+                    'processTotal' => $processTotal
                     )
                 );
             }else
@@ -85,7 +91,8 @@ class Dashboard extends Controller
                 return response()->json(
                     array(
                     'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
-                    'file' => 0
+                    'file' => 0,
+                    'processTotal' => 0
                     )
                 );
             }
@@ -94,7 +101,8 @@ class Dashboard extends Controller
             return response()->json(
                 array(
                 'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
-                'file' => 0
+                'file' => 0,
+                'processTotal' => $processTotal
                 )
             );
         }

@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Services\Contracts\RawDataInterface;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class RawData implements RawDataInterface
 {
@@ -172,5 +174,19 @@ class RawData implements RawDataInterface
             FROM mst_productdb
             WHERE prod_code = :productCode
         ", $data);
+    }
+
+    public function isProcessRunning($process)
+    {
+        $process = Process::fromShellCommandline('ps aux --no-heading | grep '.$process.' | wc -l');
+        $process->setWorkingDirectory(base_path());
+
+        try {
+            $process->mustRun();
+
+            return $process->getOutput();
+        } catch (ProcessFailedException $exception) {
+            echo $exception->getMessage();
+        }
     }
 }

@@ -21,4 +21,6 @@ Interface RawDataInterface
 	public function getImportTagging($branchCode);
 
 	public function getProductName($productCode);
+
+	public function isProcessRunning($process);
 }

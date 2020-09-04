@@ -17,6 +17,7 @@
         "laravel/ui": "^2.1",
         "maatwebsite/excel": "^3.1",
         "matt-allan/laravel-code-style": "^0.5.1",
+        "rap2hpoutre/fast-excel": "^2.0",
         "symfony/finder": "^5.1",
         "symfony/process": "^5.1",
         "yajra/laravel-datatables-oracle": "^9.10"
