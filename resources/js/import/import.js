@@ -44,7 +44,7 @@ new Vue({
   	},
   	submitFile: function()
   	{
-      this.status = 'Importing....';
+      this.status = 'Uploading excel to server.';
       this.browseBtn = true;
       this.uploadBtn = true;
       this.isImporting = true;
@@ -68,7 +68,7 @@ new Vue({
        {
           let resp = response.data;
           console.log(resp);
-          this.status = 'Importing done.';
+          this.status = 'Excel uploaded to server.';
           this.browseBtn = false;
           this.uploadBtn = false;
           this.isImporting = false;
@@ -117,6 +117,10 @@ new Vue({
 
         if(resp.file > 0)
         {
+          this.status = 'Importing..';
+          this.browseBtn = true;
+          this.uploadBtn = true;
+          this.isImporting = true;
           this.endTime = new Date().getTime();
           this.runTime = this.convertToString(this.endTime - this.startTime);
         }else

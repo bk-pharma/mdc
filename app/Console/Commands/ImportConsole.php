@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ImportConsole extends Command
 {
-    protected $signature = 'import {--file_name=}';
+    protected $signature = 'import {--file_name=} {--start=} {--limit=}';
 
     protected $description = 'Laravel Excel importer';
 
@@ -25,10 +25,11 @@ class ImportConsole extends Command
     public function handle()
     {
     	$fileName = $this->option('file_name');
+        $start = $this->option('start');
+        $limit = $this->option('limit');
 
         $this->output->title('Starting import');
-       	Excel::import(new RawDataImport($this->raw_data), storage_path('app/uploads/rawData/'.$fileName));
-        unlink(storage_path('app/uploads/rawData/'.$fileName));
+       	Excel::import(new RawDataImport($this->raw_data, $start, $limit), storage_path('app/uploads/rawData/'.$fileName));
         $this->output->success('Import successful');
     }
 }
