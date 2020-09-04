@@ -7,18 +7,25 @@ use App\models\RawDataImporter;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
+use Maatwebsite\Excel\Concerns\WithStartRow;
+use Maatwebsite\Excel\Concerns\WithLimit;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use App\Services\Contracts\RawDataInterface;
 use Illuminate\Support\Facades\Validator;
 
-class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChunkReading
+
+class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChunkReading, WithStartRow, WithLimit
 {
   private $raw_data;
+  private $start;
+  private $limit;
 
-  public function __construct(RawDataInterface $raw_data)
+  public function __construct(RawDataInterface $raw_data, $start, $limit)
   {
     $this->raw_data = $raw_data;
+    $this->start = $start;
+    $this->limit = $limit;
   }
 
   public function model(array $row)
@@ -50,7 +57,7 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
 
     $transactDate = Date::excelToTimestamp($row['transact_date']);
 
-    if($this->raw_data->getImportTagging($row['branch_code']) > 0)
+    if(count($this->raw_data->getImportTagging($row['branch_code'])) > 0)
     {
       $tagging = $this->raw_data->getImportTagging($row['branch_code'])[0];
     }else
@@ -59,7 +66,7 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
       $tagging->mst_branchcode = '';
       $tagging->mst_lbucode = '';
       $tagging->mst_lburebate = '';
-      $tagging->mst_branchname;
+      $tagging->mst_branchname = '';
       $tagging->mst_district = '';
       $tagging->mst_sarcode = '';
       $tagging->mst_sarname = '';
@@ -99,7 +106,7 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
       'raw_doctor' => $row['md_name'],
       'raw_corrected_name' => '',
       'raw_license' => $row['ptr'],
-      'raw_address' => $row['address'],
+      'raw_address' => trim($row['address']),
       'raw_productcode' => $row['item_code'],
       'raw_productname' => $product->prod_name,
       'raw_qtytab' => round($row['qty'], 2),
@@ -127,12 +134,22 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
 
   public function batchSize(): int
   {
-      return 100000;
+      return 10000;
   }
 
   public function chunkSize(): int
   {
-      return 100000;
+      return 10000;
+  }
+
+  public function startRow(): int
+  {
+      return $this->start;
+  }
+
+  public function limit(): int
+  {
+    return $this->limit;
   }
 
   private function getAmountPerTab($rawData)
@@ -150,7 +167,13 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
   {
     if($amountPerTab <= ($product->prod_pertab + 1))
     {
-      return $rawData['qty'] / $product->prod_packsize;
+      if($product->prod_packsize > 0)
+      {
+        return $rawData['qty'] / $product->prod_packsize;
+      }else
+      {
+        return $rawData['qty'] / 1;
+      }
     }else
     {
       return $rawData['qty'];
