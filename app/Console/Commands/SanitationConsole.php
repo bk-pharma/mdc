@@ -494,7 +494,7 @@ class SanitationConsole extends Command
 
                 $this->formattedNameTotal += 1;
 
-                $this->name_format->formatName($md->raw_id, $sanitizedName, $this->formatName($md, $sanitizedName), 'system-formatter');
+                $this->name_format->formatName($md->raw_id, $this->formatName($md, $sanitizedName), $this->formatName($md, $sanitizedName), 'system-formatter');
             }
         }
     }
