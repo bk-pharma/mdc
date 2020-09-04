@@ -158,6 +158,11 @@ class Dashboard extends Controller
             $process = Process::fromShellCommandline('./bash/sanitize-70k.sh');
         }
 
+        if($totalUnsanitize > 700000 && $totalUnsanitize <= 800000)
+        {
+            $process = Process::fromShellCommandline('./bash/sanitize-80k.sh');
+        }
+
         if($totalUnsanitize > 800000 && $totalUnsanitize <= 900000)
         {
             $process = Process::fromShellCommandline('./bash/sanitize-80k.sh');
