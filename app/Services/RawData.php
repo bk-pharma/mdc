@@ -14,6 +14,7 @@ class RawData implements RawDataInterface
     public function add($dataArr)
     {
         DB::insert('INSERT INTO sanitation_result_new (
+            raw_id,
             raw_year,
             raw_quarter,
             raw_month,
@@ -50,6 +51,7 @@ class RawData implements RawDataInterface
             sanitized_by,
             orig_mdname
         ) VALUES (
+            :raw_id,
             :raw_year,
             :raw_quarter,
             :raw_month,
