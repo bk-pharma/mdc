@@ -6,17 +6,20 @@ use Illuminate\Support\Facades\DB;
 use App\models\RawDataImporter;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\RemembersRowNumber;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithLimit;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use App\Services\Contracts\RawDataInterface;
-use Illuminate\Support\Facades\Validator;
 
 
 class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChunkReading, WithStartRow, WithLimit
 {
+
+  use RemembersRowNumber;
+
   private $raw_data;
   private $start;
   private $limit;
@@ -30,31 +33,6 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
 
   public function model(array $row)
   {
-     Validator::make($row,
-      [
-        'branch_code' => 'required',
-        'transact_date' => 'required',
-        'md_name' => 'required',
-        'ptr' => 'required',
-        'address' => 'required',
-        'item_code' => 'required',
-        'item_name' => 'required',
-        'qty' => 'required',
-        'amount' => 'required'
-      ],
-      [
-        'branch_code.required' => 'branch_code is missing.',
-        'transact_date.required' => 'transact_date is missing.',
-        'md_name.required' => 'md_name is missing.',
-        'ptr.required' => 'ptr is missing.',
-        'address.required' => 'address is missing.',
-        'item_code.required' => 'Item code is missing.',
-        'item_name.required' => 'Item name is missing.',
-        'qty.required' => 'qty is missing.',
-        'amount.required' => 'amount is missing.'
-      ]
-     )->validate();
-
     $transactDate = Date::excelToTimestamp($row['transact_date']);
 
     if(count($this->raw_data->getImportTagging($row['branch_code'])) > 0)
@@ -94,6 +72,7 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
     }
 
     $this->raw_data->add([
+      'raw_id' => $this->getRowNumber(),
       'raw_year' => date("Y", $transactDate),
       'raw_quarter' => "Q".ceil(date("n", $transactDate)/3),
       'raw_month' => date("F", $transactDate),

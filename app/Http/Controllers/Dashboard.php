@@ -8,6 +8,8 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 use App\Services\Contracts\ManualSanitationInterface;
 use Symfony\Component\Process\Process;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\HeadingRowImport;
+use Illuminate\Support\Facades\Validator;
 
 class Dashboard extends Controller
 {
@@ -34,11 +36,47 @@ class Dashboard extends Controller
 
     public function importNow(Request $req)
     {
-        $this->validate(
-            $req,
-            ['rawExcel' => 'required'],
-            ['rawExcel.required' => 'There is no file to upload.']
-        );
+        $headings = (new HeadingRowImport)->toArray($req->file('rawExcel'));
+
+        $excelHeader = [
+            'branch_code' => $headings[0][0][0],
+            'transact_date' => $headings[0][0][1],
+            'md_name' => $headings[0][0][2],
+            'ptr' => $headings[0][0][3],
+            'address' => $headings[0][0][4],
+            'item_code' => $headings[0][0][5],
+            'item_name' => $headings[0][0][6],
+            'qty' => $headings[0][0][7],
+            'amount' => (isset($headings[0][0][8])) ? $headings[0][0][8] : null
+        ];
+
+        $validator = Validator::make($excelHeader,
+            [
+                'branch_code' => 'required',
+                'transact_date' => 'required',
+                'md_name' => 'required',
+                'ptr' => 'required',
+                'address' => 'required',
+                'item_code' => 'required',
+                'item_name' => 'required',
+                'qty' => 'required',
+                'amount' => 'required'
+            ],
+            [
+                'branch_code.required' => 'branch_code is missing at A1',
+                'transact_date.required' => 'transact_date is missing at B1',
+                'md_name.required' => 'md_name is missing at C1',
+                'ptr.required' => 'ptr is missing at D1',
+                'address.required' => 'address is missing at E1',
+                'item_code.required' => 'item_code is missing at F1',
+                'item_name.required' => 'item_name is missing at G1',
+                'qty.required' => 'qty is missing at H1',
+                'amount.required' => 'amount is missing at I1'
+
+            ]
+        )->validate();
+
+        $this->validate($req,['rawExcel' => 'required'],['rawExcel.required' => 'There is no file to upload.']);
 
         $fileName = $req->file('rawExcel')->getClientOriginalName();
         $file = $req->file('rawExcel')->storeAs('rawData', $fileName);
