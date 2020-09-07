@@ -6,17 +6,20 @@ use Illuminate\Support\Facades\DB;
 use App\models\RawDataImporter;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\RemembersRowNumber;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithLimit;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use App\Services\Contracts\RawDataInterface;
-use Illuminate\Support\Facades\Validator;
 
 
 class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithChunkReading, WithStartRow, WithLimit
 {
+
+  use RemembersRowNumber;
+
   private $raw_data;
   private $start;
   private $limit;
@@ -94,6 +97,7 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
     }
 
     $this->raw_data->add([
+      'raw_id' => $this->getRowNumber(),
       'raw_year' => date("Y", $transactDate),
       'raw_quarter' => "Q".ceil(date("n", $transactDate)/3),
       'raw_month' => date("F", $transactDate),
