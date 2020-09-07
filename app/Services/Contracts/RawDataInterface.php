@@ -14,7 +14,9 @@ Interface RawDataInterface
 
 	public function getSanitizedCount();
 
-	 public function getAllUnsanitize();
+	public function getRawDataById($id);
+
+	public function getAllUnsanitize();
 
 	public function setAsUnidentified($rawId, $sanitizedBy);
 

@@ -22,7 +22,6 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
 
   private $raw_data;
   private $start;
-  private $limit;
 
   public function __construct(RawDataInterface $raw_data, $start, $limit)
   {
@@ -33,61 +32,55 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
 
   public function model(array $row)
   {
-     // Validator::make($row,
-     //  [
-     //    'branch_code' => 'required',
-     //    'transact_date' => 'required',
-     //    'md_name' => 'required',
-     //    'ptr' => 'required',
-     //    'address' => 'required',
-     //    'item_code' => 'required',
-     //    'item_name' => 'required',
-     //    'qty' => 'required',
-     //    'amount' => 'required'
-     //  ],
-     //  [
-     //    'branch_code.required' => 'branch_code is missing.',
-     //    'transact_date.required' => 'transact_date is missing.',
-     //    'md_name.required' => 'md_name is missing.',
-     //    'ptr.required' => 'ptr is missing.',
-     //    'address.required' => 'address is missing.',
-     //    'item_code.required' => 'Item code is missing.',
-     //    'item_name.required' => 'Item name is missing.',
-     //    'qty.required' => 'qty is missing.',
-     //    'amount.required' => 'amount is missing.'
-     //  ]
-     // )->validate();
+
+    if(!isset($row['branch_code']))
+    {
+      return null;
+    }
+
+    if(count($this->raw_data->getRawDataById($this->getRowNumber())) > 0 )
+    {
+      return null;
+    }
+
+    $branchCode = (isset($row['branch_code'])) ? $row['branch_code'] : 0;
+    $mdName = (isset($row['md_name'])) ? $row['md_name'] : 'null';
+    $ptr = (isset($row['ptr'])) ? $row['ptr'] : 0;
+    $address = (isset($row['address'])) ? $row['address'] : 'null';
+    $qty = (isset($row['qty'])) ? $row['qty'] : 0;
+    $amount = (isset($row['amount'])) ? $row['amount'] : 0;
+    $itemCode = (isset($row['item_code'])) ? $row['item_code'] : 0;
 
     $transactDate = Date::excelToTimestamp($row['transact_date']);
 
-    if(count($this->raw_data->getImportTagging($row['branch_code'])) > 0)
+    if(count($this->raw_data->getImportTagging($branchCode)) > 0)
     {
-      $tagging = $this->raw_data->getImportTagging($row['branch_code'])[0];
+      $tagging = $this->raw_data->getImportTagging($branchCode)[0];
     }else
     {
       $tagging = (object)array();
-      $tagging->mst_branchcode = '';
-      $tagging->mst_lbucode = '';
-      $tagging->mst_lburebate = '';
-      $tagging->mst_branchname = '';
-      $tagging->mst_district = '';
-      $tagging->mst_sarcode = '';
-      $tagging->mst_sarname = '';
-      $tagging->mst_samcode = '';
-      $tagging->mst_samname = '';
-      $tagging->mst_hospcode = '';
-      $tagging->mst_hospname = '';
-      $tagging->mst_hdmcode = '';
-      $tagging->mst_hdmname = '';
-      $tagging->mst_kasscode = '';
-      $tagging->mst_kassname = '';
-      $tagging->mst_kassmcode = '';
-      $tagging->mst_kassmname = '';
+      $tagging->mst_branchcode = '0';
+      $tagging->mst_lbucode = '0';
+      $tagging->mst_lburebate = '0';
+      $tagging->mst_branchname = 'null';
+      $tagging->mst_district = 'null';
+      $tagging->mst_sarcode = '0';
+      $tagging->mst_sarname = 'null';
+      $tagging->mst_samcode = '0';
+      $tagging->mst_samname = 'null';
+      $tagging->mst_hospcode = '0';
+      $tagging->mst_hospname = 'null';
+      $tagging->mst_hdmcode = '0';
+      $tagging->mst_hdmname = 'null';
+      $tagging->mst_kasscode = '0';
+      $tagging->mst_kassname = 'null';
+      $tagging->mst_kassmcode = '0';
+      $tagging->mst_kassmname = 'null';
     }
 
-    if(count($this->raw_data->getProductName($row['item_code'])) > 0)
+    if(count($this->raw_data->getProductName($itemCode)) > 0)
     {
-      $product = $this->raw_data->getProductName($row['item_code'])[0];
+      $product = $this->raw_data->getProductName($itemCode)[0];
     }else
     {
       $product = (object)array();
@@ -105,17 +98,17 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
       'raw_lbucode' => $tagging->mst_lbucode,
       'raw_lburebate' => $tagging->mst_lburebate,
       'raw_date' => date('Y-m-d', $transactDate),
-      'raw_branchcode' => $row['branch_code'],
+      'raw_branchcode' => $branchCode,
       'raw_branchname' => $tagging->mst_branchname,
-      'raw_doctor' => $row['md_name'],
+      'raw_doctor' => $mdName,
       'raw_corrected_name' => '',
-      'raw_license' => $row['ptr'],
-      'raw_address' => trim($row['address']),
-      'raw_productcode' => $row['item_code'],
+      'raw_license' => $ptr,
+      'raw_address' => trim($address),
+      'raw_productcode' => $itemCode,
       'raw_productname' => $product->prod_name,
-      'raw_qtytab' => round($row['qty'], 2),
+      'raw_qtytab' => round($qty, 2),
       'raw_qtypack' => round($this->getAmountPerPack($this->getAmountPerTab($row), $row, $product), 2),
-      'raw_amount' => round($row['amount'], 2),
+      'raw_amount' => round($amount, 2),
       'raw_district' => $tagging->mst_district,
       'raw_sarcode' => $tagging->mst_sarcode,
       'raw_sarname' => $tagging->mst_sarname,
@@ -132,18 +125,19 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
       'raw_universe' => '',
       'raw_mdcode' => '',
       'sanitized_by' => '',
-      'orig_mdname' => $row['md_name']
+      'orig_mdname' => $mdName
     ]);
+
   }
 
   public function batchSize(): int
   {
-      return 10000;
+      return 50000;
   }
 
   public function chunkSize(): int
   {
-      return 10000;
+      return 50000;
   }
 
   public function startRow(): int
@@ -153,7 +147,7 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
 
   public function limit(): int
   {
-    return $this->limit;
+      return $this->limit;
   }
 
   private function getAmountPerTab($rawData)

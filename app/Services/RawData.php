@@ -117,6 +117,15 @@ class RawData implements RawDataInterface
         ");
     }
 
+    public function getRawDataById($id)
+    {
+        return DB::select("
+            SELECT *
+            FROM sanitation_result_new
+            WHERE raw_id = :id
+        ",['id' => $id]);
+    }
+
     public function getAllUnsanitize()
     {
         return DB::select("
