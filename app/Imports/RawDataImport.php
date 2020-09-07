@@ -30,30 +30,30 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
 
   public function model(array $row)
   {
-     Validator::make($row,
-      [
-        'branch_code' => 'required',
-        'transact_date' => 'required',
-        'md_name' => 'required',
-        'ptr' => 'required',
-        'address' => 'required',
-        'item_code' => 'required',
-        'item_name' => 'required',
-        'qty' => 'required',
-        'amount' => 'required'
-      ],
-      [
-        'branch_code.required' => 'branch_code is missing.',
-        'transact_date.required' => 'transact_date is missing.',
-        'md_name.required' => 'md_name is missing.',
-        'ptr.required' => 'ptr is missing.',
-        'address.required' => 'address is missing.',
-        'item_code.required' => 'Item code is missing.',
-        'item_name.required' => 'Item name is missing.',
-        'qty.required' => 'qty is missing.',
-        'amount.required' => 'amount is missing.'
-      ]
-     )->validate();
+     // Validator::make($row,
+     //  [
+     //    'branch_code' => 'required',
+     //    'transact_date' => 'required',
+     //    'md_name' => 'required',
+     //    'ptr' => 'required',
+     //    'address' => 'required',
+     //    'item_code' => 'required',
+     //    'item_name' => 'required',
+     //    'qty' => 'required',
+     //    'amount' => 'required'
+     //  ],
+     //  [
+     //    'branch_code.required' => 'branch_code is missing.',
+     //    'transact_date.required' => 'transact_date is missing.',
+     //    'md_name.required' => 'md_name is missing.',
+     //    'ptr.required' => 'ptr is missing.',
+     //    'address.required' => 'address is missing.',
+     //    'item_code.required' => 'Item code is missing.',
+     //    'item_name.required' => 'Item name is missing.',
+     //    'qty.required' => 'qty is missing.',
+     //    'amount.required' => 'amount is missing.'
+     //  ]
+     // )->validate();
 
     $transactDate = Date::excelToTimestamp($row['transact_date']);
 
