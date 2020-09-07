@@ -238,7 +238,7 @@ class Dashboard extends Controller
 
     private function isSanitationProcessRunning()
     {
-        $process = Process::fromShellCommandline('ps aux --no-heading | grep artisan | wc -l');
+        $process = Process::fromShellCommandline('ps aux --no-heading | grep sanitize | wc -l');
         $process->setWorkingDirectory(base_path());
 
         try {
