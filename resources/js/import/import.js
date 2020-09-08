@@ -114,6 +114,7 @@ new Vue({
         let resp = response.data;
 
         this.totalRaw = resp.totalRaw;
+        this.importErrors = resp.errors;
 
         if(resp.file > 0)
         {
