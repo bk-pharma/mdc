@@ -36,6 +36,8 @@ class Dashboard extends Controller
 
     public function importNow(Request $req)
     {
+        $this->raw_data->deleteImportErrors();
+
         $headings = (new HeadingRowImport)->toArray($req->file('rawExcel'));
 
         $excelHeader = [
@@ -121,16 +123,19 @@ class Dashboard extends Controller
                     array(
                     'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
                     'file' => 1,
-                    'processTotal' => $processTotal
+                    'processTotal' => $processTotal,
+                    'errors' => $this->raw_data->getImportErrors($fileName)
                     )
                 );
+
             }else
             {
                 return response()->json(
                     array(
                     'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
                     'file' => 0,
-                    'processTotal' => 0
+                    'processTotal' => 0,
+                    'errors' => $this->raw_data->getImportErrors($fileName)
                     )
                 );
             }
@@ -140,7 +145,8 @@ class Dashboard extends Controller
                 array(
                 'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
                 'file' => 0,
-                'processTotal' => $processTotal
+                'processTotal' => $processTotal,
+                'errors' => $this->raw_data->getImportErrors($fileName)
                 )
             );
         }

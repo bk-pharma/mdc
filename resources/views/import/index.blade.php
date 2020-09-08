@@ -30,9 +30,14 @@
 			Total imported: <span id="totalImported"> @{{ totalRaw | numberFormat }} </span>
 		</span>
 	</div>
-	<div class="row">
+	<div class="row mt-1 mb-1">
 		<span id="runtime" style="font-size: 20px;">
 			Runtime: @{{ runTime }}
+		</span>
+	</div>
+	<div class="row" v-for="error in importErrors" :key="error.id">
+		<span id="importErrors" style="font-size: 14px;">
+			<span style="color:#FF0000;">Row#</span>: @{{ error.row_id }} , <span style="color:#FF0000;">Error</span>: @{{ error.error }}
 		</span>
 	</div>
 </div>
