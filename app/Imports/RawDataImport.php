@@ -22,71 +22,78 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
 
   private $raw_data;
   private $start;
+  private $limit;
+  private $fileName;
 
-  public function __construct(RawDataInterface $raw_data, $start, $limit)
+  public function __construct(RawDataInterface $raw_data, $fileName, $start, $limit)
   {
     $this->raw_data = $raw_data;
     $this->start = $start;
     $this->limit = $limit;
+    $this->fileName = $fileName;
   }
 
   public function model(array $row)
   {
 
-    if(!isset($row['branch_code']))
+    //ending row
+    if(!isset($row['branch_code']) && !isset($row['transact_date']) && !isset($row['md_name']))
     {
       return null;
     }
 
+    //if row is already exist
     if(count($this->raw_data->getRawDataById($this->getRowNumber())) > 0 )
     {
       return null;
     }
 
-    $branchCode = (isset($row['branch_code'])) ? $row['branch_code'] : 0;
+    //if has no branch_code
+    if(!isset($row['branch_code']))
+    {
+      $this->raw_data->addImportError($this->getRowNumber(), $this->fileName, 'branch_code has no value. skipping row.');
+      return null;
+    }else
+    {
+      $branchCode = $row['branch_code'];
+    }
+
+    //if has no item_code
+    if(!isset($row['item_code']))
+    {
+      $this->raw_data->addImportError($this->getRowNumber(), $this->fileName, 'item_code has no value. skipping row.');
+      return null;
+    }else
+    {
+      $itemCode = $row['item_code'];
+    }
+
+
     $mdName = (isset($row['md_name'])) ? $row['md_name'] : 'null';
     $ptr = (isset($row['ptr'])) ? $row['ptr'] : 0;
     $address = (isset($row['address'])) ? $row['address'] : 'null';
     $qty = (isset($row['qty'])) ? $row['qty'] : 0;
     $amount = (isset($row['amount'])) ? $row['amount'] : 0;
-    $itemCode = (isset($row['item_code'])) ? $row['item_code'] : 0;
-
     $transactDate = Date::excelToTimestamp($row['transact_date']);
 
+    //get tagging
     if(count($this->raw_data->getImportTagging($branchCode)) > 0)
     {
       $tagging = $this->raw_data->getImportTagging($branchCode)[0];
     }else
     {
-      $tagging = (object)array();
-      $tagging->mst_branchcode = '0';
-      $tagging->mst_lbucode = '0';
-      $tagging->mst_lburebate = '0';
-      $tagging->mst_branchname = 'null';
-      $tagging->mst_district = 'null';
-      $tagging->mst_sarcode = '0';
-      $tagging->mst_sarname = 'null';
-      $tagging->mst_samcode = '0';
-      $tagging->mst_samname = 'null';
-      $tagging->mst_hospcode = '0';
-      $tagging->mst_hospname = 'null';
-      $tagging->mst_hdmcode = '0';
-      $tagging->mst_hdmname = 'null';
-      $tagging->mst_kasscode = '0';
-      $tagging->mst_kassname = 'null';
-      $tagging->mst_kassmcode = '0';
-      $tagging->mst_kassmname = 'null';
+      $this->raw_data->addImportError($this->getRowNumber(), $this->fileName, 'branch code "'.$branchCode.'" is not existing in masterlist. skipping row.');
+      return null;
     }
 
+    //get products
     if(count($this->raw_data->getProductName($itemCode)) > 0)
     {
       $product = $this->raw_data->getProductName($itemCode)[0];
     }else
     {
-      $product = (object)array();
-      $product->prod_name = $row['item_name'].' (not exist on the product masterlist)';
-      $product->prod_packsize = 0;
-      $product->prod_pertab = 0;
+      $this->raw_data->addImportError($this->getRowNumber(), $this->fileName, 'item code "'.$itemCode.'" is not existing in masterlist. skipping row.');
+      return null;
     }
 
     $this->raw_data->add([
@@ -127,7 +134,6 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
       'sanitized_by' => '',
       'orig_mdname' => $mdName
     ]);
-
   }
 
   public function batchSize(): int

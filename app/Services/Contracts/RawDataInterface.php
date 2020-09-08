@@ -10,6 +10,12 @@ Interface RawDataInterface
 
 	public function getRawData($rowStart, $rowCount);
 
+	public function addImportError($rowId, $fileName, $msg);
+
+	public function getImportErrors($fileName);
+
+	public function deleteImportErrors();
+
 	public function getAllRawData();
 
 	public function getSanitizedCount();
