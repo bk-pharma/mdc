@@ -9,4 +9,4 @@ php artisan import --file_name="$1" --start=500000 --limit=599999 &
 php artisan import --file_name="$1" --start=600000 --limit=699999 &
 php artisan import --file_name="$1" --start=700000 --limit=799999 &
 php artisan import --file_name="$1" --start=800000 --limit=899999 &
-php artisan import --file_name="$1" --start=900000 --limit=1000000
+php artisan import --file_name="$1" --start=900000 --limit=1000001
