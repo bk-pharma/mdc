@@ -11,8 +11,10 @@ new Vue({
       runTime: '',
       startTime: '',
       endTime: '',
+      isUploading: false,
       isImporting: false,
-      importErrors: []
+      importErrors: [],
+      totalErrors: 0
 	  }
   },
   filters: {
@@ -35,6 +37,7 @@ new Vue({
   created()
   {
     this.runTime = '';
+    this.getImportErrors();
   },
   methods: {
   	handleFileUpload: function ()
@@ -48,6 +51,7 @@ new Vue({
       this.browseBtn = true;
       this.uploadBtn = true;
       this.isImporting = true;
+      this.isUploading = true;
 
       localStorage.startTime = new Date().getTime();
       this.startTime = localStorage.startTime;
@@ -72,6 +76,7 @@ new Vue({
           this.browseBtn = false;
           this.uploadBtn = false;
           this.isImporting = false;
+          this.isUploading = false;
       })
       .catch((error) =>
       {
@@ -114,7 +119,12 @@ new Vue({
         let resp = response.data;
 
         this.totalRaw = resp.totalRaw;
-        this.importErrors = resp.errors;
+
+        if(!this.isUploading)
+        {
+          this.importErrors = resp.errors;
+          this.totalErrors = this.importErrors.length;
+        }
 
         if(resp.file > 0)
         {
@@ -142,6 +152,19 @@ new Vue({
       })
       .catch((error) => {
         console.log(error);
+      });
+    },
+    getImportErrors: function()
+    {
+      axios.get('import/errors')
+      .then((response) =>
+      {
+        this.importErrors = response.data;
+        this.totalErrors = this.importErrors.length;
+      })
+      .catch((errors) =>
+      {
+        console.log(errors);
       });
     },
     convertToString:function(millis)

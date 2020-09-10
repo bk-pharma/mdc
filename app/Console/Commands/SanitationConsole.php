@@ -549,8 +549,26 @@ class SanitationConsole extends Command
         {
             $counter += 1;
 
-             $sanitizedName = $this->misc->stripPrefix($this->misc->stripSuffix($md->raw_doctor));
+            $preSanitizedName = $this->misc->stripPrefix($this->misc->stripSuffix($md->raw_doctor));
 
+            if($preSanitizedName === '')
+            {
+                continue;
+            }
+
+            $finalName = explode(" ", $preSanitizedName);
+
+            //check if the first word in the name is single letter then remove if true
+            if(strlen($finalName[0]) === 1)
+            {
+                array_shift($finalName);
+                $sanitizedName = implode(' ', $finalName);
+            }else
+            {
+                $sanitizedName = $preSanitizedName;
+            }
+
+            //if want to show the name on console
             if($this->argument('show'))
             {
                 $this->info($counter.'. '.$md->raw_doctor.' ['.$sanitizedName.']');

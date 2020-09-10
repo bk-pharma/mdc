@@ -100,26 +100,17 @@ class RawData implements RawDataInterface
         return DB::select('CALL getDataToBeSanitized(:rowStart, :rowCount)', $data);
     }
 
-    public function addImportError($rowId, $fileName, $msg)
+    public function addImportError($errorArr)
     {
-        $data = [
-            'rowId' => $rowId,
-            'fileName' => $fileName,
-            'msg' => $msg
-        ];
-
-        DB::insert('INSERT INTO import_errors (row_id, filename, error) VALUES (:rowId, :fileName, :msg)', $data);
+        DB::insert('INSERT INTO import_errors (row_id, filename, error, branch_code, transact_date, md_name, ptr, address, item_code, item_name, qty, amount) VALUES (:rowId, :fileName, :msg, :branch_code, :transact_date, :md_name, :ptr, :address, :item_code, :item_name, :qty, :amount)', $errorArr);
     }
 
-    public function getImportErrors($fileName)
+    public function getImportErrors()
     {
-        $data = ['fileName' => $fileName];
-
         return DB::select("
             SELECT *
             FROM import_errors
-            WHERE filename = :fileName
-        ", $data);
+        ");
     }
 
     public function deleteImportErrors()

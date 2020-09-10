@@ -15,6 +15,7 @@ class Misc implements MiscInterface
         "`DRA ",
         "DRA. ",
         "`R ",
+        "DR",
         "DR ",
         "DR  ",
         "D   ",
@@ -39,6 +40,7 @@ class Misc implements MiscInterface
 	];
 
 	private $suffix = [
+        "MD",
         "MD ",
         " MD",
         " JR",
