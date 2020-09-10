@@ -91,8 +91,10 @@ class Dashboard extends Controller
         $process->setTimeout(3600);
         $process->start();
 
-        while ($process->isRunning()) {
-            // waiting for process to finish
+        while ($process->isRunning())
+        {
+            $process->checkTimeout();
+            usleep(200000);
         }
 
         $data = array(

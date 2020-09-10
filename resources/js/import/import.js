@@ -80,25 +80,27 @@ new Vue({
       })
       .catch((error) =>
       {
-        let errorResp = error.response.data.errors;
+        if(error.response.status !== 504)
+        {
+          let errorResp = error.response.data.errors;
 
-        console.log(errorResp);
+          if(errorResp.rawExcel) this.status = errorResp.rawExcel[0];
+          if(errorResp.branch_code) this.status = errorResp.branch_code[0];
+          if(errorResp.transact_date) this.status = errorResp.transact_date[0];
+          if(errorResp.md_name) this.status = errorResp.md_name[0];
+          if(errorResp.ptr) this.status = errorResp.ptr[0];
+          if(errorResp.address) this.status = errorResp.address[0];
+          if(errorResp.item_code) this.status = errorResp.item_code[0];
+          if(errorResp.item_name) this.status = errorResp.item_name[0];
+          if(errorResp.qty) this.status = errorResp.qty[0];
+          if(errorResp.amount) this.status = errorResp.amount[0];
 
-        if(errorResp.rawExcel) this.status = errorResp.rawExcel[0];
-        if(errorResp.branch_code) this.status = errorResp.branch_code[0];
-        if(errorResp.transact_date) this.status = errorResp.transact_date[0];
-        if(errorResp.md_name) this.status = errorResp.md_name[0];
-        if(errorResp.ptr) this.status = errorResp.ptr[0];
-        if(errorResp.address) this.status = errorResp.address[0];
-        if(errorResp.item_code) this.status = errorResp.item_code[0];
-        if(errorResp.item_name) this.status = errorResp.item_name[0];
-        if(errorResp.qty) this.status = errorResp.qty[0];
-        if(errorResp.amount) this.status = errorResp.amount[0];
-
-        this.browseBtn = false;
-        this.uploadBtn = false;
-        this.isImporting = false;
-        this.runTime = '';
+          this.browseBtn = false;
+          this.uploadBtn = false;
+          this.isImporting = false;
+          this.isUploading = false;
+          this.runTime = '';
+        }
       });
 
       setInterval(() =>
@@ -142,6 +144,7 @@ new Vue({
             this.browseBtn = false;
             this.uploadBtn = false;
             this.isImporting = false;
+            this.isUploading = false;
             this.runTime = this.convertToString(this.endTime - this.startTime);
           }else
           {
