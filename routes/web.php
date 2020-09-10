@@ -31,6 +31,8 @@ Route::prefix('/import')->group(function () {
     Route::get('/', 'Dashboard@import');
     Route::post('/start', 'Dashboard@importNow');
     Route::post('/progress','Dashboard@importProgress');
+    Route::get('/errors', 'Dashboard@getImportErrors');
+    Route::get('/errors/export', 'Dashboard@exportImportErrors');
 });
 
 Route::prefix('/sanitation')->group(function () {

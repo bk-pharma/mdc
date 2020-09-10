@@ -51,7 +51,22 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
     //if has no branch_code
     if(!isset($row['branch_code']))
     {
-      $this->raw_data->addImportError($this->getRowNumber(), $this->fileName, 'branch_code has no value. skipping row.');
+      $errorArr = [
+        'rowId' => $this->getRowNumber(),
+        'fileName' => $this->fileName,
+        'msg' => 'branch_code has no value. skipping row.',
+        'branch_code' => $row['branch_code'],
+        'transact_date' => $row['transact_date'],
+        'md_name' => $row['md_name'],
+        'ptr' => $row['ptr'],
+        'address' => $row['address'],
+        'item_code' => $row['item_code'],
+        'item_name' => $row['item_name'],
+        'qty' => $row['qty'],
+        'amount' => $row['amount']
+      ];
+
+      $this->raw_data->addImportError($errorArr);
       return null;
     }else
     {
@@ -61,7 +76,22 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
     //if has no item_code
     if(!isset($row['item_code']))
     {
-      $this->raw_data->addImportError($this->getRowNumber(), $this->fileName, 'item_code has no value. skipping row.');
+      $errorArr = [
+        'rowId' => $this->getRowNumber(),
+        'fileName' => $this->fileName,
+        'msg' => 'item_code has no value. skipping row.',
+        'branch_code' => $row['branch_code'],
+        'transact_date' => $row['transact_date'],
+        'md_name' => $row['md_name'],
+        'ptr' => $row['ptr'],
+        'address' => $row['address'],
+        'item_code' => $row['item_code'],
+        'item_name' => $row['item_name'],
+        'qty' => $row['qty'],
+        'amount' => $row['amount']
+      ];
+
+      $this->raw_data->addImportError($errorArr);
       return null;
     }else
     {
@@ -82,7 +112,41 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
       $tagging = $this->raw_data->getImportTagging($branchCode)[0];
     }else
     {
-      $this->raw_data->addImportError($this->getRowNumber(), $this->fileName, 'branch code "'.$branchCode.'" is not existing in masterlist. skipping row.');
+      if(count($this->raw_data->getProductName($itemCode)) > 0)
+      {
+        $errorArr = [
+          'rowId' => $this->getRowNumber(),
+          'fileName' => $this->fileName,
+          'msg' => 'branch code "'.$branchCode.'" and item code "'.$itemCode.'" is not existing in masterlist. skipping row.',
+          'branch_code' => $row['branch_code'],
+          'transact_date' => $row['transact_date'],
+          'md_name' => $row['md_name'],
+          'ptr' => $row['ptr'],
+          'address' => $row['address'],
+          'item_code' => $row['item_code'],
+          'item_name' => $row['item_name'],
+          'qty' => $row['qty'],
+          'amount' => $row['amount']
+        ];
+      }else
+      {
+        $errorArr = [
+          'rowId' => $this->getRowNumber(),
+          'fileName' => $this->fileName,
+          'msg' => 'branch code "'.$branchCode.'" is not existing in masterlist. skipping row.',
+          'branch_code' => $row['branch_code'],
+          'transact_date' => $row['transact_date'],
+          'md_name' => $row['md_name'],
+          'ptr' => $row['ptr'],
+          'address' => $row['address'],
+          'item_code' => $row['item_code'],
+          'item_name' => $row['item_name'],
+          'qty' => $row['qty'],
+          'amount' => $row['amount']
+        ];
+      }
+
+      $this->raw_data->addImportError($errorArr);
       return null;
     }
 
@@ -92,12 +156,27 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
       $product = $this->raw_data->getProductName($itemCode)[0];
     }else
     {
-      $this->raw_data->addImportError($this->getRowNumber(), $this->fileName, 'item code "'.$itemCode.'" is not existing in masterlist. skipping row.');
+       $errorArr = [
+        'rowId' => $this->getRowNumber(),
+        'fileName' => $this->fileName,
+        'msg' => 'item code "'.$itemCode.'" is not existing in masterlist. skipping row.',
+        'branch_code' => $row['branch_code'],
+        'transact_date' => $row['transact_date'],
+        'md_name' => $row['md_name'],
+        'ptr' => $row['ptr'],
+        'address' => $row['address'],
+        'item_code' => $row['item_code'],
+        'item_name' => $row['item_name'],
+        'qty' => $row['qty'],
+        'amount' => $row['amount']
+      ];
+
+      $this->raw_data->addImportError($errorArr);
       return null;
     }
 
     $this->raw_data->add([
-      'raw_id' => $this->getRowNumber(),
+      'raw_id' => (isset($row['row_id'])) ? $row['row_id'] : $this->getRowNumber(),
       'raw_year' => date("Y", $transactDate),
       'raw_quarter' => "Q".ceil(date("n", $transactDate)/3),
       'raw_month' => date("F", $transactDate),
