@@ -117,7 +117,7 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
         $errorArr = [
           'rowId' => $this->getRowNumber(),
           'fileName' => $this->fileName,
-          'msg' => 'branch code "'.$branchCode.'" and item code "'.$itemCode.'" is not existing in masterlist. skipping row.',
+          'msg' => 'branch code "'.$branchCode.'" is not existing in masterlist. skipping row.',
           'branch_code' => $row['branch_code'],
           'transact_date' => $row['transact_date'],
           'md_name' => $row['md_name'],
@@ -133,7 +133,7 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
         $errorArr = [
           'rowId' => $this->getRowNumber(),
           'fileName' => $this->fileName,
-          'msg' => 'branch code "'.$branchCode.'" is not existing in masterlist. skipping row.',
+          'msg' => 'branch code "'.$branchCode.'" and item code "'.$itemCode.'" is not existing in masterlist. skipping row.',
           'branch_code' => $row['branch_code'],
           'transact_date' => $row['transact_date'],
           'md_name' => $row['md_name'],
