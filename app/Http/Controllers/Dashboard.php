@@ -10,11 +10,14 @@ use Symfony\Component\Process\Process;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\HeadingRowImport;
 use Illuminate\Support\Facades\Validator;
+use App\Exports\ImportErrorsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Dashboard extends Controller
 {
     private $raw_data;
     private $unsanitized_data;
+    private $fileName;
 
     function __construct(
         RawDataInterface $raw_data,
@@ -104,6 +107,7 @@ class Dashboard extends Controller
         if($req->has('fileName'))
         {
             $fileName = $req->input('fileName');
+            $this->fileName = $req->input('fileName');
 
             $file = '/rawData/'.$fileName;
             $exists = Storage::disk('local')->exists($file);
@@ -124,7 +128,7 @@ class Dashboard extends Controller
                     'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
                     'file' => 1,
                     'processTotal' => $processTotal,
-                    'errors' => $this->raw_data->getImportErrors($fileName)
+                    'errors' => $this->raw_data->getImportErrors()
                     )
                 );
 
@@ -135,7 +139,7 @@ class Dashboard extends Controller
                     'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
                     'file' => 0,
                     'processTotal' => 0,
-                    'errors' => $this->raw_data->getImportErrors($fileName)
+                    'errors' => $this->raw_data->getImportErrors()
                     )
                 );
             }
@@ -146,10 +150,20 @@ class Dashboard extends Controller
                 'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
                 'file' => 0,
                 'processTotal' => $processTotal,
-                'errors' => $this->raw_data->getImportErrors($fileName)
+                'errors' => $this->raw_data->getImportErrors()
                 )
             );
         }
+    }
+
+    public function getImportErrors()
+    {
+        return $this->raw_data->getImportErrors();
+    }
+
+    public function exportImportErrors()
+    {
+        return Excel::download(new ImportErrorsExport, 'import errors ('.date('Y-m-d').').xlsx');
     }
 
     public function sanitation()
