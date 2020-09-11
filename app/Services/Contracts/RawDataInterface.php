@@ -10,6 +10,8 @@ Interface RawDataInterface
 
 	public function getRawData($rowStart, $rowCount);
 
+	public function getTotalImported($fileName);
+
 	public function addImportError($errorArr);
 
 	public function getImportErrors();

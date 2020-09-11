@@ -211,6 +211,7 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
       'raw_universe' => '',
       'raw_mdcode' => '',
       'sanitized_by' => '',
+      'filename' => $this->fileName,
       'orig_mdname' => $mdName
     ]);
   }
