@@ -123,11 +123,15 @@ class Dashboard extends Controller
                     $processTotal = ((int) $process - 2);
                 }
 
-                if($processTotal === 0) unlink(storage_path('app/uploads/rawData/'.$fileName));
+
+                if($processTotal === 0)
+                {
+                    unlink(storage_path('app/uploads/rawData/'.$fileName));
+                }
 
                 return response()->json(
                     array(
-                    'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
+                    'totalRaw' => $this->raw_data->getTotalImported($this->fileName)[0]->total,
                     'file' => 1,
                     'processTotal' => $processTotal,
                     'errors' => $this->raw_data->getImportErrors()
@@ -138,7 +142,7 @@ class Dashboard extends Controller
             {
                 return response()->json(
                     array(
-                    'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
+                    'totalRaw' => $this->raw_data->getTotalImported($this->fileName)[0]->total,
                     'file' => 0,
                     'processTotal' => 0,
                     'errors' => $this->raw_data->getImportErrors()
@@ -149,7 +153,7 @@ class Dashboard extends Controller
         {
             return response()->json(
                 array(
-                'totalRaw' => $this->raw_data->getAllRawData()[0]->totalData,
+                'totalRaw' => $this->raw_data->getTotalImported($fileName)[0]->total,
                 'file' => 0,
                 'processTotal' => $processTotal,
                 'errors' => $this->raw_data->getImportErrors()

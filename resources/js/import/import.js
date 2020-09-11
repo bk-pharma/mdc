@@ -43,6 +43,7 @@ new Vue({
   	handleFileUpload: function ()
   	{
   		this.file = this.$refs.file.files[0];
+      this.fileName = `${Math.random().toString(36).substring(7)}-${this.file.name}`;
   	  	$('.custom-file-input').siblings(".custom-file-label").addClass("selected").html(this.file.name);
   	},
   	submitFile: function()
@@ -58,7 +59,7 @@ new Vue({
       this.runTime = '00h 00m 00s';
 
   		 let formData = new FormData();
-  		 formData.append('rawExcel', this.file);
+  		 formData.append('rawExcel', this.file, this.fileName);
 
        axios.post( 'import/start',
               formData,
@@ -105,7 +106,7 @@ new Vue({
 
       setInterval(() =>
       {
-        this.importProgress(this.file.name);
+        this.importProgress(this.fileName);
       }, 6000);
   	},
     importProgress: function(fileName)
