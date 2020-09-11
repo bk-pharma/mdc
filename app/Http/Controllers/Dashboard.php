@@ -124,7 +124,7 @@ class Dashboard extends Controller
                 }
 
 
-                if($processTotal === 0)
+                if($processTotal === 0 && $this->raw_data->getTotalImported($this->fileName)[0]->total > 0)
                 {
                     unlink(storage_path('app/uploads/rawData/'.$fileName));
                 }
