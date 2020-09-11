@@ -43,8 +43,7 @@ new Vue({
   	handleFileUpload: function ()
   	{
   		this.file = this.$refs.file.files[0];
-      this.fileName = `${Math.random().toString(36).substring(7)}-${this.file.name}`;
-  	  	$('.custom-file-input').siblings(".custom-file-label").addClass("selected").html(this.file.name);
+  	  $('.custom-file-input').siblings(".custom-file-label").addClass("selected").html(this.file.name);
   	},
   	submitFile: function()
   	{
@@ -57,6 +56,7 @@ new Vue({
       localStorage.startTime = new Date().getTime();
       this.startTime = localStorage.startTime;
       this.runTime = '00h 00m 00s';
+      this.fileName = `${this.makeRandomChar()}-${this.file.name}`;
 
   		 let formData = new FormData();
   		 formData.append('rawExcel', this.file, this.fileName);
@@ -184,6 +184,10 @@ new Vue({
         minutes = minutes < 10 ? '0' + minutes : minutes;
         seconds = seconds < 10 ? '0' + seconds : seconds;
         return hours + 'h'+ delim + minutes + 'm' + delim + seconds + 's';
+    },
+    makeRandomChar: function()
+    {
+       return Math.random().toString(5).substr(2, 5)
     }
   }
 });

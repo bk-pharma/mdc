@@ -43,7 +43,8 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
     }
 
     //if row is already exist
-    if(count($this->raw_data->getRawDataById($this->getRowNumber())) > 0 )
+    $idBasis = (isset($row['row_id'])) ? $row['row_id'] : $this->getRowNumber();
+    if(count($this->raw_data->getRawDataById($idBasis)) > 0 )
     {
       return null;
     }
@@ -52,11 +53,11 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
     if(!isset($row['branch_code']))
     {
       $errorArr = [
-        'rowId' => $this->getRowNumber(),
+        'rowId' => (isset($row['row_id'])) ? $row['row_id'] : $this->getRowNumber(),
         'fileName' => $this->fileName,
         'msg' => 'branch_code has no value. skipping row.',
         'branch_code' => $row['branch_code'],
-        'transact_date' => $row['transact_date'],
+        'transact_date' => date('Y-m-d', Date::excelToTimestamp($row['transact_date'])),
         'md_name' => $row['md_name'],
         'ptr' => $row['ptr'],
         'address' => $row['address'],
@@ -77,11 +78,11 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
     if(!isset($row['item_code']))
     {
       $errorArr = [
-        'rowId' => $this->getRowNumber(),
+        'rowId' => (isset($row['row_id'])) ? $row['row_id'] : $this->getRowNumber(),
         'fileName' => $this->fileName,
         'msg' => 'item_code has no value. skipping row.',
         'branch_code' => $row['branch_code'],
-        'transact_date' => $row['transact_date'],
+        'transact_date' => date('Y-m-d', Date::excelToTimestamp($row['transact_date'])),
         'md_name' => $row['md_name'],
         'ptr' => $row['ptr'],
         'address' => $row['address'],
@@ -115,11 +116,11 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
       if(count($this->raw_data->getProductName($itemCode)) > 0)
       {
         $errorArr = [
-          'rowId' => $this->getRowNumber(),
+          'rowId' => (isset($row['row_id'])) ? $row['row_id'] : $this->getRowNumber(),
           'fileName' => $this->fileName,
           'msg' => 'branch code "'.$branchCode.'" is not existing in masterlist. skipping row.',
           'branch_code' => $row['branch_code'],
-          'transact_date' => $row['transact_date'],
+          'transact_date' => date('Y-m-d', Date::excelToTimestamp($row['transact_date'])),
           'md_name' => $row['md_name'],
           'ptr' => $row['ptr'],
           'address' => $row['address'],
@@ -131,11 +132,11 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
       }else
       {
         $errorArr = [
-          'rowId' => $this->getRowNumber(),
+          'rowId' => (isset($row['row_id'])) ? $row['row_id'] : $this->getRowNumber(),
           'fileName' => $this->fileName,
           'msg' => 'branch code "'.$branchCode.'" and item code "'.$itemCode.'" is not existing in masterlist. skipping row.',
           'branch_code' => $row['branch_code'],
-          'transact_date' => $row['transact_date'],
+          'transact_date' => date('Y-m-d', Date::excelToTimestamp($row['transact_date'])),
           'md_name' => $row['md_name'],
           'ptr' => $row['ptr'],
           'address' => $row['address'],
@@ -157,11 +158,11 @@ class RawDataImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
     }else
     {
        $errorArr = [
-        'rowId' => $this->getRowNumber(),
+        'rowId' => (isset($row['row_id'])) ? $row['row_id'] : $this->getRowNumber(),
         'fileName' => $this->fileName,
         'msg' => 'item code "'.$itemCode.'" is not existing in masterlist. skipping row.',
         'branch_code' => $row['branch_code'],
-        'transact_date' => $row['transact_date'],
+        'transact_date' => date('Y-m-d', Date::excelToTimestamp($row['transact_date'])),
         'md_name' => $row['md_name'],
         'ptr' => $row['ptr'],
         'address' => $row['address'],
