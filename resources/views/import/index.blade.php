@@ -48,6 +48,7 @@
 	<div class="row mt-2">
 		<span id="totalErrors" style="font-size: 14px;" v-show="totalErrors > 0 && !isImporting">
 			<form method="get" action="{{ url('/import/errors/export') }}">
+				<span style="font-size: 11px;">Refresh the page when re-importing.</span><br>
 				<button class="btn btn-sm btn-info"><i class="fas fa-file-download"></i> Export</button>
 			</form>
 		</span>
