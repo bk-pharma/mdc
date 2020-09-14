@@ -139,18 +139,13 @@ new Vue({
           this.runTime = this.convertToString(this.endTime - this.startTime);
         }else
         {
-          if(this.totalRaw)
-          {
             this.status = 'Importing done.';
             this.browseBtn = false;
             this.uploadBtn = false;
             this.isImporting = false;
             this.isUploading = false;
             this.runTime = this.convertToString(this.endTime - this.startTime);
-          }else
-          {
             this.runTime = '';
-          }
         }
 
       })
