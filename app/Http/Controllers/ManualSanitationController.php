@@ -28,7 +28,7 @@ class ManualSanitationController extends Controller
 	public function __construct(RulesInterface $rules, RawDataInterface $raw_data)
     {
 
-        /* $this->middleware('auth'); */
+        $this->middleware('auth'); 
         $this->raw_data = $raw_data;
         $this->rules = $rules;
     }
