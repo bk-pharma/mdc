@@ -42,21 +42,42 @@ Route::prefix('/sanitation')->group(function () {
     Route::get('/sanitized-total', 'Dashboard@getSanitizedCount');
 });
 
-Route::prefix('/manual')->group(function() {
-	Route::get('/', 'Dashboard@manual')->middleware('auth');
-	Route::get('/unsanitizedData', 'Dashboard@getUnsanitizedData');
-	Route::get('/correctedName', 'Dashboard@getCorrectedName');
+
+Route::get('/mdc/manual/sanitation', 'ManualSanitationController@getManualSanitation');
+
+Route::get('/sanitation/data', 'ManualSanitationController@getSanitationData');
+
+Route::get('/get/rules_by/{mdCode}', 'ManualSanitationController@getByMdCode'); //GAWA NI JHAY TO RETRIEVE MD BY mdcode
+
+Route::post('/set/rules_by', 'ManualSanitationController@updateMdByMdCode')->name('set.rules_by'); // gawa ni jhay to update md by raw_id and mdcode
+
+Route::get('/get/rule_code/{ruleCode}', 'ManualSanitationController@getByRawIds'); // gawa ni jhay to update md by raw_id and mdcode
+
+Route::get('/get/rawDoctors', 'ManualSanitationController@updateRawDoctors');
+
+Route::post('/realtime/sanitation', 'ManualSanitationController@postRealtimeSanitationData')->name('manual.sanitation');
+
+Route::post('/realtime/check/all/rows', 'ManualSanitationController@postRealtimeCheckAllRows')->name('check.all.rows');
+
+Route::post('/set/rules/sanitize', 'ManualSanitationController@postSetRuleSanitize')->name('set.rules.sanitize');
+
+Route::post('/set/rules/sanitize/one', 'ManualSanitationController@postSetRuleSanitizeOne')->name('set.rules.sanitize.one');
+
+Route::post('/rules/sanitation', 'ManualSanitationController@rulesToBeCreated')->name('rules.sanitaion'); //gawa ni norman naka dd lang naman
+
+Route::post('/mark/all/as/unidentifed', 'ManualSanitationController@postMarkAllUnidentified');
+
+
+Route::get('/get/selected', 'ManualSanitationController@getSelected');
+
+Route::get('/admin', function () {
+    return view('layouts.admin');
 });
 
-
-
-Route::prefix('/unclean')->group(function() {
-	Route::get('/', 'Dashboard@uncleanedData')->middleware('auth');
-	Route::get('/unsanitizedData', 'Dashboard@getUnsanitizedData');
-
+Route::get('/csrf', function(){
+	return csrf_token();
 });
 
-// Route::get('/sanitize', 'Dashboard@sanitation');
 
 Auth::routes();
 

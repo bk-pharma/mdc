@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 
 Interface RulesInterface
 {
+	public function generateRuleCode();
+
+	public function add($rulesArr);
+
+	public function details($ruleCode, $column, $operator, $value, $condition);
+
 	public function getRules($ruleCode);
 
 	public function getRuleDetails($columns, $value, $columns1, $value1);
@@ -14,7 +20,6 @@ Interface RulesInterface
 
 	public function getRulesSanitation($mdName);
 
-	public function getDocNameFromRuleTbl($ruleCode);
+	public function applyRules($rawId, $rawStatus, $mdName, $correctedName, $universe, $mdCode);
 
-	public function applyRules($rawId, $rawStatus, $mdName, $correctedName, $universe, $mdCode, $sanitizedBy);
 }

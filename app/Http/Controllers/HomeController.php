@@ -24,7 +24,7 @@ class HomeController extends Controller
     public function index()
     {
         if(Auth::user()){
-            return view('main');
+            return redirect('/sanitation');
         }
     }
 }

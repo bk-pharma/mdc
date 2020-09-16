@@ -55,6 +55,7 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'auth_fullname' => ['required', 'string', 'max:255'],
             'auth_role' => ['required', 'string', 'max:255'],
+            'tag_color' => ['required', 'string', 'max:255'],
         ]);
     }
 
@@ -72,6 +73,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'auth_fullname' => $data['auth_fullname'],
             'auth_role' => $data['auth_role'],
+            'tag_color' => $data['tag_color'],
         ]);
     }
 }
