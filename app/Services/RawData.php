@@ -49,6 +49,7 @@ class RawData implements RawDataInterface
             raw_universe,
             raw_mdcode,
             sanitized_by,
+            filename,
             orig_mdname
         ) VALUES (
             :raw_id,
@@ -86,6 +87,7 @@ class RawData implements RawDataInterface
             :raw_universe,
             :raw_mdcode,
             :sanitized_by,
+            :filename,
             :orig_mdname
         )', $dataArr);
     }
@@ -98,6 +100,35 @@ class RawData implements RawDataInterface
     	);
 
         return DB::select('CALL getDataToBeSanitized(:rowStart, :rowCount)', $data);
+    }
+
+    public function getTotalImported($fileName)
+    {
+        $data = ['fileName' => $fileName];
+
+        return DB::select("
+            SELECT COUNT(raw_id) as total
+            FROM sanitation_result_new
+            WHERE filename = :fileName
+        ", $data);
+    }
+
+    public function addImportError($errorArr)
+    {
+        DB::insert('INSERT INTO import_errors (row_id, filename, error, branch_code, transact_date, md_name, ptr, address, item_code, item_name, qty, amount) VALUES (:rowId, :fileName, :msg, :branch_code, :transact_date, :md_name, :ptr, :address, :item_code, :item_name, :qty, :amount)', $errorArr);
+    }
+
+    public function getImportErrors()
+    {
+        return DB::select("
+            SELECT *
+            FROM import_errors
+        ");
+    }
+
+    public function deleteImportErrors()
+    {
+        return DB::delete('DELETE FROM import_errors');
     }
 
     public function getAllRawData()
@@ -113,8 +144,17 @@ class RawData implements RawDataInterface
         return DB::select("
             SELECT DISTINCT COUNT(raw_id) as totalSanitized, ROUND(SUM(raw_amount),2) as totalAmount
             FROM sanitation_result_new
-            WHERE raw_status != '' OR raw_corrected_name != ''
+            WHERE raw_status != ''
         ");
+    }
+
+    public function getRawDataById($id)
+    {
+        return DB::select("
+            SELECT *
+            FROM sanitation_result_new
+            WHERE raw_id = :id
+        ",['id' => $id]);
     }
 
     public function getAllUnsanitize()
@@ -122,7 +162,7 @@ class RawData implements RawDataInterface
         return DB::select("
             SELECT DISTINCT COUNT(raw_id) as totalUnsanitize
             FROM sanitation_result_new
-            WHERE sanitized_by = ''
+            WHERE raw_status = ''
         ");
     }
 

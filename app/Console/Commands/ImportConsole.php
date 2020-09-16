@@ -29,7 +29,8 @@ class ImportConsole extends Command
         $limit = $this->option('limit');
 
         $this->output->title('Starting import');
-       	Excel::import(new RawDataImport($this->raw_data, $start, $limit), storage_path('app/uploads/rawData/'.$fileName));
+        $import = new RawDataImport($this->raw_data, $fileName, $start, $limit);
+       	Excel::import($import, storage_path('app/uploads/rawData/'.$fileName));
         $this->output->success('Import successful');
     }
 }
